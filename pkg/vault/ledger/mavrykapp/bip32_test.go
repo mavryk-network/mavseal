@@ -12,7 +12,7 @@ func TestBIP32(t *testing.T) {
 	assert.Equal(t, BIP32{0x8000002c, 0x800006c1, 0x80000000, 0x80000000}, bip)
 
 	str := bip.String()
-	assert.Equal(t, "44'/1729'/0'/0'", str)
+	assert.Equal(t, "44'/1969'/0'/0'", str)
 
 	bip2 := ParseBIP32(str)
 	assert.Equal(t, bip, bip2)

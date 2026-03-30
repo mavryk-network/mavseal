@@ -31,7 +31,7 @@ func TestHashiVault(t *testing.T) {
 	backup_then_update_config(c)
 	defer restore_config()
 
-	pkh := hashiGetTz1()
+	pkh := hashiGetMv1()
 	var p MavrykPolicy
 	p.LogPayloads = true
 	p.Allow = map[string][]string{"generic": {"reveal", "transaction"}}
@@ -39,16 +39,16 @@ func TestHashiVault(t *testing.T) {
 	c.Write()
 	restart_mavsign()
 
-	out, err := MavkitClient("import", "secret", "key", "hashitz1", "http://mavsign:6732/"+pkh)
+	out, err := MavkitClient("import", "secret", "key", "hashimv1", "http://mavsign:6732/"+pkh)
 	assert.NoError(t, err)
 	assert.Contains(t, string(out), "Mavryk address added: "+pkh)
-	defer MavkitClient("forget", "address", "hashitz1", "--force")
+	defer MavkitClient("forget", "address", "hashimv1", "--force")
 
-	out, err = MavkitClient("transfer", "100", "from", "alice", "to", "hashitz1", "--burn-cap", "0.06425")
+	out, err = MavkitClient("transfer", "100", "from", "alice", "to", "hashimv1", "--burn-cap", "0.06425")
 	assert.NoError(t, err)
 	require.Contains(t, string(out), "Operation successfully injected in the node")
 
-	out, err = MavkitClient("transfer", "1", "from", "hashitz1", "to", "alice", "--burn-cap", "0.06425")
+	out, err = MavkitClient("transfer", "1", "from", "hashimv1", "to", "alice", "--burn-cap", "0.06425")
 	assert.NoError(t, err)
 	require.Contains(t, string(out), "Operation successfully injected in the node")
 
@@ -127,10 +127,10 @@ func hashiCheckErr(code int, message string) {
 	}
 }
 
-func hashiGetTz1() string {
+func hashiGetMv1() string {
 	out, err := MavSignCli("list")
 	if err != nil {
-		panic("hashiGetTz1: mavsign-cli returned an error: " + string(out))
+		panic("hashiGetMv1: mavsign-cli returned an error: " + string(out))
 	}
 	var mv1 string
 	lines := strings.Split(string(out), "\n")

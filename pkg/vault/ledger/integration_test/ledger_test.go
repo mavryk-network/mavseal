@@ -89,7 +89,7 @@ func TestLedger(t *testing.T) {
 			PublicKey:     "edpkv5y3MhiAcQtiAGvJ4DL64zbgXt3QeNJcv3kJ9Wji2deDNoDQZf",
 			PublicKeyHash: publicKeyHash,
 			VaultName:     "Ledger",
-			ID:            "bip32-ed25519/44'/1729'/0'/0'",
+			ID:            "bip32-ed25519/44'/1969'/0'/0'",
 			Policy: &mavsign.Policy{
 				AllowedRequests: []string{"generic", "block", "endorsement"},
 				AllowedOps:      []string{"endorsement", "seed_nonce_revelation", "activate_account", "ballot", "reveal", "transaction", "origination", "delegation"},

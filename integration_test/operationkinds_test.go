@@ -15,7 +15,7 @@ const (
 	alias         = "opstest"
 	account1      = "mv1DVkbxJrvuihcZM5MoteqxEsJaHDmexMTw"
 	alias1        = "opstest1"
-	contract      = "contract.event.tz"
+	contract      = "contract.event.mv"
 	contractAlias = "emit_event"
 	mavboxnob   = "http://mavboxnobaking:20000"
 	vault         = "File"

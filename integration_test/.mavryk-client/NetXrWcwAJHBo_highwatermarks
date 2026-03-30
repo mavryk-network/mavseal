@@ -1,0 +1,9 @@
+{ "blocks":
+    [ { "delegate": "mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v",
+        "highwatermark": { "round": 20, "level": 2 } } ],
+  "preattestations":
+    [ { "delegate": "mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v",
+        "highwatermark": { "round": 0, "level": 1 } } ],
+  "attestations":
+    [ { "delegate": "mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v",
+        "highwatermark": { "round": 0, "level": 1 } } ] }

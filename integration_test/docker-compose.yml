@@ -1,4 +1,3 @@
-version: "3.9"
 networks:
   ecadnet: {}
 
@@ -6,7 +5,7 @@ services:
 
   mavbox:
     container_name: mavbox
-    image: mavrykdynamics/mavbox:boreas-update-run
+    image: registry.gitlab.com/mavryk-network/mavbox:master-run
     ports:
       - "20000:20000"
       - "20001:20001"
@@ -26,7 +25,7 @@ services:
 
   mavboxnobaking:
     container_name: mavboxnobaking
-    image: mavrykdynamics/mavbox:boreas-update-run
+    image: registry.gitlab.com/mavryk-network/mavbox:master-run
     ports:
       - "30000:20000"
       - "30001:20001"
@@ -52,7 +51,7 @@ services:
     entrypoint: tail -f /dev/null
     volumes:
       - ./.mavryk-client:/home/mavryk/.mavryk-client
-      - ./contract.event.tz:/home/mavryk/contract.event.tz
+      - ./contract.event.mv:/home/mavryk/contract.event.mv
     depends_on:
       mavbox:
         condition: service_healthy
@@ -102,7 +101,7 @@ services:
 
   speculos:
     container_name: speculos
-    image: stephengaudet/tezoswalletemu:$ARCH
+    image: mavrykdynamics/mavryk-ledger-emulator:latest
     ports:
       - "9999:9999"
       - "41000:41000"

@@ -22,7 +22,7 @@ const (
 	protocol  = "http://"
 	host      = "localhost"
 	port      = "6732"
-	pkh       = "tz1WGcYos3hL7GXYXjKrMnSFdkT7FyXnFBvf"
+	pkh       = "mv1PzDyjNPB9Cu2Wo97oe8SZVLwjdPr5KVUZ"
 	url       = protocol + host + ":" + port + "/keys/" + pkh
 	dir       = "/var/lib/mavsign/watermark_v2/"
 	container = "mavsign"
