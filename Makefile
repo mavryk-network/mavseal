@@ -35,9 +35,9 @@ release-dry-run:
 		-w /go/src/$(PACKAGE_NAME) \
 		ghcr.io/goreleaser/goreleaser-cross:${GOLANG_CROSS_VERSION} \
 		release \
-		--rm-dist \
+		--clean \
 		--snapshot \
-		--skip-docker
+		--skip=docker
 
 .PHONY: release-preview
 release-preview:
@@ -51,7 +51,7 @@ release-preview:
 		-w /go/src/$(PACKAGE_NAME) \
 		ghcr.io/goreleaser/goreleaser-cross:${GOLANG_CROSS_VERSION} \
 		release \
-		--rm-dist \
+		--clean \
 		--snapshot
 
 .PHONY: release
@@ -71,5 +71,5 @@ release:
 		-w /go/src/$(PACKAGE_NAME) \
 		ghcr.io/goreleaser/goreleaser-cross:${GOLANG_CROSS_VERSION} \
 		release \
-		--rm-dist \
+		--clean \
 		--skip-validate
