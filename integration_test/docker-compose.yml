@@ -55,7 +55,7 @@ services:
     depends_on:
       mavbox:
         condition: service_healthy
-      mavsign:
+      mavseal:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "mavkit-client", "list", "known", "addresses"]
@@ -64,8 +64,8 @@ services:
       retries: 10
       start_period: 1s
     
-  mavsign:
-    container_name: mavsign
+  mavseal:
+    container_name: mavseal
     build: ../
     ports:
       - "6732:6732"
@@ -73,12 +73,12 @@ services:
     networks:
       - ecadnet
     volumes:
-      - ./.watermarks:/var/lib/mavsign
+      - ./.watermarks:/var/lib/mavseal
       - ./coverage:/opt/coverage
       - ./hashicerts:/opt/hashicerts
     configs:
       - source: sigy-config
-        target: /etc/mavsign.yaml
+        target: /etc/mavseal.yaml
       - source: sigy-secret
         target: /etc/secret.json
       - source: gcp-token
@@ -127,18 +127,18 @@ services:
       - VAULT_DEV_ROOT_TOKEN_ID=root
       - VAULT_TOKEN=root
       - VAULT_ADDR=https://127.0.0.1:8200
-      - VAULT_CACERT=/opt/mavsign/certs/vault-ca.pem
-    command: server -dev-tls -dev-tls-cert-dir=/opt/mavsign/certs
+      - VAULT_CACERT=/opt/mavseal/certs/vault-ca.pem
+    command: server -dev-tls -dev-tls-cert-dir=/opt/mavseal/certs
     volumes:
-      - ./hashicerts:/opt/mavsign/certs
+      - ./hashicerts:/opt/mavseal/certs
     cap_add:
       - IPC_LOCK      
 
 configs:
   sigy-config:
-    file: ./mavsign.yaml
+    file: ./mavseal.yaml
   sigy-secret:
-    file: ./mavsign-local-secret.json
+    file: ./mavseal-local-secret.json
   gcp-token:
     file: ./gcp-token.json
   az-sp-key:

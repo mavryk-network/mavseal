@@ -14,7 +14,7 @@ The hook is called after the standard request type and operation checks. If the 
 sequenceDiagram
 autonumber
 participant C as Client
-participant S as MavSign
+participant S as MavSeal
 participant R as Remote Policy<br> Service
 C->>S: Mavryk Operation
 S-->>+R: POST operation and metadata
@@ -88,4 +88,4 @@ Just the HTTP status code is inspected. The sign operation is allowed if the ser
 
 ## Reference implementation
 
-See [Approve List Service](https://github.com/mavryk-network/mavsign/tree/main/cmd/approve-list-svc)
+See [Approve List Service](https://github.com/mavryk-network/mavseal/tree/main/cmd/approve-list-svc)

@@ -1,4 +1,4 @@
-package mavsign
+package mavseal
 
 import (
 	"bytes"
@@ -20,13 +20,13 @@ import (
 	"github.com/mavryk-network/mavbingo/v2/protocol"
 	"github.com/mavryk-network/mavbingo/v2/protocol/core"
 	"github.com/mavryk-network/mavbingo/v2/protocol/latest"
-	"github.com/mavryk-network/mavsign/pkg/auth"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/request"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/watermark"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/auth"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/request"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/watermark"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 )
@@ -80,8 +80,8 @@ type PublicKey struct {
 	Active bool
 }
 
-// MavSign is a struct coordinate mavsign action and select vault according to the key being used
-type MavSign struct {
+// MavSeal is a struct coordinate mavseal action and select vault according to the key being used
+type MavSeal struct {
 	config Config
 	vaults map[string]vault.Vault
 	cache  keyCache
@@ -133,7 +133,7 @@ func (k *keyCache) drop() {
 	k.cache = nil
 }
 
-func (s *MavSign) logger() log.FieldLogger {
+func (s *MavSeal) logger() log.FieldLogger {
 	if s.config.Logger != nil {
 		return s.config.Logger
 	}
@@ -144,7 +144,7 @@ var defaultPolicy = PublicKeyPolicy{
 	AllowedRequests: []string{"block", "preattestation", "attestation"},
 }
 
-func (s *MavSign) fetchPolicyOrDefault(keyHash crypt.PublicKeyHash) *PublicKeyPolicy {
+func (s *MavSeal) fetchPolicyOrDefault(keyHash crypt.PublicKeyHash) *PublicKeyPolicy {
 	val, ok := s.config.Policy.Get(keyHash)
 	if !ok {
 		return nil
@@ -229,7 +229,7 @@ func jwtVerifyUser(user string, policy *PublicKeyPolicy, req *SignRequest) error
 	return nil
 }
 
-func (s *MavSign) callPolicyHook(ctx context.Context, req *SignRequest) error {
+func (s *MavSeal) callPolicyHook(ctx context.Context, req *SignRequest) error {
 	if s.config.PolicyHook == nil {
 		return nil
 	}
@@ -322,7 +322,7 @@ func (s *MavSign) callPolicyHook(ctx context.Context, req *SignRequest) error {
 }
 
 // Sign ask the vault to sign a message with the private key associated to keyHash
-func (s *MavSign) Sign(ctx context.Context, req *SignRequest) (crypt.Signature, error) {
+func (s *MavSeal) Sign(ctx context.Context, req *SignRequest) (crypt.Signature, error) {
 	l := s.logger().WithField(logPKH, req.PublicKeyHash)
 
 	if req.ClientPublicKeyHash != nil {
@@ -425,7 +425,7 @@ func (s *MavSign) Sign(ctx context.Context, req *SignRequest) (crypt.Signature, 
 
 type publicKeys = hashmap.PublicKeyHashMap[*keyVaultPair]
 
-func (s *MavSign) listPublicKeys(ctx context.Context) (ret publicKeys, list []*keyVaultPair, err error) {
+func (s *MavSeal) listPublicKeys(ctx context.Context) (ret publicKeys, list []*keyVaultPair, err error) {
 	ret = make(publicKeys)
 	for name, v := range s.vaults {
 		var vaultKeys []*keyVaultPair
@@ -459,7 +459,7 @@ func (s *MavSign) listPublicKeys(ctx context.Context) (ret publicKeys, list []*k
 }
 
 // ListPublicKeys retrieve the list of all public keys supported by the current configuration
-func (s *MavSign) ListPublicKeys(ctx context.Context) ([]*PublicKey, error) {
+func (s *MavSeal) ListPublicKeys(ctx context.Context) ([]*PublicKey, error) {
 	_, list, err := s.listPublicKeys(ctx)
 	if err != nil {
 		return nil, err
@@ -477,7 +477,7 @@ func (s *MavSign) ListPublicKeys(ctx context.Context) ([]*PublicKey, error) {
 	return ret, nil
 }
 
-func (s *MavSign) getPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash) (*keyVaultPair, error) {
+func (s *MavSeal) getPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash) (*keyVaultPair, error) {
 	cached := s.cache.get(keyHash)
 	if cached != nil {
 		return cached, nil
@@ -497,7 +497,7 @@ func (s *MavSign) getPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash)
 }
 
 // GetPublicKey retrieve the public key from a vault
-func (s *MavSign) GetPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash) (*PublicKey, error) {
+func (s *MavSeal) GetPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash) (*PublicKey, error) {
 
 	p, err := s.getPublicKey(ctx, keyHash)
 	if err != nil {
@@ -514,7 +514,7 @@ func (s *MavSign) GetPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash)
 }
 
 // Unlock unlock all the vaults
-func (s *MavSign) Unlock(ctx context.Context) error {
+func (s *MavSeal) Unlock(ctx context.Context) error {
 	for _, v := range s.vaults {
 		if unlocker, ok := v.(vault.Unlocker); ok {
 			if err := unlocker.Unlock(ctx); err != nil {
@@ -533,7 +533,7 @@ type PolicyHook struct {
 
 type Policy = hashmap.PublicKeyHashMap[*PublicKeyPolicy]
 
-// Config represents MavSign configuration
+// Config represents MavSeal configuration
 type Config struct {
 	Policy       Policy
 	Vaults       map[string]*config.VaultConfig
@@ -544,9 +544,9 @@ type Config struct {
 	PolicyHook   *PolicyHook
 }
 
-// New returns MavSign instance
-func New(ctx context.Context, c *Config) (*MavSign, error) {
-	s := &MavSign{
+// New returns MavSeal instance
+func New(ctx context.Context, c *Config) (*MavSeal, error) {
+	s := &MavSeal{
 		config: *c,
 		vaults: make(map[string]vault.Vault, len(c.Vaults)),
 	}
@@ -579,7 +579,7 @@ func New(ctx context.Context, c *Config) (*MavSign, error) {
 }
 
 // Ready returns true if all backends are ready
-func (s *MavSign) Ready(ctx context.Context) (bool, error) {
+func (s *MavSeal) Ready(ctx context.Context) (bool, error) {
 	for _, v := range s.vaults {
 		if rc, ok := v.(vault.ReadinessChecker); ok {
 			if ok, err := rc.Ready(ctx); !ok || err != nil {

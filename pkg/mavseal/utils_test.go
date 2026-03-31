@@ -1,11 +1,11 @@
 //go:build !integration
 
-package mavsign_test
+package mavseal_test
 
 import (
 	"context"
 
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 )
 
 type GetPublicKey func(ctx context.Context, id string) (vault.KeyReference, error)

@@ -6,30 +6,24 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/mavryk-network/mavsign/cmd/commands"
+	"github.com/mavryk-network/mavseal/cmd/commands"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 
-	"github.com/mavryk-network/mavsign/pkg/vault"
 	// Install backends
-	_ "github.com/mavryk-network/mavsign/pkg/vault/preamble"
+	_ "github.com/mavryk-network/mavseal/pkg/vault/preamble"
 )
 
 func newRootCommand(ctx context.Context) *cobra.Command {
 	rootCtx := commands.Context{
 		Context: ctx,
 	}
-	rootCmd := commands.NewRootCommand(&rootCtx, "mavsign-cli")
-	rootCmd.AddCommand(
-		commands.NewListCommand(&rootCtx),
-		commands.NewImportCommand(&rootCtx),
-		commands.NewVersionCommand(&rootCtx),
-		commands.NewListRequests(&rootCtx),
-		commands.NewListOps(&rootCtx),
-	)
-
-	// Vault specific
-	rootCmd.AddCommand(vault.Commands()...)
+	rootCmd := commands.NewRootCommand(&rootCtx, "mavseal")
+	serve := commands.NewServeCommand(&rootCtx)
+	vers := commands.NewVersionCommand(&rootCtx)
+	rootCmd.AddCommand(serve)
+	rootCmd.AddCommand(vers)
+	rootCmd.RunE = serve.RunE
 
 	return rootCmd
 }

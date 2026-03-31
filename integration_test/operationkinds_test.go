@@ -181,7 +181,7 @@ func TestOperationAllowPolicy(t *testing.T) {
 			c.Mavryk[test.account].Allow = test.notAllowPolicy
 			backup_then_update_config(c)
 			defer restore_config()
-			restart_mavsign()
+			restart_mavseal()
 			out, err := MavkitClient(test.testOp...)
 			if test.op == "generic" {
 				//the baking operations in mavkit-client do not return an error when they fail
@@ -198,7 +198,7 @@ func TestOperationAllowPolicy(t *testing.T) {
 			c.Read()
 			c.Mavryk[test.account].Allow = test.allowPolicy
 			c.Write()
-			restart_mavsign()
+			restart_mavseal()
 			out, err = MavkitClient(test.testOp...)
 			if err != nil {
 				log.Println("error received: " + err.Error() + " " + string(out))

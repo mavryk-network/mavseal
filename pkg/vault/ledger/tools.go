@@ -3,7 +3,7 @@ package ledger
 import (
 	"github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/b58"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger/mavrykapp"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger/mavrykapp"
 )
 
 // Utility functions used by CLI

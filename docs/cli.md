@@ -3,13 +3,13 @@ id: cli
 title: CLI
 ---
 
-# Key Import using mavsign-cli
+# Key Import using mavseal-cli
 
-To import a secret key, we will use the `mavsign-cli import` command.
+To import a secret key, we will use the `mavseal-cli import` command.
 
 ## Generating a key using mavkit-client
 
-This is not the only way to generate keys to import in mavsign. Any existing key can be imported in the vaults via mavsign if the vault supports the key curve.
+This is not the only way to generate keys to import in mavseal. Any existing key can be imported in the vaults via mavseal if the vault supports the key curve.
 
 ```bash
 % mavkit-client gen keys import-p256 -s p256 --encrypted
@@ -31,35 +31,35 @@ The encrypted private key can be obtained from the `.mavkit-client/` directory
       "encrypted:p2esk**********************************************************" }]
 ```
 
-## Importing the generated key using mavsign-cli
+## Importing the generated key using mavseal-cli
 
 A private key can be imported into any of the backend vaults (except: AWS, file & ledger) using the below command.
-If you import an encrypted key, the `mavsign-cli` command will prompt you for the password.
+If you import an encrypted key, the `mavseal-cli` command will prompt you for the password.
 
 ```bash
-% ./mavsign-cli import -c ./azure.yaml --base-dir ./ --vault azure
+% ./mavseal-cli import -c ./azure.yaml --base-dir ./ --vault azure
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
 Enter secret key: 
 Enter Password:
 INFO[0002] Requesting import operation                   pkh=tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo vault=Azure vault_name="https://forimport.vault.azure.net/"
-INFO[0007] Successfully imported                         key_id="https://forimport.vault.azure.net/keys/mavsign-imported-2CsWhgGqeRdkEiA0LFm3WyN5DxS/9d2266b388734ef0b14203e0943465d7" pkh=tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo vault=Azure vault_name="https://forimport.vault.azure.net/"
+INFO[0007] Successfully imported                         key_id="https://forimport.vault.azure.net/keys/mavseal-imported-2CsWhgGqeRdkEiA0LFm3WyN5DxS/9d2266b388734ef0b14203e0943465d7" pkh=tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo vault=Azure vault_name="https://forimport.vault.azure.net/"
 ```
 
-If the import is successful, the `mavsign-cli` will report the PKH (`tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo` in the above example) of your newly imported secret which in turn can be used in the config YAML to add the policies.
+If the import is successful, the `mavseal-cli` will report the PKH (`tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo` in the above example) of your newly imported secret which in turn can be used in the config YAML to add the policies.
 
-**Note:** The PKH from MavSign and the PKH from `mavkit-client list known addresess` command must be the same.
+**Note:** The PKH from MavSeal and the PKH from `mavkit-client list known addresess` command must be the same.
 
 Name of the key can also be provided with the import command.
 
 ```bash
-% ./mavsign-cli import -c ./azure.yaml --base-dir ./ --vault azure -o "name":test-name
+% ./mavseal-cli import -c ./azure.yaml --base-dir ./ --vault azure -o "name":test-name
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
 Enter secret key: 
 Enter Password: 
 INFO[0003] Requesting import operation                   pkh=tz2PpBJj8utBU3Nxu7vexbdJVTcRxYfkfqcV vault=Azure vault_name="https://forimport.vault.azure.net/"
 INFO[0009] Successfully imported                         key_id="https://forimport.vault.azure.net/keys/test-name/f503f20b309e4c8ea57982bd9736c412" pkh=tz2PpBJj8utBU3Nxu7vexbdJVTcRxYfkfqcV vault=Azure vault_name="https://forimport.vault.azure.net/"
 
-./mavsign-cli list -c ./azure.yaml --base-dir ./
+./mavseal-cli list -c ./azure.yaml --base-dir ./
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
 Public Key Hash:    tz2PpBJj8utBU3Nxu7vexbdJVTcRxYfkfqcV
 Vault:              Azure
@@ -72,12 +72,12 @@ Active:             false
 The import operation can be verified using the below list command.
 
 ```bash
- % ./mavsign-cli list -c ./azure.yaml --base-dir ./
+ % ./mavseal-cli list -c ./azure.yaml --base-dir ./
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
 
 Public Key Hash:    tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo
 Vault:              Azure
-ID:                 https://forimport.vault.azure.net/keys/mavsign-imported-2Csev40hxBXjwo5wVVnRbonNaDl/ce48c88caf744549b638e97bf89acb1b
+ID:                 https://forimport.vault.azure.net/keys/mavseal-imported-2Csev40hxBXjwo5wVVnRbonNaDl/ce48c88caf744549b638e97bf89acb1b
 Active:             true
 Allowed Operations: [block endorsement generic preendorsement]
 Allowed Kinds:      [endorsement transaction]
@@ -111,10 +111,10 @@ mavryk:
 
 **Note:** after importing the key it is made active by adding it to the config file
 
-## Configuring mavkit-client to use MavSign for remote signing
+## Configuring mavkit-client to use MavSeal for remote signing
 
-Once the key is imported and made active, the value of the secret key in mavkit-client configuration is replaced with the key's URI in MavSign:
+Once the key is imported and made active, the value of the secret key in mavkit-client configuration is replaced with the key's URI in MavSeal:
 
 ```bash
-% mavkit-client import secret key <alias> http://<mavsign_host>:6732/tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo
+% mavkit-client import secret key <alias> http://<mavseal_host>:6732/tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo
 ```

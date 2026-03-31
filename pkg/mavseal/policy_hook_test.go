@@ -1,6 +1,6 @@
 //go:build !integration
 
-package mavsign_test
+package mavseal_test
 
 import (
 	"context"
@@ -13,13 +13,13 @@ import (
 	"testing"
 
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/auth"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/watermark"
-	"github.com/mavryk-network/mavsign/pkg/vault"
-	"github.com/mavryk-network/mavsign/pkg/vault/memory"
+	"github.com/mavryk-network/mavseal/pkg/auth"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/watermark"
+	"github.com/mavryk-network/mavseal/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault/memory"
 	"github.com/stretchr/testify/require"
 	yaml "gopkg.in/yaml.v3"
 )
@@ -35,7 +35,7 @@ func generateKey() (crypt.PrivateKey, error) {
 func serveHookAuth(status int, priv crypt.PrivateKey) (func(w http.ResponseWriter, r *http.Request), error) {
 	pub := priv.Public()
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req mavsign.PolicyHookRequest
+		var req mavseal.PolicyHookRequest
 		dec := json.NewDecoder(r.Body)
 		if err := dec.Decode(&req); err != nil {
 			log.Println(err)
@@ -43,7 +43,7 @@ func serveHookAuth(status int, priv crypt.PrivateKey) (func(w http.ResponseWrite
 			return
 		}
 
-		replyPl := mavsign.PolicyHookReplyPayload{
+		replyPl := mavseal.PolicyHookReplyPayload{
 			Status:        status,
 			PublicKeyHash: pub.Hash().String(),
 			Nonce:         req.Nonce,
@@ -61,7 +61,7 @@ func serveHookAuth(status int, priv crypt.PrivateKey) (func(w http.ResponseWrite
 			panic(err)
 		}
 
-		reply := mavsign.PolicyHookReply{
+		reply := mavseal.PolicyHookReply{
 			Payload:   buf,
 			Signature: sig.String(),
 		}
@@ -98,7 +98,7 @@ func testPolicyHookAuth(t *testing.T, status int) error {
 	signPub := signPriv.Public()
 	signKeyHash := signPub.Hash()
 
-	conf := mavsign.Config{
+	conf := mavseal.Config{
 		Vaults:    map[string]*config.VaultConfig{"mock": {Driver: "mock"}},
 		Watermark: watermark.Ignore{},
 		VaultFactory: vault.FactoryFunc(func(ctx context.Context, name string, conf *yaml.Node) (vault.Vault, error) {
@@ -108,19 +108,19 @@ func testPolicyHookAuth(t *testing.T, status int) error {
 				},
 			}, "Mock")
 		}),
-		Policy: hashmap.NewPublicKeyHashMap([]hashmap.PublicKeyKV[*mavsign.PublicKeyPolicy]{{Key: signKeyHash, Val: nil}}),
+		Policy: hashmap.NewPublicKeyHashMap([]hashmap.PublicKeyKV[*mavseal.PublicKeyPolicy]{{Key: signKeyHash, Val: nil}}),
 
-		PolicyHook: &mavsign.PolicyHook{
+		PolicyHook: &mavseal.PolicyHook{
 			Address: testSrv.URL,
 			Auth:    hookAuth,
 		},
 	}
 
-	s, err := mavsign.New(context.Background(), &conf)
+	s, err := mavseal.New(context.Background(), &conf)
 	require.NoError(t, err)
 
 	msg := mustHex("11ed9d217c0000518e0118425847ac255b6d7c30ce8fec23b8eaf13b741de7d18509ac2ef83c741209630000000061947af504805682ea5d089837764b3efcc90b91db24294ff9ddb66019f332ccba17cc4741000000210000000102000000040000518e0000000000000004ffffffff0000000400000000eb1320a71e8bf8b0162a3ec315461e9153a38b70d00d5dde2df85eb92748f8d068d776e356683a9e23c186ccfb72ddc6c9857bb1704487972922e7c89a7121f800000000a8e1dd3c000000000000")
-	_, err = s.Sign(context.Background(), &mavsign.SignRequest{PublicKeyHash: signKeyHash, Message: msg})
+	_, err = s.Sign(context.Background(), &mavseal.SignRequest{PublicKeyHash: signKeyHash, Message: msg})
 	return err
 }
 
@@ -136,7 +136,7 @@ func testPolicyHook(t *testing.T, status int) error {
 	require.NoError(t, err)
 	signKeyHash := signPriv.Public().Hash()
 
-	conf := mavsign.Config{
+	conf := mavseal.Config{
 		Vaults:    map[string]*config.VaultConfig{"mock": {Driver: "mock"}},
 		Watermark: watermark.Ignore{},
 		VaultFactory: vault.FactoryFunc(func(ctx context.Context, name string, conf *yaml.Node) (vault.Vault, error) {
@@ -146,17 +146,17 @@ func testPolicyHook(t *testing.T, status int) error {
 				},
 			}, "Mock")
 		}),
-		Policy: hashmap.NewPublicKeyHashMap([]hashmap.PublicKeyKV[*mavsign.PublicKeyPolicy]{{Key: signKeyHash, Val: nil}}),
-		PolicyHook: &mavsign.PolicyHook{
+		Policy: hashmap.NewPublicKeyHashMap([]hashmap.PublicKeyKV[*mavseal.PublicKeyPolicy]{{Key: signKeyHash, Val: nil}}),
+		PolicyHook: &mavseal.PolicyHook{
 			Address: testSrv.URL,
 		},
 	}
 
-	s, err := mavsign.New(context.Background(), &conf)
+	s, err := mavseal.New(context.Background(), &conf)
 	require.NoError(t, err)
 
 	msg := mustHex("11ed9d217c0000518e0118425847ac255b6d7c30ce8fec23b8eaf13b741de7d18509ac2ef83c741209630000000061947af504805682ea5d089837764b3efcc90b91db24294ff9ddb66019f332ccba17cc4741000000210000000102000000040000518e0000000000000004ffffffff0000000400000000eb1320a71e8bf8b0162a3ec315461e9153a38b70d00d5dde2df85eb92748f8d068d776e356683a9e23c186ccfb72ddc6c9857bb1704487972922e7c89a7121f800000000a8e1dd3c000000000000")
-	_, err = s.Sign(context.Background(), &mavsign.SignRequest{PublicKeyHash: signKeyHash, Message: msg})
+	_, err = s.Sign(context.Background(), &mavseal.SignRequest{PublicKeyHash: signKeyHash, Message: msg})
 	return err
 }
 

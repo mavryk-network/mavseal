@@ -6,7 +6,7 @@ import (
 
 	mv "github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v3"
 )

@@ -5,7 +5,7 @@ import (
 
 	mv "github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
 )
 
 type authorizedKeys = hashmap.PublicKeyHashMap[crypt.PublicKey]

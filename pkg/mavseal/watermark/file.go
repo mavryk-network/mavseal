@@ -15,9 +15,9 @@ import (
 	"github.com/mavryk-network/mavbingo/v2/b58"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
 	"github.com/mavryk-network/mavbingo/v2/protocol"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/request"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/request"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 )

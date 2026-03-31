@@ -3,14 +3,14 @@ id: bakers
 title: Mavryk Bakers
 ---
 
-# How to use MavSign with a Mavryk Baker
+# How to use MavSeal with a Mavryk Baker
 
-A Mavryk node can be installed from binaries, or run with docker, or built from sources (for details see [here](https://teztnets.xyz/)) . In each case a baker is set up with a network and a vault, but each vault has unique requirements. This diagram shows the range of configurations supported by MavSign. There are `3x3x6=54` variations shown, and more are possible. This article will introduce baking and test networks but will focus on the configration details required for baking with each supported vault type.
+A Mavryk node can be installed from binaries, or run with docker, or built from sources (for details see [here](https://teztnets.xyz/)) . In each case a baker is set up with a network and a vault, but each vault has unique requirements. This diagram shows the range of configurations supported by MavSeal. There are `3x3x6=54` variations shown, and more are possible. This article will introduce baking and test networks but will focus on the configration details required for baking with each supported vault type.
 ```mermaid
 flowchart LR
-    I{How Install Mavryk<br> and MavSign?}-->BIN[Binaries]
-    I{How Install Mavryk<br> and MavSign?}-->DOCKER[Docker]
-    I{How Install Mavryk<br> and MavSign?}-->SOURCES[Sources]
+    I{How Install Mavryk<br> and MavSeal?}-->BIN[Binaries]
+    I{How Install Mavryk<br> and MavSeal?}-->DOCKER[Docker]
+    I{How Install Mavryk<br> and MavSeal?}-->SOURCES[Sources]
     BIN-->NET{Which net?}
     DOCKER-->NET{Which net?}
     SOURCES-->NET{Which net?}
@@ -94,20 +94,20 @@ To start the baker :
 ```bash!
 ./mavkit-baker-alpha run with local node ~/.mavryk-node --liquidity-baking-toggle-vote pass
 ```
-## MavSign
+## MavSeal
 
-Clone MavSign from its Github repository or run with docker .
-
-```
-git clone <https://github.com/daily-co/mavsign.git>
-```
-
-Build MavSign:
+Clone MavSeal from its Github repository or run with docker .
 
 ```
-cd mavsign
-make mavsign
-make mavsign-cli
+git clone <https://github.com/daily-co/mavseal.git>
+```
+
+Build MavSeal:
+
+```
+cd mavseal
+make mavseal
+make mavseal-cli
 ```
 
 
@@ -149,13 +149,13 @@ vaults:
       - delegation
 ```
 
-Start MavSign :
+Start MavSeal :
 
 ```
-./mavsign serve -c ./mavsign.yaml
+./mavseal serve -c ./mavseal.yaml
 ```
 
-Test that MavSign is working :
+Test that MavSeal is working :
 
 ```bash!
 curl localhost:6732/keys/tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
@@ -163,7 +163,7 @@ curl localhost:6732/keys/tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
 {"public_key":"edpktmKfj5reMbPmgwh2BNw5EHYpHEZZceMWfffcEpfPTn6pXgoRwF"}
 
 
-./mavsign-cli list -c local_secret.yaml
+./mavseal-cli list -c local_secret.yaml
 
 INFO[0000] Initializing vault                            vault=file vault_name=local_secret
 Public Key Hash:    tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
@@ -171,7 +171,7 @@ Vault:              File
 ID:                 tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
 Active:             false
 ```
-Import the key MavSign provides into mavkit-client, overriding the key alice created earlier.
+Import the key MavSeal provides into mavkit-client, overriding the key alice created earlier.
 
 ```bash!
 ./mavkit-client import secret key alice http://localhost:6732/tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU --force
@@ -188,7 +188,7 @@ Do a mavryk transfer operation:
 ```bash!
 ./mavkit-client transfer 10 from alice to bob
 ```
-and check the mavsign logs
+and check the mavseal logs
 ```go!
 INFO[0006] Requesting signing operation                  ops="map[transaction:1]" ops_total=1 pkh=tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU request=generic vault=File vault_name=local_secret
 INFO[0006] About to sign raw bytes                       ops="map[transaction:1]" ops_total=1 pkh=tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU raw=034266bedbf77c4e104790c8c3e7ca81cef9aa2f63770ae27d9032c670902f03e76c00fa8d929d0a3eb3a509e16bd6aec74e6c18783432e102fd13e9070080ade20400005cf5b8fb0209b20765b88233de1700896d4d084a00 request=generic vault=File vault_name=local_secret
@@ -208,7 +208,7 @@ Make sure that mavryk client can access the ledger:
 Found a Mavryk Baking 2.3.2 (git-description: "") application running on
 Ledger Nano S at [0001:0029:00].
 
-To use keys at BIP32 path m/44'/1729'/0'/0' (default Mavryk key path), use one
+To use keys at BIP32 path m/44'/1969'/0'/0' (default Mavryk key path), use one
 of:
   mavkit-client import secret key ledger_michael "ledger://elated-beaver-unusual-nightingale/bip25519/0h/0h"
   mavkit-client import secret key ledger_michael "ledger://elated-beaver-unusual-nightingale/ed25519/0h/0h"
@@ -233,7 +233,7 @@ Ensure the implicit account used has funds for a baking stake. (Use the [faucet]
 
 Set up ledger for baking 
 ```
-./mavsign-cli ledger setup-baking bip25519/0h/0h -c mavsign.yaml 
+./mavseal-cli ledger setup-baking bip25519/0h/0h -c mavseal.yaml 
 
 INFO[0000] Initializing vault    
 vault=ledger vault_name=ledger
@@ -242,15 +242,15 @@ Authorized baking for address: tz1Kiak7gwhv6fvcpq9Q9ghjKNuFNYDtUJUG
 
 Determine the ID of the ledger device. 
 ```bash!
-./mavsign-cli ledger list -c mavsign.yaml
+./mavseal-cli ledger list -c mavseal.yaml
   
 Path:           0001:0029:00
 ID:             elated-beaver-unusual-nightingale / 00f24232
 Version:        TezBake 2.3.2
 ```
 
-The ID is used by the mavsign.yaml file to identify the ledger
-Set up the MavSign configuration file like this, and save it a `ledger.yaml`:
+The ID is used by the mavseal.yaml file to identify the ledger
+Set up the MavSeal configuration file like this, and save it a `ledger.yaml`:
 
 ```bash!
 server:
@@ -281,9 +281,9 @@ mavryk:
 ```
 where we have added the Ledger ID and the ledger's public key hash that we imported to mavkit-client.
 
-Start mavsign from the CLI or with Docker:
+Start mavseal from the CLI or with Docker:
 ```
-./mavsign-cli ledger setup-baking ed25519/0h/0h -c sig-ledger.yaml --base-dir .
+./mavseal-cli ledger setup-baking ed25519/0h/0h -c sig-ledger.yaml --base-dir .
 ```
 Review and permit the request on the ledger device.
 ```
@@ -291,12 +291,12 @@ Review and permit the request on the ledger device.
 Get the public key hash from the ledger device
 
 ```bash!
-./mavsign-cli list -c ledger.yaml 
+./mavseal-cli list -c ledger.yaml 
 
 INFO[0000] Initializing vault                            vault=ledger vault_name=ledger
 Public Key Hash:    tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt
 Vault:              Ledger
-ID:                 bip32-ed25519/44'/1729'/0'/0'
+ID:                 bip32-ed25519/44'/1969'/0'/0'
 Active:             true
 Allowed Requests:   [block endorsement generic preendorsement]
 Allowed Operations: [endorsement proposals transaction]
@@ -308,7 +308,7 @@ Mar 22 12:09:44.815 - 016-PtMumbai.baker.actions:   for blueledger (tz1bQYMFieZH
 Mar 22 12:09:46.596 - 016-PtMumbai.baker.actions: injected endorsement ooee4W7k4oNSLRZu62aZQwhkahmWRngbEnJZ5CopsXGantGemzd for
 Mar 22 12:09:46.596 - 016-PtMumbai.baker.actions:   blueledger (tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt)
 ```
-See the endorsing in the MavSign logs:
+See the endorsing in the MavSeal logs:
 ```go!
 INFO[1910525] Requesting signing operation                  chain_id=NetXQw6nWSnrJ5t lvl=457542 pkh=tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt request=preendorsement vault=Ledger vault_name=00f24232
 INFO[1910525] About to sign raw bytes                       chain_id=NetXQw6nWSnrJ5t lvl=457542 pkh=tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt raw=122f6cbd6119f3a10704d101a5d13334809adce2e9d3011c6cead4b975a8d39f91c87273e714001e0006fb4600000082c6194912098ea5a9a7d52a593e4783afb36f3965780b242eb1e271c1159cc946 request=preendorsement vault=Ledger vault_name=00f24232
@@ -316,9 +316,9 @@ INFO[1910527] Signed preendorsement successfully            chain_id=NetXQw6nWSn
 INFO[1910527] POST /keys/tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt  duration=1.772184564s hostname="localhost:6732" method=POST path=/keys/tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt start_time="2023-03-08T10:26:30-08:00" status=200
 ```
 ### 3. Yubi HSM
-Follow the MavSign Vault installation instructions for Yubi HSM at https://mavsign.mavryk.org/docs/yubihsm
+Follow the MavSeal Vault installation instructions for Yubi HSM at https://mavseal.mavryk.org/docs/yubihsm
 
-MavSign will expose the key in the vault to the baker. The set up of keys and bakers is the same as for the simpler examples above. The baker needs to be setup for baking with the key as supplied by MavSign.
+MavSeal will expose the key in the vault to the baker. The set up of keys and bakers is the same as for the simpler examples above. The baker needs to be setup for baking with the key as supplied by MavSeal.
 
 ```bash!
 server:
@@ -343,7 +343,7 @@ mavryk:
       generic:
         - transaction
 ```
-With Baker, MavSign and Yubi set up you should see in the yubi logs:
+With Baker, MavSeal and Yubi set up you should see in the yubi logs:
 ```go!
 INFO[0668] handled request                               Content-Length=13 Content-Type=application/octet-stream Method=POST RemoteAddr="127.0.0.1:38524" StatusCode=200 URI=/connector/api User-Agent=Go-http-client/1.1 X-Real-IP=127.0.0.1 X-Request-ID=74d3cc1b-6f8b-4e73-afdd-25af90054a32 latency=10.879542ms
 DEBU[0668] usb device already open                       Correlation-ID=e08fb56a-deac-4d28-8069-39b41b7f6892
@@ -352,12 +352,12 @@ DEBU[0668] usb endpoint read                             Correlation-ID=e08fb56a
 ```
 
 ### 4. AWS KMS
-Follow the MavSign Vault installation instructions for AWS KMS at https://mavsign.mavryk.org/docs/aws_kms
+Follow the MavSeal Vault installation instructions for AWS KMS at https://mavseal.mavryk.org/docs/aws_kms
 
 - AWS KMS needs programmatic access
 
 
-MavSign will expose the key in the vault to the baker. The set up of keys and bakers is the same as for the simpler examples above. The baker needs to be setup for baking with the key that was created using the cryptographic curve histed by AWS KMS. MavSign will expose this key and apply policy to operations.
+MavSeal will expose the key in the vault to the baker. The set up of keys and bakers is the same as for the simpler examples above. The baker needs to be setup for baking with the key that was created using the cryptographic curve histed by AWS KMS. MavSeal will expose this key and apply policy to operations.
 
 ```bash!
 server:
@@ -383,12 +383,12 @@ mavryk:
       generic:
         - transaction
 ``` 
-Here `tz2KtieusLufPkLEEocrr2etP4rb1QR3k8ri` is the key returned by MavSign when you run `./mavsign-cli list -c awskms.yaml`.
+Here `tz2KtieusLufPkLEEocrr2etP4rb1QR3k8ri` is the key returned by MavSeal when you run `./mavseal-cli list -c awskms.yaml`.
 
 The vault should be active when listed:
 
 ```bash
-./mavsign-cli list -c awskms.yaml
+./mavseal-cli list -c awskms.yaml
 
 INFO[0000] Initializing vault                            vault=awskms vault_name=aws
 Public Key Hash:    tz2KtieusLufPkLEEocrr2etP4rb1QR3k8ri
@@ -405,9 +405,9 @@ To manage baking with this key using mavkit-client you can import the key:
  ./mavkit-client import secret key awskms http://localhost:6732/tz2KtieusLufPkLEEocrr2etP4rb1QR3k8ri
 ```
 ### 5. GCPKeyManagement
-Follow the MavSign Vault installation instructions for GCPKeyManagement at https://mavsign.mavryk.org/docs/gcp_kms
+Follow the MavSeal Vault installation instructions for GCPKeyManagement at https://mavseal.mavryk.org/docs/gcp_kms
 
-MavSign will expose the key in the vault to the baker. The set up of keys and bakers is the same as for the simpler examples above. The baker needs to be setup for baking with the key as supplied by MavSign.
+MavSeal will expose the key in the vault to the baker. The set up of keys and bakers is the same as for the simpler examples above. The baker needs to be setup for baking with the key as supplied by MavSeal.
 
 ```bash!
 server:
@@ -433,16 +433,16 @@ mavryk:
       generic:
         - transaction
 ```
-Here `tz2PgBeeL6ddBuejPDs26iYExRchEn3K6ZXp` is the key returned by MavSign when you run `./mavsign-cli list -c google.yaml`.
+Here `tz2PgBeeL6ddBuejPDs26iYExRchEn3K6ZXp` is the key returned by MavSeal when you run `./mavseal-cli list -c google.yaml`.
 
 The vault should be active when listed:
 
 ```bash
-./mavsign-cli list -c google.yaml
+./mavseal-cli list -c google.yaml
 INFO[0000] Initializing vault                            vault=cloudkms vault_name=gcp
 Public Key Hash:    tz2PgBeeL6ddBuejPDs26iYExRchEn3K6ZXp
 Vault:              CloudKMS
-ID:                 projects/mavsign-testing/locations/northamerica-northeast2/keyRings/googlebaker/cryptoKeys/baker/cryptoKeyVersions/1
+ID:                 projects/mavseal-testing/locations/northamerica-northeast2/keyRings/googlebaker/cryptoKeys/baker/cryptoKeyVersions/1
 Active:             true
 Allowed Requests:   [block endorsement generic preendorsement]
 Allowed Operations: [transaction]
@@ -456,9 +456,9 @@ To manage baking with this key using mavkit-client you can import the key:
 
 
 ### 6. Azure Key Vault
-Follow the MavSign Vault installation instructions for Azure Key Vault at https://mavsign.mavryk.org/docs/azure_kms
+Follow the MavSeal Vault installation instructions for Azure Key Vault at https://mavseal.mavryk.org/docs/azure_kms
 
-MavSign will expose the key in the vault to the baker. The set up of keys and bakers is the same as for the simpler examples above. The baker needs to be setup for baking with the key as supplied by MavSign.
+MavSeal will expose the key in the vault to the baker. The set up of keys and bakers is the same as for the simpler examples above. The baker needs to be setup for baking with the key as supplied by MavSeal.
 
 ```bash!
 server:

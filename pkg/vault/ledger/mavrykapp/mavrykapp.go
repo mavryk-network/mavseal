@@ -11,7 +11,7 @@ import (
 
 	"github.com/decred/dcrd/dcrec/secp256k1/v4"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger/ledger"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger/ledger"
 )
 
 // App represents Mavryk application client

@@ -17,7 +17,7 @@ type constCollector struct {
 }
 
 func init() {
-	prometheus.MustRegister(NewBuildInfoCollector("mavsign"))
+	prometheus.MustRegister(NewBuildInfoCollector("mavseal"))
 }
 
 // NewBuildInfoCollector returns a collector collecting a single metric "go_build_info"

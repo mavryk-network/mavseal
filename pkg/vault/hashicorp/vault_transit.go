@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	"github.com/hashicorp/vault/api"
 )
 

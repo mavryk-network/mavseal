@@ -5,7 +5,7 @@ import (
 
 	"github.com/mavryk-network/mavbingo/v2/b58"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v3"
 )
@@ -30,7 +30,7 @@ var testCases = []testCase{
 	{
 		title: "Valid",
 		src: `---
-base_dir: $HOME/.mavsign
+base_dir: $HOME/.mavseal
 server:
   address: :6732
   utility_address: :9583
@@ -39,7 +39,7 @@ vaults:
   kms:
     driver: cloudkms
     config:
-      project: mavsign
+      project: mavseal
       location: europe-north1
       key_ring: hsm-ring
 
@@ -56,7 +56,7 @@ mavryk:
       endorsement:
 `,
 		expect: &Config{
-			BaseDir: "$HOME/.mavsign",
+			BaseDir: "$HOME/.mavseal",
 			Server: ServerConfig{
 				Address:        ":6732",
 				UtilityAddress: ":9583",
@@ -78,7 +78,7 @@ mavryk:
 							{
 								Kind:   8,
 								Tag:    "!!str",
-								Value:  "mavsign",
+								Value:  "mavseal",
 								Line:   11,
 								Column: 16,
 							},
@@ -138,7 +138,7 @@ mavryk:
 	{
 		title: "InvalidBase58",
 		src: `---
-base_dir: $HOME/.mavsign
+base_dir: $HOME/.mavseal
 server:
   address: :6732
   utility_address: :9583
@@ -147,7 +147,7 @@ vaults:
   kms:
     driver: cloudkms
     config:
-      project: mavsign
+      project: mavseal
       location: europe-north1
       key_ring: hsm-ring
 
@@ -159,7 +159,7 @@ mavryk:
 	{
 		title: "InvalidType",
 		src: `---
-base_dir: $HOME/.mavsign
+base_dir: $HOME/.mavseal
 server:
   address: :6732
   utility_address: :9583
@@ -168,7 +168,7 @@ vaults:
   kms:
     driver: cloudkms
     config:
-      project: mavsign
+      project: mavseal
       location: europe-north1
       key_ring: hsm-ring
 
@@ -188,7 +188,7 @@ vaults:
   kms:
     driver: cloudkms
     config:
-      project: mavsign
+      project: mavseal
       location: europe-north1
       key_ring: hsm-ring
 
@@ -226,7 +226,7 @@ mavryk:
 							{
 								Kind:   8,
 								Tag:    "!!str",
-								Value:  "mavsign",
+								Value:  "mavseal",
 								Line:   10,
 								Column: 16,
 							},
@@ -287,7 +287,7 @@ mavryk:
 	{
 		title: "InvalidAddress",
 		src: `---
-base_dir: $HOME/.mavsign
+base_dir: $HOME/.mavseal
 server:
   address: xxxx
   utility_address: :9583
@@ -296,7 +296,7 @@ vaults:
   kms:
     driver: cloudkms
     config:
-      project: mavsign
+      project: mavseal
       location: europe-north1
       key_ring: hsm-ring
 
@@ -313,7 +313,7 @@ mavryk:
       endorsement:
 `,
 		expect: &Config{
-			BaseDir: "$HOME/.mavsign",
+			BaseDir: "$HOME/.mavseal",
 			Server: ServerConfig{
 				Address:        "xxxx",
 				UtilityAddress: ":9583",
@@ -335,7 +335,7 @@ mavryk:
 							{
 								Kind:   8,
 								Tag:    "!!str",
-								Value:  "mavsign",
+								Value:  "mavseal",
 								Line:   11,
 								Column: 16,
 							},
@@ -396,7 +396,7 @@ mavryk:
 	{
 		title: "EmptyVaultData",
 		src: `---
-base_dir: $HOME/.mavsign
+base_dir: $HOME/.mavseal
 server:
   address: :6732
   utility_address: :9583
@@ -417,7 +417,7 @@ mavryk:
       endorsement:
 `,
 		expect: &Config{
-			BaseDir: "$HOME/.mavsign",
+			BaseDir: "$HOME/.mavseal",
 			Server: ServerConfig{
 				Address:        ":6732",
 				UtilityAddress: ":9583",

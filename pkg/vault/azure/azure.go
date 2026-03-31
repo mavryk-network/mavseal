@@ -17,12 +17,12 @@ import (
 
 	"github.com/decred/dcrd/dcrec/secp256k1/v4"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/utils"
-	"github.com/mavryk-network/mavsign/pkg/vault"
-	"github.com/mavryk-network/mavsign/pkg/vault/azure/auth"
-	"github.com/mavryk-network/mavsign/pkg/vault/azure/jwk"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/utils"
+	"github.com/mavryk-network/mavseal/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault/azure/auth"
+	"github.com/mavryk-network/mavseal/pkg/vault/azure/jwk"
 	"github.com/segmentio/ksuid"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
@@ -309,7 +309,7 @@ func (v *Vault) Import(ctx context.Context, priv crypt.PrivateKey, opt utils.Opt
 		return nil, fmt.Errorf("(Azure/%s): %w", v.config.Vault, err)
 	}
 	if !ok {
-		keyName = "mavsign-imported-" + ksuid.New().String()
+		keyName = "mavseal-imported-" + ksuid.New().String()
 	}
 
 	ecdsaKey, ok := priv.(*crypt.ECDSAPrivateKey)

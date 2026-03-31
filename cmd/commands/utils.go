@@ -5,8 +5,8 @@ import (
 	"io"
 	"text/template"
 
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 )
 
 const listTemplateSrc = `{{range . -}}
@@ -32,7 +32,7 @@ var (
 	}).Parse(listTemplateSrc))
 )
 
-func listKeys(s *mavsign.MavSign, w io.Writer, ctx context.Context) error {
+func listKeys(s *mavseal.MavSeal, w io.Writer, ctx context.Context) error {
 	keys, err := s.ListPublicKeys(ctx)
 	if err != nil {
 		return err

@@ -12,8 +12,8 @@ import (
 	"github.com/ecadlabs/go-pkcs11/pkcs11"
 	"github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 )

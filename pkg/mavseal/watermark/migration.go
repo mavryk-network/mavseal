@@ -10,8 +10,8 @@ import (
 
 	mv "github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/b58"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/request"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/request"
 )
 
 type v0KindMap map[string]v0WatermarkMap

@@ -1,4 +1,4 @@
-package mavsign
+package mavseal
 
 import (
 	"encoding/json"

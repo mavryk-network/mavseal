@@ -8,7 +8,7 @@ title: AWSKMS
 
 Create an asymmetric key with usage as "sign and verify" in your AWS account.
 
-Search for IAM and create a user with "Programmatic access" for MavSign to access the key resources. Save the details at the end which will be given only once on creation of the user.
+Search for IAM and create a user with "Programmatic access" for MavSeal to access the key resources. Save the details at the end which will be given only once on creation of the user.
 
 ## AWS KMS backend
 
@@ -50,9 +50,9 @@ To generate a new private key withing AWS, you must:
     - Single Region
   - Ensure that the users who will need to access the key are added to the usage permissions list and create
 
-## Example Configuration for the AWS KMS vault in MavSign
+## Example Configuration for the AWS KMS vault in MavSeal
 
-This example shows a MavSign vault configuration for AWS KMS. Text in `{}` must be replaced.
+This example shows a MavSeal vault configuration for AWS KMS. Text in `{}` must be replaced.
 
 
 ```
@@ -84,21 +84,21 @@ mavryk:
       - *authorized_key
 ```
 
-### MavSign-cli features for AWS KMS
+### MavSeal-cli features for AWS KMS
 
-Once you have MavSign binaries and the appropriate AWS pieces set up, it is time to test the connection between the hardware and MavSign. After completing the setup for the key and MavSign we can test it by using the mavsign-cli command `list`. Here is an example:
+Once you have MavSeal binaries and the appropriate AWS pieces set up, it is time to test the connection between the hardware and MavSeal. After completing the setup for the key and MavSeal we can test it by using the mavseal-cli command `list`. Here is an example:
 ```
-$ ./mavsign-cli list --help
+$ ./mavseal-cli list --help
 List public keys
 Usage:
-  mavsign-cli list [flags]
+  mavseal-cli list [flags]
 Flags:
   -h, --help   help for list
 Global Flags:
-  -c, --config string   Config file path (default "/etc/mavsign.yaml")
+  -c, --config string   Config file path (default "/etc/mavseal.yaml")
       --log string      Log level: [error, warn, info, debug, trace] (default "info")
       
-$ ./mavsign-cli list -c mavsign.yaml
+$ ./mavseal-cli list -c mavseal.yaml
 INFO[0000] Initializing vault                            vault=awskms vault_name=awskms
 Public Key Hash:    tz3WxgnteyTpM5YzJSTFFtnNYB8Du31gf3bQ
 Vault:              AWSKMS
@@ -108,8 +108,8 @@ Allowed Operations: [block endorsement generic]
 Allowed Kinds:      [delegation endorsement reveal transaction]
 ```
 
-### Final MavSign Verification Test
-We can finally see that all the pieces are working together by curling the MavSign service and asking for the public key associated with our active public key hash:
+### Final MavSeal Verification Test
+We can finally see that all the pieces are working together by curling the MavSeal service and asking for the public key associated with our active public key hash:
 `curl http://localhost:6732/keys/tz3WxgnteyTpM5YzJSTFFtnNYB8Du31gf3bQ`
 
 The output can be verified by checking the public_keys file in the .mavryk-client directory

@@ -15,9 +15,9 @@ import (
 	mv "github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
 	"github.com/mavryk-network/mavbingo/v2/protocol"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/request"
-	awskms "github.com/mavryk-network/mavsign/pkg/vault/aws"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/request"
+	awskms "github.com/mavryk-network/mavseal/pkg/vault/aws"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 )

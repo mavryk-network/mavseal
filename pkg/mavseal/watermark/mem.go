@@ -7,8 +7,8 @@ import (
 	mv "github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
 	"github.com/mavryk-network/mavbingo/v2/protocol"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/request"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/request"
 	"gopkg.in/yaml.v3"
 )
 

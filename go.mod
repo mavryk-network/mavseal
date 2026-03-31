@@ -1,4 +1,4 @@
-module github.com/mavryk-network/mavsign
+module github.com/mavryk-network/mavseal
 
 go 1.24
 

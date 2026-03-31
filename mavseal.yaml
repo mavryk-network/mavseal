@@ -21,14 +21,14 @@ vaults:
     driver: cloudkms
     config:
       # See backend specific documentation
-      project: mavsign
+      project: mavseal
       location: europe-north1
       key_ring: hsm-ring
   azure:
     driver: azure
     config:
       # See backend specific documentation
-      vault: https://mavsign.vault.azure.net/
+      vault: https://mavseal.vault.azure.net/
       tenant_id: cf5dd0ba-d3a3-4f3f-a688-06d12672f8ed
       client_id: 5d29a974-edd0-4659-b933-7d9c56726649
       client_pkcs12_certificate: principal.pfx
@@ -57,9 +57,9 @@ mavryk:
   # This example does not specifiy a policy, and be default will allow signing of "block" and "endorsement" operations only.
   mv19VEmW4zEELeQiBqLHH4RHgysYuLe4P6xt:
 
-  # This example specifies which operations and kinds MavSign will sign, and logs payloads.
+  # This example specifies which operations and kinds MavSeal will sign, and logs payloads.
   mv3CXEtMtTwnnroNp3fxkWsBV1M5xP9uMCmm:
-    # Setting `log_payloads` to `true` will cause MavSign to log operation
+    # Setting `log_payloads` to `true` will cause MavSeal to log operation
     # payloads to `stdout`. This may be desirable for audit and investigative
     # purposes.
     log_payloads: true

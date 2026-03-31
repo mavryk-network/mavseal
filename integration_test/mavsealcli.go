@@ -4,9 +4,9 @@ import (
 	"os/exec"
 )
 
-func MavSignCli(arg ...string) ([]byte, error) {
+func MavSealCli(arg ...string) ([]byte, error) {
 	var cmd = "docker"
-	var args = []string{"exec", "mavsign", "mavsign-cli"}
+	var args = []string{"exec", "mavseal", "mavseal-cli"}
 	args = append(args, arg...)
 	return exec.Command(cmd, args...).CombinedOutput()
 }

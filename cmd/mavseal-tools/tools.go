@@ -8,8 +8,8 @@ import (
 
 func main() {
 	rootCmd := &cobra.Command{
-		Use:   "mavsign-tools",
-		Short: "Various MavSign tools",
+		Use:   "mavseal-tools",
+		Short: "Various MavSeal tools",
 	}
 
 	rootCmd.AddCommand(NewGenKeyCommand())

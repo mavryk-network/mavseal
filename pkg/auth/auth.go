@@ -7,7 +7,7 @@ import (
 
 	"github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/errors"
 )
 
 // ErrPublicKeyNotFound is returned by AuthorizedKeysStorage.GetPublicKey if authorized key is not found

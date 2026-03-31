@@ -1,25 +1,25 @@
 ---
 id: architecture
-title: MavSign Architecture
-sidebar_label: MavSign Architecture
+title: MavSeal Architecture
+sidebar_label: MavSeal Architecture
 ---
 
-# MavSign Architecture  
+# MavSeal Architecture  
 
-MavSign is an excellent solution for secure and reliable remote signing in Mavryk Blockchain cases. With easy-to-use configuration options, users can set up vaults and policies to ensure that only authorized operations are signed. MavSign also supports a variety of hardware-based and cloud-based HSMs, such as [AWS KMS](https://aws.amazon.com/kms/) and [YubiHSM](https://www.yubico.com/), to protect cryptographic keys.
+MavSeal is an excellent solution for secure and reliable remote signing in Mavryk Blockchain cases. With easy-to-use configuration options, users can set up vaults and policies to ensure that only authorized operations are signed. MavSeal also supports a variety of hardware-based and cloud-based HSMs, such as [AWS KMS](https://aws.amazon.com/kms/) and [YubiHSM](https://www.yubico.com/), to protect cryptographic keys.
 
-Using MavSign, users can securely store their secret keys and control which operations can be signed, reducing the risk of losing or having their keys stolen. MavSign also allows users to sign transactions on hardware not connected to the internet, providing an additional layer of security.
+Using MavSeal, users can securely store their secret keys and control which operations can be signed, reducing the risk of losing or having their keys stolen. MavSeal also allows users to sign transactions on hardware not connected to the internet, providing an additional layer of security.
 
-### 1. MavSign System Context
+### 1. MavSeal System Context
 
-The diagram demonstrated the overall high level MavSign system and includes the MavSign user, responsible for setting up the system's configuration, and the client software system, which submits requests to the Mavryk API. The diagram also shows various vaults, such as AWS KMS and YubiHSM, which MavSign uses to store cryptographic keys, and the Prometheus service, which pulls and aggregates metrics data.
+The diagram demonstrated the overall high level MavSeal system and includes the MavSeal user, responsible for setting up the system's configuration, and the client software system, which submits requests to the Mavryk API. The diagram also shows various vaults, such as AWS KMS and YubiHSM, which MavSeal uses to store cryptographic keys, and the Prometheus service, which pulls and aggregates metrics data.
 ```mermaid
 flowchart TD
-User["MavSign User Setup
+User["MavSeal User Setup
 [CONFIG]
 Bakers or Institutions looking\n to enforce signing policies"]
 
-S["MavSign
+S["MavSeal
 [Software System]
 Provides signing options for\n cloud-based or hardware-based HSMs"]
 
@@ -49,11 +49,11 @@ class S focusSystem
 class OC,V,PS supportingSystem
 
 ```
-### 2. MavSign Container Model
-The MavSign container diagram shows the different elements of the MavSign system, including MavSign as the central container, with various supporting software systems surrounding it. These supporting systems include client software for submitting requests to the Mavryk API, the Prometheus service for storing metrics data, and various hardware-based and cloud-based HSMs for protecting cryptographic keys. The diagram also shows MavSign's different vaults to store cryptographic keys, such as AWS KMS and YubiHSM. 
+### 2. MavSeal Container Model
+The MavSeal container diagram shows the different elements of the MavSeal system, including MavSeal as the central container, with various supporting software systems surrounding it. These supporting systems include client software for submitting requests to the Mavryk API, the Prometheus service for storing metrics data, and various hardware-based and cloud-based HSMs for protecting cryptographic keys. The diagram also shows MavSeal's different vaults to store cryptographic keys, such as AWS KMS and YubiHSM. 
 ```mermaid
 flowchart TD
-User["MavSign User
+User["MavSeal User
 [Person]
 Baker or Institution operation requests with key security"]
 
@@ -78,7 +78,7 @@ ML["HTTP Service
 captures metric data"]
 
 SIG["Service 
-[MAVSIGN SERVICE]
+[MAVSEAL SERVICE]
 check policy and sign"]
 
 Y["Hardware Security Module
@@ -111,7 +111,7 @@ User-- "configures<br>[FILE]"-->CFG
 OC-- "Get Post <br>[HTTP]"-->SL
 ML-- "Get<br>[HTTP]" -->P
 
-subgraph MavSign[MavSign]
+subgraph MavSeal[MavSeal]
 SIG--"exposes metrics to<br>[JSON]" -->ML
 CFG-- "governs<br>[CODE]"-->SIG
 SL-- "informs<br>[CODE]" -->SIG
@@ -137,27 +137,27 @@ class SIG,POL,SL,ML,CFG container
 class C cloud
 class P,AWS,G,A,L,LS,Y,T,OC supportingSystem
 ```
-### 3. MavSign Component Model 
+### 3. MavSeal Component Model 
 A sequence diagram is a way to express the behaviour of the underlying code in a software system. It shows the interactions between different system components over time, highlighting how the system behaves and responds to different inputs. Using a sequence diagram, developers can better understand the flow of data and control within the system and identify potential issues or areas for improvement.
 
-The sequence diagram for the MavSign remote signer application shows the behaviour of the underlying code in the system. It highlights how the different components of the system interact with one another over time, showing the flow of data and control within the system. Using a sequence diagram, developers can better understand how the system behaves and identify potential issues or areas for improvement.
+The sequence diagram for the MavSeal remote signer application shows the behaviour of the underlying code in the system. It highlights how the different components of the system interact with one another over time, showing the flow of data and control within the system. Using a sequence diagram, developers can better understand how the system behaves and identify potential issues or areas for improvement.
 ```mermaid
 sequenceDiagram
 autonumber
 actor Client
-participant MavSign
+participant MavSeal
 participant Signature service
 participant Metrics server
 participant Vault
 
-MavSign->>+MavSign: RootCmd
-MavSign->>+MavSign: read config
-MavSign->>+MavSign: Register Vaults (Yubikey/Azure/CloudKMS)
-MavSign->>+MavSign: Initialize Vault (Yubikey/Azure/CloudKMS)
-MavSign->>+MavSign: ServeCmd
+MavSeal->>+MavSeal: RootCmd
+MavSeal->>+MavSeal: read config
+MavSeal->>+MavSeal: Register Vaults (Yubikey/Azure/CloudKMS)
+MavSeal->>+MavSeal: Initialize Vault (Yubikey/Azure/CloudKMS)
+MavSeal->>+MavSeal: ServeCmd
 
-MavSign->>+Signature service: Start service
-MavSign->>+Metrics server: Start service
+MavSeal->>+Signature service: Start service
+MavSeal->>+Metrics server: Start service
 
 
 Client->>+Signature service: GET /authorized_keys 
@@ -217,7 +217,7 @@ sign the operation request"]
 SK["Secret Key
 [Bytes]
 alice_sk.hex"]
-MAVSIGN["MavSign Signing Listener
+MAVSEAL["MavSeal Signing Listener
 [HTTP Service]
 captures operation signing requests"]
 ST["Signed Transaction
@@ -232,8 +232,8 @@ TN-- "Serialize" -->TB
 TB-- "Add" -->W
 W-- "Hash" -->B
 B-- "Send operation.hex" -->ED
-SK-- "from vault" -->MAVSIGN
-MAVSIGN-- "Send alice_sk.hex" -->ED
+SK-- "from vault" -->MAVSEAL
+MAVSEAL-- "Send alice_sk.hex" -->ED
 ED--"Hash " -->ST
 ST-- "Injection RPC<br>
 ../injection/operation?chain=main<br> --data $(cat operation.hex)$(cat signature.hex)" -->TN

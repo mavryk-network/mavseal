@@ -2,26 +2,26 @@ GIT_REVISION := $(shell git rev-parse HEAD)
 GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 CONTAINER_TAG ?= $(shell git branch --show-current)
 
-COLLECTOR_PKG = github.com/mavryk-network/mavsign/pkg/metrics
+COLLECTOR_PKG = github.com/mavryk-network/mavseal/pkg/metrics
 
-PACKAGE_NAME          := github.com/mavryk-network/mavsign
-GOLANG_CROSS_VERSION  ?= v1.21.0
+PACKAGE_NAME          := github.com/mavryk-network/mavseal
+GOLANG_CROSS_VERSION  ?= v1.24.0
 
-all: mavsign mavsign-cli
+all: mavseal mavseal-cli
 
 # build is controlled by Go build system, so mark phony to ignore file timestamps
-.PHONY: mavsign mavsign-cli
-mavsign:
-	CGO_ENABLED=1 go build -ldflags "-X $(COLLECTOR_PKG).GitRevision=$(GIT_REVISION) -X $(COLLECTOR_PKG).GitBranch=$(GIT_BRANCH)" ./cmd/mavsign
-mavsign-cli:
-	CGO_ENABLED=1 go build -ldflags "-X $(COLLECTOR_PKG).GitRevision=$(GIT_REVISION) -X $(COLLECTOR_PKG).GitBranch=$(GIT_BRANCH)" ./cmd/mavsign-cli
+.PHONY: mavseal mavseal-cli
+mavseal:
+	CGO_ENABLED=1 go build -ldflags "-X $(COLLECTOR_PKG).GitRevision=$(GIT_REVISION) -X $(COLLECTOR_PKG).GitBranch=$(GIT_BRANCH)" ./cmd/mavseal
+mavseal-cli:
+	CGO_ENABLED=1 go build -ldflags "-X $(COLLECTOR_PKG).GitRevision=$(GIT_REVISION) -X $(COLLECTOR_PKG).GitBranch=$(GIT_BRANCH)" ./cmd/mavseal-cli
 
 .PHONY: container
-container: mavsign mavsign-cli
-	docker build -t mavrykdynamics/mavsign:$(CONTAINER_TAG) -f goreleaser.dockerfile .
+container: mavseal mavseal-cli
+	docker build -t mavrykdynamics/mavseal:$(CONTAINER_TAG) -f goreleaser.dockerfile .
 
 clean:
-	rm mavsign mavsign-cli
+	rm mavseal mavseal-cli
 
 .PHONY: release-dry-run
 release-dry-run:
@@ -36,7 +36,8 @@ release-dry-run:
 		ghcr.io/goreleaser/goreleaser-cross:${GOLANG_CROSS_VERSION} \
 		release \
 		--rm-dist \
-		--snapshot
+		--snapshot \
+		--skip-docker
 
 .PHONY: release-preview
 release-preview:

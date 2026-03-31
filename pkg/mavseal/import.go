@@ -1,4 +1,4 @@
-package mavsign
+package mavseal
 
 import (
 	"context"
@@ -6,13 +6,13 @@ import (
 
 	"github.com/mavryk-network/mavbingo/v2/b58"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/utils"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/utils"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	log "github.com/sirupsen/logrus"
 )
 
 // Import a keyPair inside the vault
-func (s *MavSign) Import(ctx context.Context, importerName string, secretKey string, passCB func() ([]byte, error), opt utils.Options) (*PublicKey, error) {
+func (s *MavSeal) Import(ctx context.Context, importerName string, secretKey string, passCB func() ([]byte, error), opt utils.Options) (*PublicKey, error) {
 	v, ok := s.vaults[importerName]
 	if !ok {
 		return nil, fmt.Errorf("import: vault %s is not found", importerName)

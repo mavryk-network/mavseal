@@ -11,24 +11,24 @@ import (
 
 	mv "github.com/mavryk-network/mavbingo/v2"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/server"
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/server"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	"github.com/stretchr/testify/require"
 )
 
 type signerMock struct {
 	SignResponse      crypt.Signature
 	SignError         error
-	PublicKeyResponse *mavsign.PublicKey
+	PublicKeyResponse *mavseal.PublicKey
 	PublicKeyError    error
 }
 
-func (c *signerMock) Sign(ctx context.Context, req *mavsign.SignRequest) (crypt.Signature, error) {
+func (c *signerMock) Sign(ctx context.Context, req *mavseal.SignRequest) (crypt.Signature, error) {
 	return c.SignResponse, c.SignError
 }
 
-func (c *signerMock) GetPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash) (*mavsign.PublicKey, error) {
+func (c *signerMock) GetPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash) (*mavseal.PublicKey, error) {
 	if c.PublicKeyResponse == nil && c.PublicKeyError == nil {
 		return nil, errors.New("key not found")
 	}
@@ -146,7 +146,7 @@ func TestGetPublicKey(t *testing.T) {
 	type testCase struct {
 		Name       string
 		StatusCode int
-		Response   *mavsign.PublicKey
+		Response   *mavseal.PublicKey
 		Error      error
 		Expected   string
 	}
@@ -169,7 +169,7 @@ func TestGetPublicKey(t *testing.T) {
 		{
 			Name:       "Normal",
 			StatusCode: http.StatusOK,
-			Response:   &mavsign.PublicKey{KeyReference: &mockRef{mustPk(&mv.Ed25519PublicKey{1, 2, 3})}},
+			Response:   &mavseal.PublicKey{KeyReference: &mockRef{mustPk(&mv.Ed25519PublicKey{1, 2, 3})}},
 			Expected:   "{\"public_key\":\"edpktefgU4dfKqN1rZVBwBP8ZueBoJZfhDS3kHPSbo8c3aGPrMrunt\"}\n",
 		},
 	}

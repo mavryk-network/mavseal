@@ -198,7 +198,7 @@ function Footer() {
 				)}
 			</div>
 			<div className='footer__copyright'>
-				{`Copyright © ${new Date().getFullYear()} ECAD Labs - Apache License 2.0`}
+				{`Copyright © ${new Date().getFullYear()} Mavryk Network - Apache License 2.0`}
 			</div>
 		</footer>
 	);

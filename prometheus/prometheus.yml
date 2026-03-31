@@ -11,7 +11,7 @@ scrape_configs:
          - targets: ['localhost:9090']
 
 
-  - job_name: 'mavsign'
+  - job_name: 'mavseal'
     scrape_interval: 5s
     static_configs:
-         - targets: ['mavsign:9583']
+         - targets: ['mavseal:9583']

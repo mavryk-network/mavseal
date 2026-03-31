@@ -24,8 +24,8 @@ const (
 	port      = "6732"
 	pkh       = "mv1PzDyjNPB9Cu2Wo97oe8SZVLwjdPr5KVUZ"
 	url       = protocol + host + ":" + port + "/keys/" + pkh
-	dir       = "/var/lib/mavsign/watermark_v2/"
-	container = "mavsign"
+	dir       = "/var/lib/mavseal/watermark_v2/"
+	container = "mavseal"
 )
 
 type functionalTestCase struct {
@@ -149,12 +149,12 @@ var functionalTestCases = []functionalTestCase{
 func TestWatermark(t *testing.T) {
 	for _, test := range functionalTestCases {
 		remove_watermark_files()
-		restart_mavsign()
+		restart_mavseal()
 		t.Run(test.title, func(t *testing.T) {
 			if test.watermarkBefore != nil {
 				mkdir()
 				write_watermark_file(test.watermarkBefore, test.chainID+".json")
-				restart_mavsign()
+				restart_mavseal()
 			}
 			for i, request := range test.signRequestBodies {
 				code, message := RequestSignature(pkh, request)
@@ -182,7 +182,7 @@ func TestWatermark(t *testing.T) {
 		})
 	}
 	remove_watermark_files()
-	restart_mavsign()
+	restart_mavseal()
 }
 
 type concurrencyTestCase struct {
@@ -233,12 +233,12 @@ var (
 func TestWatermarkConcurrency(t *testing.T) {
 	for _, test := range concurrencyTestCases {
 		remove_watermark_files()
-		restart_mavsign()
+		restart_mavseal()
 		t.Run(test.title, func(t *testing.T) {
 			mkdir()
 			if test.watermarkBefore != nil {
 				write_watermark_file(test.watermarkBefore, test.chainID+".json")
-				restart_mavsign()
+				restart_mavseal()
 			}
 			n := len(test.signRequestBodies)
 			wg.Add(n)
@@ -270,7 +270,7 @@ func TestWatermarkConcurrency(t *testing.T) {
 		})
 	}
 	remove_watermark_files()
-	restart_mavsign()
+	restart_mavseal()
 }
 
 func request_sign_concurrent(request string) {

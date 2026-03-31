@@ -7,10 +7,10 @@ import (
 	"io/ioutil"
 	"strings"
 
-	config "github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/vault"
-	"github.com/mavryk-network/mavsign/pkg/vault/memory"
+	config "github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault/memory"
 	"gopkg.in/yaml.v3"
 )
 

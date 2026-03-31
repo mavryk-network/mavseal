@@ -6,7 +6,7 @@ import (
 
 	"github.com/mavryk-network/mavbingo/v2/b58"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
 	"github.com/spf13/cobra"
 )
 
@@ -31,12 +31,12 @@ func NewAuthRequestCommand() *cobra.Command {
 				return err
 			}
 
-			req := mavsign.SignRequest{
+			req := mavseal.SignRequest{
 				Message:       msg,
 				PublicKeyHash: pkh,
 			}
 
-			data, err := mavsign.AuthenticatedBytesToSign(&req)
+			data, err := mavseal.AuthenticatedBytesToSign(&req)
 			if err != nil {
 				return err
 			}

@@ -2,7 +2,7 @@
 
 protocol=$1
 
-export opstest='opstest,edpkvSkEEfVMKvAv87env4kMNwLfuLYe7y7wXqgfvrwJwhJJpmL1GB,mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v,http://mavsign:6732/mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v'
+export opstest='opstest,edpkvSkEEfVMKvAv87env4kMNwLfuLYe7y7wXqgfvrwJwhJJpmL1GB,mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v,http://mavseal:6732/mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v'
 
 root_path=/tmp/mini-box
 

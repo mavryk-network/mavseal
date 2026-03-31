@@ -12,8 +12,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/kms/types"
 	"github.com/aws/smithy-go"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/cryptoutils"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/cryptoutils"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 
 	"gopkg.in/yaml.v3"
 )

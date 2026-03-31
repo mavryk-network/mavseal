@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/cryptoutils"
+	"github.com/mavryk-network/mavseal/pkg/cryptoutils"
 	yaml "gopkg.in/yaml.v3"
 )
 

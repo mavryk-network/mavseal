@@ -17,7 +17,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 # Add CloudHSM to PATH
 ENV PATH="/opt/cloudhsm/bin:${PATH}"
 
-COPY ./mavsign /bin
-COPY ./mavsign-cli /bin
+COPY ./mavseal /bin
+COPY ./mavseal-cli /bin
 
-ENTRYPOINT ["/bin/mavsign"]
+ENTRYPOINT ["/bin/mavseal"]

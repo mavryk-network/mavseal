@@ -18,10 +18,10 @@ import (
 	"github.com/certusone/yubihsm-go/connector"
 	"github.com/decred/dcrd/dcrec/secp256k1/v4"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/utils"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/utils"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	"gopkg.in/yaml.v3"
 )
 
@@ -308,7 +308,7 @@ func (h *HSM) Import(ctx context.Context, pk crypt.PrivateKey, opt utils.Options
 		return nil, fmt.Errorf("(YubiHSM/%s): %w", h.conf.Address, err)
 	}
 	if !ok {
-		label = fmt.Sprintf("mavsign-%s-%d", typ, time.Now().Unix())
+		label = fmt.Sprintf("mavseal-%s-%d", typ, time.Now().Unix())
 	}
 
 	command, err := commands.CreatePutAsymmetricKeyCommand(0, []byte(label), domains, caps, alg, p, nil)
