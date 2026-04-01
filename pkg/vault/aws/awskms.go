@@ -88,6 +88,7 @@ func (i *awsKMSIterator) Next() (key vault.KeyReference, err error) {
 			if err != nil {
 				return nil, err
 			}
+			continue
 		}
 
 		key, err = i.v.getPublicKey(i.ctx, i.lko.Keys[i.index].KeyId)
@@ -97,7 +98,10 @@ func (i *awsKMSIterator) Next() (key vault.KeyReference, err error) {
 		if err == nil {
 			return key, nil
 		} else if errors.As(err, &kmserr) {
-			if kmserr.ErrorCode() != "AccessDeniedException" {
+			switch kmserr.ErrorCode() {
+			case "AccessDeniedException", "UnsupportedOperationException":
+				// skip: no access or key type doesn't support GetPublicKey (e.g. symmetric keys)
+			default:
 				return nil, err
 			}
 		} else if err != crypt.ErrUnsupportedKeyType {
