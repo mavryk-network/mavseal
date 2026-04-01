@@ -241,8 +241,8 @@ dockers:
       - mavseal
       - mavseal-cli
   - image_templates:
-    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavrykdynamics/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-amd64'
-    - '{{ if not .IsSnapshot }}mavrykdynamics/mavseal:latest-amd64{{ end }}'
+    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-amd64'
+    - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-amd64{{ end }}'
     dockerfile: goreleaser.dockerfile
     use: buildx
     build_flag_templates:
@@ -254,8 +254,8 @@ dockers:
     - "--label=org.opencontainers.image.source={{.GitURL}}"
     - "--platform=linux/amd64"
   - image_templates:
-    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavrykdynamics/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-arm64'
-    - '{{ if not .IsSnapshot }}mavrykdynamics/mavseal:latest-arm64{{ end }}'
+    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-arm64'
+    - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-arm64{{ end }}'
     dockerfile: goreleaser.dockerfile
     use: buildx
     build_flag_templates:
@@ -268,8 +268,8 @@ dockers:
     - "--platform=linux/arm64"
     goarch: arm64
   - image_templates:
-    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavrykdynamics/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-armv7'
-    - '{{ if not .IsSnapshot }}mavrykdynamics/mavseal:latest-armv7{{ end }}'
+    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-armv7'
+    - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-armv7{{ end }}'
     dockerfile: goreleaser.dockerfile
     use: buildx
     build_flag_templates:
