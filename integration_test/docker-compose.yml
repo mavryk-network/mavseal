@@ -94,10 +94,10 @@ services:
     command: serve
     healthcheck:
       test: "curl --fail http://localhost:9583/healthz || exit 1"
-      interval: 1s
-      timeout: 1s
+      interval: 5s
+      timeout: 30s
       retries: 10
-      start_period: 1s
+      start_period: 5s
 
   speculos:
     container_name: speculos

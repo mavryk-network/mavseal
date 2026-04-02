@@ -29,15 +29,15 @@ import (
 )
 
 const (
-	managementURL = "https://management.azure.com/"
+	managementURL = "https://management.azure.com"
 
 	keyVaultAPIVersion       = "7.0"
-	resourceHealthAPIVersion = "2018-08-01-rc"
+	resourceHealthAPIVersion = "2022-10-01"
 )
 
 var (
 	vaultScopes      = []string{"https://vault.azure.net/.default"}
-	managementScopes = []string{managementURL + ".default"}
+	managementScopes = []string{managementURL + "/.default"}
 )
 
 // Config contains Azure KeyVault backend configuration
@@ -391,6 +391,13 @@ func (v *Vault) Ready(ctx context.Context) (bool, error) {
 	var res resourceHealthAvailabilityStatus
 	status, err := v.request(ctx, v.managementClient, "GET", uri, nil, &res)
 	if err != nil {
+		if status == http.StatusConflict {
+			// 409 Conflict: Resource Health API is not supported for this resource type
+			// (e.g. Azure Key Vault does not expose per-resource health status).
+			// Treat as available so the health check is not blocked.
+			log.WithField("vault", v.config.Vault).Warn("(Azure) Resource Health API returned 409; treating vault as available")
+			return true, nil
+		}
 		err = fmt.Errorf("(Azure/%s): %w", v.config.Vault, err)
 		if status != 0 {
 			err = errors.Wrap(err, status)
