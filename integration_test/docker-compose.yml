@@ -36,6 +36,9 @@ services:
     environment:
       - block_time=3
     command: sigybox $PROTOCOL
+    depends_on:
+      mavseal:
+        condition: service_healthy
     healthcheck:
       test: "curl --fail http://localhost:20000/chains/main/blocks/head/header || exit 1"
       interval: 10s
