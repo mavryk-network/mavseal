@@ -15,7 +15,7 @@ func TestCliList(t *testing.T) {
 	assert.Nil(t, err)
 	require.Contains(t, string(out), "mv1Hox9jGJg3uSmsv9NTvuK7rMHh25cq44nv")
 	require.Contains(t, string(out), "mv2c6wrWBXebgoBMz5fVCoxKdyYyQoDHdvrL")
-	require.Contains(t, string(out), "tz3Y2TkhTYG6MfPsijGfHFqBYrLCfwYb6HRB")
+	require.Contains(t, string(out), "mv3LPw4HmuZSvwB6s3qWX5XChsCBEKzpzmGF")
 	require.Contains(t, string(out), "mv4jEyAFCa4Cc8cuidAPGm8CfwNAwmmwcWoR")
 }
 
@@ -81,9 +81,9 @@ func TestCliListRequests(t *testing.T) {
 	assert.Nil(t, err)
 	require.Contains(t, string(out), "Possible request types:")
 	require.Contains(t, string(out), "- block")
-	require.Contains(t, string(out), "- endorsement")
+	require.Contains(t, string(out), "- attestation")
 	require.Contains(t, string(out), "- generic")
-	require.Contains(t, string(out), "- preendorsement")
+	require.Contains(t, string(out), "- preattestation")
 }
 
 func TestCliHelp(t *testing.T) {

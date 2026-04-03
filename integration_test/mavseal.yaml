@@ -105,3 +105,8 @@ mavryk:
             generic:
                 - transaction
         log_payloads: true
+    mv4jEyAFCa4Cc8cuidAPGm8CfwNAwmmwcWoR:
+        allow:
+            generic:
+                - transaction
+        log_payloads: true
