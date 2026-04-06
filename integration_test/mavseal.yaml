@@ -22,8 +22,10 @@ mavryk:
         log_payloads: true
     mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v:
         allow:
-            generic:
-                - update_consensus_key
+            block: []
+            endorsement: []
+            generic: []
+            preendorsement: []
         log_payloads: true
     mv1Ds1st3Atpto8tSNg6MFRz76ksbik4JkcF:
         allow:

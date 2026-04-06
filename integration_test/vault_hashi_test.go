@@ -30,6 +30,7 @@ func TestHashiVault(t *testing.T) {
 	c.Vaults["hashicorp"] = &v
 	backup_then_update_config(c)
 	defer restore_config()
+	restart_mavseal()
 
 	pkh := hashiGetMv1()
 	var p MavrykPolicy
@@ -135,15 +136,15 @@ func hashiGetMv1() string {
 	var mv1 string
 	lines := strings.Split(string(out), "\n")
 	for _, line := range lines {
-		if strings.Contains(line, "mv1") {
+		if strings.HasPrefix(strings.TrimSpace(line), "Public Key Hash:") {
 			fields := strings.Fields(line)
 			for _, field := range fields {
-				if strings.Contains(field, "mv1") {
+				if strings.HasPrefix(field, "mv1") {
 					mv1 = field
 				}
 			}
 		}
-		if strings.Contains(line, "HASHICORP_VAULT") {
+		if strings.Contains(line, "Hashicorp") {
 			return mv1
 		}
 	}
