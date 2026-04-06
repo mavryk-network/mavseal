@@ -76,7 +76,8 @@ services:
     networks:
       - ecadnet
     volumes:
-      - ./.watermarks:/var/lib/mavseal
+      - type: tmpfs
+        target: /var/lib/mavseal
       - ./coverage:/opt/coverage
       - ./hashicerts:/opt/hashicerts
     configs:

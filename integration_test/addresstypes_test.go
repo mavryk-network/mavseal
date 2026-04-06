@@ -15,7 +15,7 @@ func TestMv4(t *testing.T) {
 	require.Contains(t, string(out), "Operation successfully injected in the node")
 
 	out, err = MavkitClient("-w", "1", "transfer", "100", "from", "mv4alias", "to", "alice", "--burn-cap", "0.06425")
-	require.NoError(t, err)
+	require.NoError(t, err, "mv4alias transfer output: %s", string(out))
 	require.Contains(t, string(out), "Operation successfully injected in the node")
 }
 

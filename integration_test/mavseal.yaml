@@ -22,44 +22,8 @@ mavryk:
         log_payloads: true
     mv1Dgk11ZRkuwUJTpGYgohPJ2WXq82v6yC7v:
         allow:
-            endorsement: []
             generic:
-                - activate_account
-                - ballot
-                - dal_attestation
-                - dal_publish_slot_header
-                - delegation
-                - double_baking_evidence
-                - double_endorsement_evidence
-                - double_preendorsement_evidence
-                - drain_delegate
-                - endorsement
-                - event
-                - failing_noop
-                - increase_paid_storage
-                - origination
-                - preendorsement
-                - proposals
-                - register_global_constant
-                - reveal
-                - sc_rollup_add_messages
-                - sc_rollup_cement
-                - sc_rollup_execute_outbox_message
-                - sc_rollup_originate
-                - sc_rollup_publish
-                - sc_rollup_recover_bond
-                - sc_rollup_refute
-                - sc_rollup_timeout
-                - seed_nonce_revelation
-                - set_deposits_limit
-                - transaction
-                - transfer_ticket
                 - update_consensus_key
-                - vdf_revelation
-                - zk_rollup_origination
-                - zk_rollup_publish
-                - zk_rollup_update
-            preendorsement: []
         log_payloads: true
     mv1Ds1st3Atpto8tSNg6MFRz76ksbik4JkcF:
         allow:
@@ -100,13 +64,26 @@ mavryk:
                 - preendorsement
             preendorsement: []
         log_payloads: true
+    mv2PkGZNuXasfLM6duD6Z55HaLiNJHWznRDE:
+        allow:
+            generic:
+                - reveal
+                - transaction
+        log_payloads: true
     mv2c6wrWBXebgoBMz5fVCoxKdyYyQoDHdvrL:
         allow:
             generic:
                 - transaction
         log_payloads: true
+    mv3AT8prUhd3Q9T5naE3x4oEDqKRzMFRzv2n:
+        allow:
+            generic:
+                - reveal
+                - transaction
+        log_payloads: true
     mv4jEyAFCa4Cc8cuidAPGm8CfwNAwmmwcWoR:
         allow:
             generic:
+                - reveal
                 - transaction
         log_payloads: true
