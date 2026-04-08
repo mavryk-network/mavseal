@@ -24,7 +24,7 @@ func approve() {
 		if counter > 10 {
 			panic("speculos approver: waiting for test pre-conditions. it's taking too long")
 		}
-		if strings.Contains(getScreenText(), "Operation") {
+		if strings.Contains(getScreenText(), "operation") {
 			break
 		}
 		time.Sleep(time.Second)

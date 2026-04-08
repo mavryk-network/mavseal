@@ -16,8 +16,8 @@
         "key": "edpktfLxRbpLeFjL49Rz2xtBwPaSfdZ7ZL6W3idm2JaMTP93RwmCdo" } },
   { "name": "speculos",
     "value":
-      { "locator": "http://mavseal:6732/mv1Ds1st3Atpto8tSNg6MFRz76ksbik4JkcF",
-        "key": "edpktsKqhvR7kXbRWD7yDgLSD7PZUXvjLqf9SFscXhL52pUStF5nQp" } },
+      { "locator": "http://mavseal:6732/mv1P9qQbvceP562nnjC5WXyLp9qFCRjx6Dzu",
+        "key": "edpkvJkAiBX51stwvZw7jPVuKRty1hnYVPSoKXPSjkjwDhXSSjsy5n" } },
   { "name": "mv2alias",
     "value":
       { "locator": "http://mavseal:6732/mv2c6wrWBXebgoBMz5fVCoxKdyYyQoDHdvrL",
