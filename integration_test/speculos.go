@@ -34,11 +34,11 @@ func approve() {
 	for {
 		counter++
 		if counter > 20 {
-			panic("speculos approver: did not find APPROVE in 20 clicks right")
+			panic("speculos approver: did not find Accept in 20 clicks right")
 		}
 		click("right")
 		time.Sleep(time.Second)
-		if strings.Contains(getScreenText(), "APPROVE") {
+		if strings.Contains(getScreenText(), "Accept") {
 			break
 		}
 	}
