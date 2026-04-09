@@ -30,4 +30,6 @@ dist
 /integration_test/gcp-token.json
 /integration_test/.env.vaults.cicd
 /integration_test/.env.vaults.local
-/integration_test/service-principal.keyintegration_test/mavseal-state/
+/integration_test/service-principal.key
+/integration_test/mavseal-state/*
+!/integration_test/mavseal-state/.gitkeep
