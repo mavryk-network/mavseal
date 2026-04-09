@@ -173,14 +173,17 @@ jobs:
          chmod 777 ./hashicerts;
          docker compose up -d --wait --pull always;
          docker exec mavkit sudo chown -R mavryk /home/mavryk/.mavryk-client;
-         go test -timeout 30m ./...;
+         mkdir -p coverage;
+         go test -cover -timeout 30m ./... -args -test.gocoverdir="$PWD/coverage";
          docker compose kill;
          rm -f gcp-token.json;
          rm -f service-principal.key;
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: integration-test-coverage-env${{ matrix.testenvs }}
           path: ./integration_test/coverage/
+          if-no-files-found: warn
 
   report-coverage:
     needs: integration-tests
