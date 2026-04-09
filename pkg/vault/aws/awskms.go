@@ -12,8 +12,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/kms/types"
 	"github.com/aws/smithy-go"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/cryptoutils"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/cryptoutils"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 
 	"gopkg.in/yaml.v3"
 )
@@ -88,6 +88,7 @@ func (i *awsKMSIterator) Next() (key vault.KeyReference, err error) {
 			if err != nil {
 				return nil, err
 			}
+			continue
 		}
 
 		key, err = i.v.getPublicKey(i.ctx, i.lko.Keys[i.index].KeyId)
@@ -97,7 +98,10 @@ func (i *awsKMSIterator) Next() (key vault.KeyReference, err error) {
 		if err == nil {
 			return key, nil
 		} else if errors.As(err, &kmserr) {
-			if kmserr.ErrorCode() != "AccessDeniedException" {
+			switch kmserr.ErrorCode() {
+			case "AccessDeniedException", "UnsupportedOperationException":
+				// skip: no access or key type doesn't support GetPublicKey (e.g. symmetric keys)
+			default:
 				return nil, err
 			}
 		} else if err != crypt.ErrUnsupportedKeyType {

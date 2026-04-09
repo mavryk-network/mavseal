@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	"github.com/stretchr/testify/require"
 )
 

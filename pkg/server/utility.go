@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/mavryk-network/mavsign/pkg/metrics"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/metrics"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	log "github.com/sirupsen/logrus"
 )
 

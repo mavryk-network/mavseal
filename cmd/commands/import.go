@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"syscall"
 
-	"github.com/mavryk-network/mavsign/pkg/utils"
+	"github.com/mavryk-network/mavseal/pkg/utils"
 	"github.com/spf13/cobra"
 	terminal "golang.org/x/term"
 )
@@ -52,7 +52,7 @@ func NewImportCommand(c *Context) *cobra.Command {
 				return fmt.Errorf("enter a valid secret key")
 			}
 
-			_, err = c.mavsign.Import(c.Context, vaultName, string(key), passCB, options)
+			_, err = c.mavseal.Import(c.Context, vaultName, string(key), passCB, options)
 			if err != nil {
 				return err
 			}

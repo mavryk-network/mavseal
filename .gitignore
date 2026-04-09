@@ -22,11 +22,14 @@ dist
 .release-env
 .env
 .docker-creds
-/mavsign
-/mavsign-cli
+/mavseal
+/mavseal-cli
 .DS_Store
 
 # some integration_tests write secret env var to files
 /integration_test/gcp-token.json
 /integration_test/.env.vaults.cicd
+/integration_test/.env.vaults.local
 /integration_test/service-principal.key
+/integration_test/mavseal-state/*
+!/integration_test/mavseal-state/.gitkeep

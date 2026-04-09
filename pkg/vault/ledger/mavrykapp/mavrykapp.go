@@ -11,7 +11,7 @@ import (
 
 	"github.com/decred/dcrd/dcrec/secp256k1/v4"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger/ledger"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger/ledger"
 )
 
 // App represents Mavryk application client
@@ -129,8 +129,8 @@ func DerivationTypeFromString(str string) (DerivationType, error) {
 	}
 }
 
-// MavrykBIP32Root is a Mavryk BIP32 root key path i.e. 44'/1729'
-var MavrykBIP32Root = BIP32{44 | BIP32H, 1729 | BIP32H}
+// MavrykBIP32Root is a Mavryk BIP32 root key path i.e. 44'/1969'
+var MavrykBIP32Root = BIP32{44 | BIP32H, 1969 | BIP32H}
 
 const (
 	tagCompressed   = 2

@@ -79,11 +79,11 @@ If the whole object is missing then all options will be assumed as **true**
 
 ## Automatic Key Discovery
 
-MavSign can automatically discover and use keys stored in the HSM without manual configuration. This happens when the `keys` field is omitted from configuration. 
+MavSeal can automatically discover and use keys stored in the HSM without manual configuration. This happens when the `keys` field is omitted from configuration. 
 
 How automatic discovery works:
 
-1. MavSign queries the HSM for all PKCS#11 objects representing private keys
+1. MavSeal queries the HSM for all PKCS#11 objects representing private keys
 2. For each private key reference, it attempts to find the matching public key using the configured search options
 3. Successfully matched key pairs are made available for signing
 
@@ -93,11 +93,11 @@ The search behavior is controlled by `public_keys_search_options`:
 - `match_id: true` - Find public key with same ID as private key  
 - `extended_private: true` - Extract public key data from the PKCS#11 object representing the private key (AWS CloudHSM specific)
 
-By default, all three options are enabled. For AWS CloudHSM, the `extended_private` option is particularly important as it allows MavSign to access the public key information (EC_POINT attribute) stored as an attribute of the private key's PKCS#11 object, eliminating the need to locate separate public key objects. The actual private key material always remains secure within the HSM's hardware boundary.
+By default, all three options are enabled. For AWS CloudHSM, the `extended_private` option is particularly important as it allows MavSeal to access the public key information (EC_POINT attribute) stored as an attribute of the private key's PKCS#11 object, eliminating the need to locate separate public key objects. The actual private key material always remains secure within the HSM's hardware boundary.
 
 ## Docker Integration
 
-Newer images for MavSign already have the CloudHSM SDK installed. One would only need to mount the configuration file and CA cert to `/opt/cloudhsm/etc` in the container. Below is an example ome the configuration file.
+Newer images for MavSeal already have the CloudHSM SDK installed. One would only need to mount the configuration file and CA cert to `/opt/cloudhsm/etc` in the container. Below is an example ome the configuration file.
 
 ### Configuration
 
@@ -135,9 +135,9 @@ Run the Docker container with the necessary volume mounts to include the configu
 
 ```bash
 docker run --detach \
-  --volume "/path/to/mavsign/config:/etc/mavsign" \
+  --volume "/path/to/mavseal/config:/etc/mavseal" \
   --volume "/path/to/cloudhsm/config:/opt/cloudhsm/etc" \
-  mavryk-network/mavsign:<version>
+  mavryk-network/mavseal:<version>
 ```
 
 ### Using Host Machine's CloudHSM SDK Library
@@ -146,7 +146,7 @@ If you prefer to use the CloudHSM pre-configured SDK with the library from your 
 
 ```bash
 docker run --detach \
-  --volume "/path/to/mavsign/config:/etc/mavsign" \
+  --volume "/path/to/mavseal/config:/etc/mavseal" \
   --volume "/opt/cloudhsm:/opt/cloudhsm" \
   <your-docker-image>
 ```

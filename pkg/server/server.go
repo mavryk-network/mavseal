@@ -11,20 +11,20 @@ import (
 
 	"github.com/mavryk-network/mavbingo/v2/b58"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/auth"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/middlewares"
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
+	"github.com/mavryk-network/mavseal/pkg/auth"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/middlewares"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 )
 
 const defaultAddr = ":6732"
 
-// Signer interface representing a Signer (currently implemented by MavSign)
+// Signer interface representing a Signer (currently implemented by MavSeal)
 type Signer interface {
-	Sign(ctx context.Context, req *mavsign.SignRequest) (crypt.Signature, error)
-	GetPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash) (*mavsign.PublicKey, error)
+	Sign(ctx context.Context, req *mavseal.SignRequest) (crypt.Signature, error)
+	GetPublicKey(ctx context.Context, keyHash crypt.PublicKeyHash) (*mavseal.PublicKey, error)
 }
 
 // Server struct containing the information necessary to run a mavryk remote signers
@@ -43,13 +43,13 @@ func (s *Server) logger() log.FieldLogger {
 	return log.StandardLogger()
 }
 
-func (s *Server) authenticateSignRequest(req *mavsign.SignRequest, r *http.Request) error {
+func (s *Server) authenticateSignRequest(req *mavseal.SignRequest, r *http.Request) error {
 	v := r.FormValue("authentication")
 	if v == "" {
 		return errors.Wrap(stderr.New("missing authentication signature field"), http.StatusUnauthorized)
 	}
 
-	authBytes, err := mavsign.AuthenticatedBytesToSign(req)
+	authBytes, err := mavseal.AuthenticatedBytesToSign(req)
 	if err != nil {
 		return errors.Wrap(err, http.StatusBadRequest)
 	}
@@ -84,7 +84,7 @@ func (s *Server) signHandler(w http.ResponseWriter, r *http.Request) {
 		mavrykJSONError(w, errors.Wrap(err, http.StatusBadRequest))
 		return
 	}
-	signRequest := mavsign.SignRequest{
+	signRequest := mavseal.SignRequest{
 		PublicKeyHash: pkh,
 	}
 	source, _, err := net.SplitHostPort(r.RemoteAddr)
@@ -174,7 +174,7 @@ func (s *Server) authorizedKeysHandler(w http.ResponseWriter, r *http.Request) {
 	jsonResponse(w, http.StatusOK, &resp)
 }
 
-// Handler returns new MavSign HTTP API handler
+// Handler returns new MavSeal HTTP API handler
 func (s *Server) Handler() (http.Handler, error) {
 	if s.Auth != nil {
 		hashes, err := s.Auth.ListPublicKeys(context.Background())
@@ -198,7 +198,7 @@ func (s *Server) Handler() (http.Handler, error) {
 	return r, nil
 }
 
-// New returns a new http server with MavSign HTTP API handler. See Handler
+// New returns a new http server with MavSeal HTTP API handler. See Handler
 func (s *Server) New() (*http.Server, error) {
 	addr := s.Address
 	if addr == "" {

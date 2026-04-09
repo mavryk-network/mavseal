@@ -11,13 +11,13 @@ _The YubiHSM 2 is a Hardware Security Module that is within reach of all organiz
 
 YubiHSM2 is a hardware-based HSM device. This device is suitable for use where you have access to your physical servers.
 
-## Setup with MavSign
+## Setup with MavSeal
 
 ### Prerequisites
 
 In this guide, we use Docker for convenience, but you are not required to use Docker.
 
-This documentation assumes that you will be running MavSign and the YubiHSM2 device on the same physical server.
+This documentation assumes that you will be running MavSeal and the YubiHSM2 device on the same physical server.
 
 * A Linux system operably configured with:
   * Docker
@@ -26,7 +26,7 @@ This documentation assumes that you will be running MavSign and the YubiHSM2 dev
 
 ### Installing and using the YubiHSM Connector and Shell
 
-MavSign uses the `yubihsm-connector` daemon to interact with the YubiHSM USB device.
+MavSeal uses the `yubihsm-connector` daemon to interact with the YubiHSM USB device.
 
 The connector requires you to have the libusb package installed on your system.
 
@@ -46,7 +46,7 @@ To manage the YubiHSM2 device, you will need the `yubihsm-shell` utility. This u
 apt install libedit2
 ```
 
-To install yubihsm-shell, you must install the yubihsm-shell package and the supporting YubiHSM2 libraries. The `yubihsm-shell` is not required for the operation of MavSign and is only for the management of the YubiHSM2 device.
+To install yubihsm-shell, you must install the yubihsm-shell package and the supporting YubiHSM2 libraries. The `yubihsm-shell` is not required for the operation of MavSeal and is only for the management of the YubiHSM2 device.
 
 ```bash
 dpkg -i yubihsm-shell_2.0.2-1_amd64.deb \
@@ -85,7 +85,7 @@ yubihsm> list objects 1 0
 
 ### Importing a Secret key into the YubiHSM2 for Mavryk
 
-To import a secret key, we will use the `mavsign-cli` command.
+To import a secret key, we will use the `mavseal-cli` command.
 
 Here are six examples of private keys for test/evaluation purposes. Three encrypted (password is "test") and three unencrypted.
 
@@ -110,7 +110,7 @@ Here are six examples of private keys for test/evaluation purposes. Three encryp
       "unencrypted:edsk2rKA8YEExg9Zo2qNPiQnnYheF1DhqjLVmfKdxiFfu5GyGRZRnb" } ]
 ```
 
-The `mavsign-cli` command needs a configuration file. The following will suffice;
+The `mavseal-cli` command needs a configuration file. The following will suffice;
 
 ```yaml
 server:
@@ -129,10 +129,10 @@ vaults:
 To import a secret key, we take the secret key from the above JSON examples. Do not include the "encrypted:" or "unencrypted:" prefix.
 
 ```bash
-mavsign-cli import --config ./mavsign.yaml --vault yubi
+mavseal-cli import --config ./mavseal.yaml --vault yubi
 ```
 
-If the import is successful, the `mavsign-cli` will report the PKH of your newly imported secret:
+If the import is successful, the `mavseal-cli` will report the PKH of your newly imported secret:
 
 ```bash
 INFO[0000] Initializing vault                            vault=yubihsm vault_name=yubi
@@ -142,16 +142,16 @@ INFO[0000] Requesting import operation                   pkh=tz1SBhzLDp9Jvg98ztM
 INFO[0000] Successfully imported                         key_id=0cf8 pkh=tz1SBhzLDp9Jvg98ztMZMstaKbAENmzRd4Y7 vault=YubiHSM vault_name="localhost:12345/1"
 ```
 
-If you import an encrypted key, the `mavsign-cli` command will prompt you for a password.
+If you import an encrypted key, the `mavseal-cli` command will prompt you for a password.
 
 You can use the `yubihsm-shell` utility command `list objects 0 0` to verify that you can also see your newly imported secret within the YubiHSM2 device.
 
 ### Listing Mavryk Addresses in the YubiHSM2
 
-You can use the command `mavsign-cli list` to list all keys in the YubiHSM2. `mavsign-cli` also prints the configuration status for each address.
+You can use the command `mavseal-cli list` to list all keys in the YubiHSM2. `mavseal-cli` also prints the configuration status for each address.
 
 ```bash
-mavsign-cli -c ./mavsign.yaml list
+mavseal-cli -c ./mavseal.yaml list
 Public Key Hash:    tz1SBhzLDp9Jvg98ztMZMstaKbAENmzRd4Y7
 Vault:              YubiHSM
 ID:                 0cf8
@@ -160,7 +160,7 @@ Status:             Disabled
 
 ### Configuring your newly imported address
 
-Add the PKH for your new secret into the `mavryk:` block of your `mavsign.yaml` file as follows:
+Add the PKH for your new secret into the `mavryk:` block of your `mavseal.yaml` file as follows:
 
 ```yaml
 server:
@@ -182,10 +182,10 @@ mavryk:
         - origination
 ```
 
-Rerun the `mavsign-cli list` command to verify that your new address is getting picked up, and is configured as you expect.
+Rerun the `mavseal-cli list` command to verify that your new address is getting picked up, and is configured as you expect.
 
 ```bash
-mavsign-cli -c ./mavsign.yaml list
+mavseal-cli -c ./mavseal.yaml list
 Public Key Hash:    tz1SBhzLDp9Jvg98ztMZMstaKbAENmzRd4Y7
 Vault:              YubiHSM
 ID:                 0cf8

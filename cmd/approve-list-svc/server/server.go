@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
 )
 
 type Server struct {
@@ -20,7 +20,7 @@ type Server struct {
 func (s *Server) Handler() (http.Handler, error) {
 	pub := s.PrivateKey.Public()
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var req mavsign.PolicyHookRequest
+		var req mavseal.PolicyHookRequest
 		dec := json.NewDecoder(r.Body)
 		if err := dec.Decode(&req); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -51,7 +51,7 @@ func (s *Server) Handler() (http.Handler, error) {
 				status = http.StatusForbidden
 			}
 
-			replyPl := mavsign.PolicyHookReplyPayload{
+			replyPl := mavseal.PolicyHookReplyPayload{
 				Status:        status,
 				PublicKeyHash: pub.Hash().String(),
 				Nonce:         req.Nonce,
@@ -73,7 +73,7 @@ func (s *Server) Handler() (http.Handler, error) {
 				return
 			}
 
-			reply := mavsign.PolicyHookReply{
+			reply := mavseal.PolicyHookReply{
 				Payload:   buf,
 				Signature: sig.String(),
 			}

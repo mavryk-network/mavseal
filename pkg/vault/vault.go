@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/utils"
+	"github.com/mavryk-network/mavseal/pkg/utils"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )

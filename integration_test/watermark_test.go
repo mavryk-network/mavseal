@@ -22,10 +22,10 @@ const (
 	protocol  = "http://"
 	host      = "localhost"
 	port      = "6732"
-	pkh       = "tz1WGcYos3hL7GXYXjKrMnSFdkT7FyXnFBvf"
+	pkh       = "mv1Je5rQBQzggYJmg3thbc8GnmK5pN4Npp2Q"
 	url       = protocol + host + ":" + port + "/keys/" + pkh
-	dir       = "/var/lib/mavsign/watermark_v2/"
-	container = "mavsign"
+	dir       = "/var/lib/mavseal/watermark_v2/"
+	container = "mavseal"
 )
 
 type functionalTestCase struct {
@@ -123,8 +123,8 @@ var functionalTestCases = []functionalTestCase{
 			SignSuccessResponse{Signature: "edsigtfoBKBjfYYASaf194oQknF3r5eag81ihkErSSi1WPiV6qfrQjCFWomAbjG63PKaLoUvoNxqK4TCD4MLoJAFC6JtHwtBYYn"}},
 		watermarkBefore: watermarkFile{pkh: {"block": {Level: 33, Round: 2, Hash: "vh2i6wpkn9bGpw47r3RhnfHiCrLvzTvQT36AmEZNPPsKqcN7yecT"}}},
 		watermarkAfter: watermarkFile{pkh: {"block": {Level: 34, Round: 4, Hash: "vh2E3QPN8R55XtdeZXsPtbgXErMeLcE5YbjDMcUzXsFByL97u5Qc"},
-			"endorsement":    {Level: 34, Round: 4, Hash: "vh216VxjGyVK2XWEQ5gyFcAMLEqPzRKJijB6ZUybZjnwetdZp8Lm"},
-			"preendorsement": {Level: 34, Round: 4, Hash: "vh2KHE9afrJBSzLQcnP21cCtHfc9yPsjCVzsbBfLTpzRTenXtp1s"}}},
+			"attestation":    {Level: 34, Round: 4, Hash: "vh216VxjGyVK2XWEQ5gyFcAMLEqPzRKJijB6ZUybZjnwetdZp8Lm"},
+			"preattestation": {Level: 34, Round: 4, Hash: "vh2KHE9afrJBSzLQcnP21cCtHfc9yPsjCVzsbBfLTpzRTenXtp1s"}}},
 		chainID: "NetXo5iVw1vBoxM",
 	},
 	{title: "baking scenario - block request can arrive last",
@@ -140,8 +140,8 @@ var functionalTestCases = []functionalTestCase{
 			SignSuccessResponse{Signature: "edsigtfHHgiTKBhZ4wzfZwCtLpWsS1q4pHR47YbhWHLzxmx95LpSQQXXC4nWhoHCp7ppEeC2eHw2Be7zjQrKwHvsmb8KyJcGf1b"}},
 		watermarkBefore: watermarkFile{pkh: {"block": {Level: 33, Round: 2, Hash: "vh2i6wpkn9bGpw47r3RhnfHiCrLvzTvQT36AmEZNPPsKqcN7yecT"}}},
 		watermarkAfter: watermarkFile{pkh: {"block": {Level: 34, Round: 4, Hash: "vh2E3QPN8R55XtdeZXsPtbgXErMeLcE5YbjDMcUzXsFByL97u5Qc"},
-			"endorsement":    {Level: 34, Round: 4, Hash: "vh216VxjGyVK2XWEQ5gyFcAMLEqPzRKJijB6ZUybZjnwetdZp8Lm"},
-			"preendorsement": {Level: 34, Round: 4, Hash: "vh2KHE9afrJBSzLQcnP21cCtHfc9yPsjCVzsbBfLTpzRTenXtp1s"}}},
+			"attestation":    {Level: 34, Round: 4, Hash: "vh216VxjGyVK2XWEQ5gyFcAMLEqPzRKJijB6ZUybZjnwetdZp8Lm"},
+			"preattestation": {Level: 34, Round: 4, Hash: "vh2KHE9afrJBSzLQcnP21cCtHfc9yPsjCVzsbBfLTpzRTenXtp1s"}}},
 		chainID: "NetXo5iVw1vBoxM",
 	},
 }
@@ -149,12 +149,12 @@ var functionalTestCases = []functionalTestCase{
 func TestWatermark(t *testing.T) {
 	for _, test := range functionalTestCases {
 		remove_watermark_files()
-		restart_mavsign()
+		restart_mavseal()
 		t.Run(test.title, func(t *testing.T) {
 			if test.watermarkBefore != nil {
 				mkdir()
 				write_watermark_file(test.watermarkBefore, test.chainID+".json")
-				restart_mavsign()
+				restart_mavseal()
 			}
 			for i, request := range test.signRequestBodies {
 				code, message := RequestSignature(pkh, request)
@@ -182,7 +182,7 @@ func TestWatermark(t *testing.T) {
 		})
 	}
 	remove_watermark_files()
-	restart_mavsign()
+	restart_mavseal()
 }
 
 type concurrencyTestCase struct {
@@ -233,12 +233,12 @@ var (
 func TestWatermarkConcurrency(t *testing.T) {
 	for _, test := range concurrencyTestCases {
 		remove_watermark_files()
-		restart_mavsign()
+		restart_mavseal()
 		t.Run(test.title, func(t *testing.T) {
 			mkdir()
 			if test.watermarkBefore != nil {
 				write_watermark_file(test.watermarkBefore, test.chainID+".json")
-				restart_mavsign()
+				restart_mavseal()
 			}
 			n := len(test.signRequestBodies)
 			wg.Add(n)
@@ -270,7 +270,7 @@ func TestWatermarkConcurrency(t *testing.T) {
 		})
 	}
 	remove_watermark_files()
-	restart_mavsign()
+	restart_mavseal()
 }
 
 func request_sign_concurrent(request string) {

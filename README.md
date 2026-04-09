@@ -1,32 +1,32 @@
-![MavSign Logo](/docs/mavsign-logo.png "MavSign Logo")
+![MavSeal Logo](/docs/mavseal-logo.png "MavSeal Logo")
 
 #### A Mavryk Remote Signer
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2778/badge)](https://bestpractices.coreinfrastructure.org/projects/2778)
-[![GitHub Actions](https://github.com/mavryk-network/mavsign/workflows/Test%20and%20publish/badge.svg)](https://github.com/mavryk-network/mavsign/actions)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c1304869331b687e0aba/maintainability)](https://codeclimate.com/github/mavryk-network/mavsign/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/c1304869331b687e0aba/test_coverage)](https://codeclimate.com/github/mavryk-network/mavsign/test_coverage)
-[![Go Report Card](https://goreportcard.com/badge/github.com/mavryk-network/mavsign)](https://goreportcard.com/report/github.com/mavryk-network/mavsign)
+[![GitHub Actions](https://github.com/mavryk-network/mavseal/workflows/Test%20and%20publish/badge.svg)](https://github.com/mavryk-network/mavseal/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c1304869331b687e0aba/maintainability)](https://codeclimate.com/github/mavryk-network/mavseal/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c1304869331b687e0aba/test_coverage)](https://codeclimate.com/github/mavryk-network/mavseal/test_coverage)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mavryk-network/mavseal)](https://goreportcard.com/report/github.com/mavryk-network/mavseal)
 
-## What is MavSign?
+## What is MavSeal?
 
-MavSign is a remote signing daemon that allows Mavryk bakers and Mavryk Application teams to protect their private keys.
+MavSeal is a remote signing daemon that allows Mavryk bakers and Mavryk Application teams to protect their private keys.
 
-The goal of the MavSign service is to make key management as secure as possible in a Cloud and on-premise HSM context.
+The goal of the MavSeal service is to make key management as secure as possible in a Cloud and on-premise HSM context.
 
-## Why Use MavSign?
+## Why Use MavSeal?
 
-Security and convenience are typically at odds with each other. MavSign makes it easier for Mavryk teams to manage their keys securely by offering several well-tested & supported signing options for cloud-based or hardware-based HSMs.
+Security and convenience are typically at odds with each other. MavSeal makes it easier for Mavryk teams to manage their keys securely by offering several well-tested & supported signing options for cloud-based or hardware-based HSMs.
 
 ## Quick Start
 
-[See docs](https://mavsign.mavryk.org/docs/start/)
+[See docs](https://mavseal.mavryk.org/docs/start/)
 
 ---
 
 ## GitHub Docs
 
-Explore detailed documentation for various components of MavSign:
+Explore detailed documentation for various components of MavSeal:
 
 ### Introduction
 - [Getting Started](./docs/start.md)
@@ -50,21 +50,21 @@ Explore detailed documentation for various components of MavSign:
 ### Other
 - [JWT Authentication](./docs/jwt_auth.md)
 - [Remote Policy Configuration](./docs/remote_policy.md)
-- [MavSign Architecture](./docs/mavsign-architecture.md)
+- [MavSeal Architecture](./docs/mavseal-architecture.md)
 
 ## Features
 
 ### Remote Signing
 
-MavSign receives requests to sign Mavryk operations. These operations may be consensus operations when used in a Baking context, or they may be transactions or any other Mavryk operation type.
+MavSeal receives requests to sign Mavryk operations. These operations may be consensus operations when used in a Baking context, or they may be transactions or any other Mavryk operation type.
 
-MavSign will inspect the operations and assert that the operation request is in line with MavSign's policy. If the operation passes the policy rules, MavSign will then have a signature produced using the appropriate backend system. 
+MavSeal will inspect the operations and assert that the operation request is in line with MavSeal's policy. If the operation passes the policy rules, MavSeal will then have a signature produced using the appropriate backend system. 
 
-MavSign operators can choose from AWS, Azure or Google Cloud KMS systems, or self-hosted solutions such as the YubiHSM2, Hashicorp Vault or Ledger Hardware wallet.
+MavSeal operators can choose from AWS, Azure or Google Cloud KMS systems, or self-hosted solutions such as the YubiHSM2, Hashicorp Vault or Ledger Hardware wallet.
 
 ### Observability
 
-MavSign is also focused on observability, exposing metrics about its performance, volume and possible errors. Metrics allow operators to see historical trends, signing volumes, errors and latencies, enabling rich reporting and alerting capabilities.
+MavSeal is also focused on observability, exposing metrics about its performance, volume and possible errors. Metrics allow operators to see historical trends, signing volumes, errors and latencies, enabling rich reporting and alerting capabilities.
 
 ### Private-Key Import
 
@@ -74,11 +74,11 @@ Private-key import is an important security consideration when choosing a Cloud 
 
 ## How it Works
 
-* A Mavryk operation is sent to the MavSign API
-* MavSign decodes and checks that the operation is permitted based on the defined policy
-* MavSign sends the operation to the configured vault backend for signing
-* Upon receiving the signature produced by backend, MavSign validates the signature
-* MavSign returns the signature to MavSign client
+* A Mavryk operation is sent to the MavSeal API
+* MavSeal decodes and checks that the operation is permitted based on the defined policy
+* MavSeal sends the operation to the configured vault backend for signing
+* Upon receiving the signature produced by backend, MavSeal validates the signature
+* MavSeal returns the signature to MavSeal client
 
 
 ## Why
@@ -127,11 +127,11 @@ In Mavryk, you can infer the signing algorithm from the first three characters o
 
 ### Security Issues
 
-To report a security issue, please contact security@ecadlabs.com
+To report a security issue, please contact info@mavryk.io
 
 ### Other Issues & Feature Requests
 
-Please use the [GitHub issue tracker](https://github.com/mavryk-network/mavsign/issues) to report bugs or request features.
+Please use the [GitHub issue tracker](https://github.com/mavryk-network/mavseal/issues) to report bugs or request features.
 
 ## Contributions
 

@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	filename = "mavsign.yaml"
+	filename = "mavseal.yaml"
 )
 
 type Config struct {

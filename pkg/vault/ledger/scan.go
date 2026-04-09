@@ -8,9 +8,9 @@ import (
 	"sync"
 
 	"github.com/mavryk-network/mavbingo/v2/encoding"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger/ledger"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger/mnemonic"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger/mavrykapp"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger/ledger"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger/mnemonic"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger/mavrykapp"
 	log "github.com/sirupsen/logrus"
 )
 

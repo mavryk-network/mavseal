@@ -11,19 +11,19 @@ func TestCliList(t *testing.T) {
 	var c Config
 	c.Read()
 
-	out, err := MavSignCli("list")
+	out, err := MavSealCli("list")
 	assert.Nil(t, err)
 	require.Contains(t, string(out), "mv1Hox9jGJg3uSmsv9NTvuK7rMHh25cq44nv")
 	require.Contains(t, string(out), "mv2c6wrWBXebgoBMz5fVCoxKdyYyQoDHdvrL")
-	require.Contains(t, string(out), "tz3Y2TkhTYG6MfPsijGfHFqBYrLCfwYb6HRB")
+	require.Contains(t, string(out), "mv3Nfa66Ho2E7N6ztyVHPS83bZnN2yaAs46X")
 	require.Contains(t, string(out), "mv4jEyAFCa4Cc8cuidAPGm8CfwNAwmmwcWoR")
 }
 
 func TestCliUsage(t *testing.T) {
-	out, err := MavSignCli()
+	out, err := MavSealCli()
 	assert.Nil(t, err)
 	require.Contains(t, string(out), "Usage:")
-	require.Contains(t, string(out), "mavsign-cli [command]")
+	require.Contains(t, string(out), "mavseal-cli [command]")
 	require.Contains(t, string(out), "completion    Generate the autocompletion script for the specified shell")
 	require.Contains(t, string(out), "help          Help about any command")
 	require.Contains(t, string(out), "import        Import Mavryk private keys (edsk..., spsk..., p2sk...)")
@@ -31,12 +31,12 @@ func TestCliUsage(t *testing.T) {
 	require.Contains(t, string(out), "list          List public keys")
 	require.Contains(t, string(out), "list-ops      Print possible operation types inside the `generic` request")
 	require.Contains(t, string(out), "list-requests Print possible request types")
-	require.Contains(t, string(out), "version       Show mavsign image version/release (short alias 'v')")
+	require.Contains(t, string(out), "version       Show mavseal image version/release (short alias 'v')")
 }
 
 // If/when Issue #425 is fixed, this test will break.  to fix it, leverage the function in this package named "getAllOps"
 func TestCliListOps(t *testing.T) {
-	out, err := MavSignCli("list-ops")
+	out, err := MavSealCli("list-ops")
 	assert.Nil(t, err)
 	require.Contains(t, string(out), "Possible operation types:")
 	require.Contains(t, string(out), "- activate_account")
@@ -77,29 +77,29 @@ func TestCliListOps(t *testing.T) {
 }
 
 func TestCliListRequests(t *testing.T) {
-	out, err := MavSignCli("list-requests")
+	out, err := MavSealCli("list-requests")
 	assert.Nil(t, err)
 	require.Contains(t, string(out), "Possible request types:")
 	require.Contains(t, string(out), "- block")
-	require.Contains(t, string(out), "- endorsement")
+	require.Contains(t, string(out), "- attestation")
 	require.Contains(t, string(out), "- generic")
-	require.Contains(t, string(out), "- preendorsement")
+	require.Contains(t, string(out), "- preattestation")
 }
 
 func TestCliHelp(t *testing.T) {
-	usage, err := MavSignCli()
+	usage, err := MavSealCli()
 	assert.Nil(t, err)
-	help, err := MavSignCli("help")
+	help, err := MavSealCli("help")
 	assert.Nil(t, err)
 	require.Contains(t, string(help), string(usage))
 }
 
 func TestCliLedgerUsage(t *testing.T) {
-	out, err := MavSignCli("ledger")
+	out, err := MavSealCli("ledger")
 	assert.Nil(t, err)
 	require.Contains(t, string(out), "Ledger specific operations")
 	require.Contains(t, string(out), "Usage:")
-	require.Contains(t, string(out), "mavsign-cli ledger [command]")
+	require.Contains(t, string(out), "mavseal-cli ledger [command]")
 	require.Contains(t, string(out), "Available Commands:")
 	require.Contains(t, string(out), "deauthorize-baking  Deuthorize a key")
 	require.Contains(t, string(out), "get-high-watermark  Get high water mark")
@@ -107,11 +107,11 @@ func TestCliLedgerUsage(t *testing.T) {
 	require.Contains(t, string(out), "list                List connected Ledgers")
 	require.Contains(t, string(out), "set-high-watermark  Set high water mark")
 	require.Contains(t, string(out), "setup-baking        Authorize a key for baking")
-	require.Contains(t, string(out), "Use \"mavsign-cli ledger [command] --help\" for more information about a command.")
+	require.Contains(t, string(out), "Use \"mavseal-cli ledger [command] --help\" for more information about a command.")
 }
 
 func TestCliLedgerList(t *testing.T) {
-	out, err := MavSignCli("ledger", "-t", "tcp://speculos:9999", "list")
+	out, err := MavSealCli("ledger", "-t", "tcp://speculos:9999", "list")
 	assert.Nil(t, err)
 	require.Contains(t, string(out), "Path:  		speculos:9999")
 	require.Contains(t, string(out), "ID:")
@@ -119,11 +119,11 @@ func TestCliLedgerList(t *testing.T) {
 }
 
 func TestCliVersion(t *testing.T) {
-	v, err := MavSignCli("v")
+	v, err := MavSealCli("v")
 	assert.Nil(t, err)
 	require.Contains(t, string(v), "Release Version: ")
 	require.Greater(t, len(v), len("Release Version: ")+4)
-	version, err := MavSignCli("version")
+	version, err := MavSealCli("version")
 	assert.Nil(t, err)
 	require.Equal(t, v, version)
 }

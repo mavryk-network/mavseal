@@ -9,10 +9,10 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
-	"github.com/mavryk-network/mavsign/pkg/vault"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
+	"github.com/mavryk-network/mavseal/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v3"
 )
@@ -61,16 +61,16 @@ func TestLedger(t *testing.T) {
 		require.Equal(t, publicKeyHash, pkh)
 	}
 
-	conf := mavsign.Config{
+	conf := mavseal.Config{
 		Vaults:    map[string]*config.VaultConfig{"ledger": {Driver: "ledger"}},
-		Watermark: mavsign.IgnoreWatermark{},
+		Watermark: mavseal.IgnoreWatermark{},
 		VaultFactory: vault.FactoryFunc(func(ctx context.Context, name string, conf *yaml.Node) (vault.Vault, error) {
 			return ledger.New(context.Background(), &ledger.Config{
 				ID:   "c4c56423",
 				Keys: []string{"bip25519/0'/0'"},
 			})
 		}),
-		Policy: map[string]*mavsign.Policy{
+		Policy: map[string]*mavseal.Policy{
 			publicKeyHash: {
 				AllowedRequests: []string{"generic", "block", "endorsement"},
 				AllowedOps:      []string{"endorsement", "seed_nonce_revelation", "activate_account", "ballot", "reveal", "transaction", "origination", "delegation"},
@@ -78,19 +78,19 @@ func TestLedger(t *testing.T) {
 		},
 	}
 
-	signer, err := mavsign.New(context.Background(), &conf)
+	signer, err := mavseal.New(context.Background(), &conf)
 	require.NoError(t, err)
 
 	pub, err := signer.ListPublicKeys(context.Background())
 	require.NoError(t, err)
 
-	require.Equal(t, []*mavsign.PublicKey{
+	require.Equal(t, []*mavseal.PublicKey{
 		{
 			PublicKey:     "edpkv5y3MhiAcQtiAGvJ4DL64zbgXt3QeNJcv3kJ9Wji2deDNoDQZf",
 			PublicKeyHash: publicKeyHash,
 			VaultName:     "Ledger",
-			ID:            "bip32-ed25519/44'/1729'/0'/0'",
-			Policy: &mavsign.Policy{
+			ID:            "bip32-ed25519/44'/1969'/0'/0'",
+			Policy: &mavseal.Policy{
 				AllowedRequests: []string{"generic", "block", "endorsement"},
 				AllowedOps:      []string{"endorsement", "seed_nonce_revelation", "activate_account", "ballot", "reveal", "transaction", "origination", "delegation"},
 			},
@@ -100,7 +100,7 @@ func TestLedger(t *testing.T) {
 
 	for _, r := range requests {
 		msg, _ := hex.DecodeString(r.message)
-		req := &mavsign.SignRequest{
+		req := &mavseal.SignRequest{
 			PublicKeyHash: publicKeyHash,
 			Message:       msg,
 		}

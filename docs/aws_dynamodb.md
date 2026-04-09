@@ -7,7 +7,7 @@ title: AWS DynamoDB Watermark Backend
 
 ## Overview
 
-The AWS DynamoDB watermark backend provides a distributed, highly available solution for tracking watermarks in MavSign. This backend is ideal for environments where multiple MavSign instances need to coordinate to prevent double-signing operations.
+The AWS DynamoDB watermark backend provides a distributed, highly available solution for tracking watermarks in MavSeal. This backend is ideal for environments where multiple MavSeal instances need to coordinate to prevent double-signing operations.
 
 As explained in the [Watermarks](./watermarks.md) documentation, watermarks are essential for preventing double signing of operations at the same block level or round.
 
@@ -15,7 +15,7 @@ As explained in the [Watermarks](./watermarks.md) documentation, watermarks are 
 
 DynamoDB is the recommended watermark backend when:
 
-- **Running multiple MavSign instances** - Using a shared watermark store ensures that all instances are synchronized
+- **Running multiple MavSeal instances** - Using a shared watermark store ensures that all instances are synchronized
 - **Deploying in AWS** - Native integration with AWS services provides better reliability
 - **High availability is critical** - DynamoDB offers strong consistency for watermark operations
 - **Scalability is required** - DynamoDB can handle high throughput with minimal configuration
@@ -54,17 +54,17 @@ This is the recommended approach for production deployments.
 
 ## Table Design
 
-When MavSign initializes the AWS backend, it automatically creates the DynamoDB table if it doesn't already exist. The table is created with:
+When MavSeal initializes the AWS backend, it automatically creates the DynamoDB table if it doesn't already exist. The table is created with:
 
 - Partition key: `idx` (combination of chain ID and public key hash)
 - Sort key: `request` (type of request: block, endorsement, etc.)
 - Provisioned capacity: 5 read and 5 write capacity units
 
-When MavSign starts up, it will log one of these messages to confirm which table is being used:
+When MavSeal starts up, it will log one of these messages to confirm which table is being used:
 - `DynamoDB watermark backend created table 'table_name'` - when creating a new table
 - `DynamoDB watermark backend using existing table 'table_name'` - when using an existing table
 
-This allows operators to verify that MavSign is using the expected DynamoDB table.
+This allows operators to verify that MavSeal is using the expected DynamoDB table.
 
 ### Data Structure
 
@@ -153,7 +153,7 @@ If you need to reset your watermarks (use with caution!), you can delete the tab
 aws dynamodb delete-table --table-name watermark --region us-east-1
 ```
 
-MavSign will automatically recreate the table on the next startup.
+MavSeal will automatically recreate the table on the next startup.
 
 ## Operational Notes
 
@@ -172,5 +172,5 @@ If you encounter issues with the DynamoDB watermark backend:
    - `dynamodb:PutItem`
 3. For watermark validation failures, enable debug logs:
    ```bash
-   mavsign serve --log debug -c /path/to/config.yaml
+   mavseal serve --log debug -c /path/to/config.yaml
    ```

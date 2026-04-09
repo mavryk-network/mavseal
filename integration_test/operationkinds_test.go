@@ -15,9 +15,9 @@ const (
 	alias         = "opstest"
 	account1      = "mv1DVkbxJrvuihcZM5MoteqxEsJaHDmexMTw"
 	alias1        = "opstest1"
-	contract      = "contract.event.tz"
+	contract      = "contract.event.mv"
 	contractAlias = "emit_event"
-	flexmasanob   = "http://flexmasanobaking:20000"
+	mavboxnob   = "http://mavboxnobaking:20000"
 	vault         = "File"
 )
 
@@ -36,20 +36,20 @@ type testCase struct {
 // these test cases are not atomic -- some tests depend on previous tests (order matters)
 var testcases = []testCase{
 	{
-		kind:           "preendorsement",
-		op:             "preendorsement",
+		kind:           "preattestation",
+		op:             "preattestation",
 		testSetupOps:   nil,
-		testOp:         []string{"--endpoint", flexmasanob, "preendorse", "for", alias, "--force"},
+		testOp:         []string{"--endpoint", mavboxnob, "preendorse", "for", alias, "--force"},
 		account:        account,
 		allowPolicy:    map[string][]string{"generic": {"preendorsement"}, "preendorsement": {}},
 		notAllowPolicy: map[string][]string{"generic": getAllOpsExcluding([]string{"preendorsement"}), "endorsement": {}, "block": {}},
 		successMessage: "injected ",
 	},
 	{
-		kind:           "endorsement",
-		op:             "endorsement",
+		kind:           "attestation",
+		op:             "attestation",
 		testSetupOps:   nil,
-		testOp:         []string{"--endpoint", flexmasanob, "endorse", "for", alias, "--force"},
+		testOp:         []string{"--endpoint", mavboxnob, "endorse", "for", alias, "--force"},
 		account:        account,
 		allowPolicy:    map[string][]string{"generic": {"endorsement"}, "endorsement": {}},
 		notAllowPolicy: map[string][]string{"generic": getAllOpsExcluding([]string{"endorsement"}), "preendorsement": {}, "block": {}},
@@ -59,9 +59,9 @@ var testcases = []testCase{
 		kind:           "block",
 		op:             "block",
 		testSetupOps:   nil,
-		testOp:         []string{"--endpoint", flexmasanob, "bake", "for", alias, "--force"},
+		testOp:         []string{"--endpoint", mavboxnob, "bake", "for", alias, "--force"},
 		account:        account,
-		allowPolicy:    map[string][]string{"generic": {}, "block": {}},
+		allowPolicy:    map[string][]string{"generic": {}, "block": {}, "preendorsement": {}, "endorsement": {}},
 		notAllowPolicy: map[string][]string{"generic": getAllOpsExcluding([]string{"block"}), "preendorsement": {}, "endorsement": {}},
 		successMessage: "injected for " + alias + " (" + account + ")",
 	},
@@ -159,10 +159,10 @@ func TestOperationAllowPolicy(t *testing.T) {
 				return
 			}
 			//likewise, when we stop testing N, we can get rid of the next 2 conditionals
-			if test.kind == "endorsement" {
+			if test.kind == "attestation" {
 				test.successMessage = test.successMessage + os.Getenv("ATTESTATION")
 			}
-			if test.kind == "preendorsement" {
+			if test.kind == "preattestation" {
 				test.successMessage = test.successMessage + os.Getenv("PREATTESTATION")
 			}
 
@@ -181,7 +181,7 @@ func TestOperationAllowPolicy(t *testing.T) {
 			c.Mavryk[test.account].Allow = test.notAllowPolicy
 			backup_then_update_config(c)
 			defer restore_config()
-			restart_mavsign()
+			restart_mavseal()
 			out, err := MavkitClient(test.testOp...)
 			if test.op == "generic" {
 				//the baking operations in mavkit-client do not return an error when they fail
@@ -195,10 +195,16 @@ func TestOperationAllowPolicy(t *testing.T) {
 			AssertMetricsSuccessUnchanged(t, metrics0, metrics1)
 
 			//finally, configure the operation being tested as the only one allowed and test it is successful
+			// For baking tests, kill any lingering baking processes and clear mavkit watermarks
+			// to avoid "potential double baking" errors in the success phase
+			if test.op == "block" || test.op == "preattestation" || test.op == "attestation" {
+				kill_baking_processes()
+				delete_watermark_files()
+			}
 			c.Read()
 			c.Mavryk[test.account].Allow = test.allowPolicy
 			c.Write()
-			restart_mavsign()
+			restart_mavseal()
 			out, err = MavkitClient(test.testOp...)
 			if err != nil {
 				log.Println("error received: " + err.Error() + " " + string(out))

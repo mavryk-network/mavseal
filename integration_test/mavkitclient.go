@@ -1,14 +1,18 @@
 package integrationtest
 
 import (
+	"context"
 	"os/exec"
+	"time"
 )
 
 func MavkitClient(arg ...string) ([]byte, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+	defer cancel()
 	var cmd = "docker"
 	var args = []string{"exec", "mavkit", "mavkit-client"}
 	args = append(args, arg...)
-	return exec.Command(cmd, args...).CombinedOutput()
+	return exec.CommandContext(ctx, cmd, args...).CombinedOutput()
 }
 
 func clean_mavryk_folder() {

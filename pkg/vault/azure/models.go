@@ -3,7 +3,7 @@ package azure
 import (
 	"time"
 
-	"github.com/mavryk-network/mavsign/pkg/vault/azure/jwk"
+	"github.com/mavryk-network/mavseal/pkg/vault/azure/jwk"
 )
 
 type keyVaultError struct {

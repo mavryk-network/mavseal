@@ -1,11 +1,11 @@
 module.exports = {
-	title: 'MavSign - A Mavryk Remote Signer',
-	tagline: 'MavSign signs your Mavryk Ops while protecting your private keys',
-	url: 'https://mavsign.mavryk.org',
+	title: 'MavSeal - A Mavryk Remote Signer',
+	tagline: 'MavSeal signs your Mavryk Ops while protecting your private keys',
+	url: 'https://mavseal.mavryk.org',
 	baseUrl: '/',
 	favicon: 'img/favicon.svg',
 	organizationName: 'ecadlabs', // Usually your GitHub org/user name.
-	projectName: 'mavsign', // Usually your repo name.
+	projectName: 'mavseal', // Usually your repo name.
 	onBrokenLinks: 'warn',
 	markdown: {
 		mermaid: true,
@@ -38,7 +38,7 @@ module.exports = {
 		navbar: {
 			// hideOnScroll: true,
 			logo: {
-				alt: 'MavSign Signer for Mavryk',
+				alt: 'MavSeal Signer for Mavryk',
 				src: 'img/header-logo.svg',
 			},
 			items: [
@@ -50,7 +50,7 @@ module.exports = {
 					className: 'header-link button_link',
 				},
 				{
-					href: 'https://github.com/mavryk-network/mavsign',
+					href: 'https://github.com/mavryk-network/mavseal',
 					position: 'right',
 					className: 'header-link header-github-link',
 					'aria-label': 'GitHub repository',
@@ -64,11 +64,11 @@ module.exports = {
 					items: [
 						{
 							label: 'Report Issues',
-							to: 'https://github.com/mavryk-network/mavsign/issues/new/choose',
+							to: 'https://github.com/mavryk-network/mavseal/issues/new/choose',
 						},
 						{
 							label: 'Contribute',
-							to: 'https://github.com/mavryk-network/mavsign/blob/main/README.md',
+							to: 'https://github.com/mavryk-network/mavseal/blob/main/README.md',
 						},
 					],
 				},
@@ -82,15 +82,15 @@ module.exports = {
 						},
 						{
 							label: 'Twitter',
-							to: 'https://twitter.com/mavsignio',
+							to: 'https://twitter.com/mavsealio',
 						},
 						{
 							label: 'Code of Conduct',
-							to: 'https://github.com/mavryk-network/mavsign/blob/main/CODE_OF_CONDUCT.md',
+							to: 'https://github.com/mavryk-network/mavseal/blob/main/CODE_OF_CONDUCT.md',
 						},
 						{
 							label: 'GitHub',
-							to: 'https://github.com/mavryk-network/mavsign',
+							to: 'https://github.com/mavryk-network/mavseal',
 						},
 					],
 				},
@@ -117,7 +117,7 @@ module.exports = {
 						},
 						{
 							html: `
-									<a class='footerButton' href='https://github.com/mavryk-network/mavsign'>
+									<a class='footerButton' href='https://github.com/mavryk-network/mavseal'>
 										GITHUB
 									</a>
 								  `,
@@ -137,7 +137,7 @@ module.exports = {
 				docs: {
 					path: '../docs',
 					sidebarPath: require.resolve('./sidebars.js'),
-					editUrl: 'https://github.com/mavryk-network/mavsign/edit/master/website/',
+					editUrl: 'https://github.com/mavryk-network/mavseal/edit/master/website/',
 				},
 				theme: {
 					customCss: [

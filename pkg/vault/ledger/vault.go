@@ -8,11 +8,11 @@ import (
 	"time"
 
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/vault"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger/ledger"
-	"github.com/mavryk-network/mavsign/pkg/vault/ledger/mavrykapp"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger/ledger"
+	"github.com/mavryk-network/mavseal/pkg/vault/ledger/mavrykapp"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 )

@@ -38,7 +38,7 @@ func TestJWTHappyPath(t *testing.T) {
 	c.Server.Jwt = JwtConfig{Users: map[string]*JwtUserData{username1: {Password: password1, Secret: secret, Exp: 60}}}
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 	code, bytes = request(endpoint, message, nil)
 	require.Equal(t, 401, code)
 	assert.Equal(t, "token required", string(bytes))
@@ -65,7 +65,7 @@ func TestJWTCredentialFailure(t *testing.T) {
 	c.Server.Jwt = JwtConfig{Users: map[string]*JwtUserData{username1: {Password: password1, Secret: secret, Exp: 60}}}
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 
 	//wrong username
 	var h = [][]string{{"Content-Type", "application/json"}, {"username", "username3"}, {"password", password1}}
@@ -87,7 +87,7 @@ func TestJWTExpiry(t *testing.T) {
 	c.Server.Jwt = JwtConfig{Users: map[string]*JwtUserData{username1: {Password: password1, Secret: secret, Exp: 1}}}
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 
 	//get a token
 	var h = [][]string{{"Content-Type", "application/json"}, {"username", username1}, {"password", password1}}
@@ -133,7 +133,7 @@ func TestAlgNoneAttack(t *testing.T) {
 	c.Server.Jwt = JwtConfig{Users: map[string]*JwtUserData{username1: {Password: password1, Secret: secret, Exp: 60}}}
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 
 	user := "username1"
 	token := createUnsignedToken(user)
@@ -173,7 +173,7 @@ func TestSignatureIsVerified(t *testing.T) {
 		username2: {Password: password2, Secret: secret, Exp: 60}}}
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 
 	//get a token
 	var h = [][]string{{"Content-Type", "application/json"}, {"username", username1}, {"password", password1}}
@@ -203,7 +203,7 @@ func TestBadInputs(t *testing.T) {
 	c.Server.Jwt = JwtConfig{Users: map[string]*JwtUserData{username1: {Password: password1, Secret: secret, Exp: 60}}}
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 	code, bytes := request(endpoint, message, nil)
 	assert.Equal(t, 401, code)
 	assert.Equal(t, "token required", string(bytes))
@@ -261,7 +261,7 @@ func TestPasswordRotation(t *testing.T) {
 	c.Server.Jwt = JwtConfig{Users: map[string]*JwtUserData{username1: {Password: password1, Secret: secret, Exp: 60, CredExp: expiry, NewCred: &JwtNewCred{Password: password2, Secret: secret2, Exp: 60}}}}
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 
 	//use old password
 	var h = [][]string{{"Content-Type", "application/json"}, {"username", username1}, {"password", password1}}
@@ -321,7 +321,7 @@ func TestPerPkh(t *testing.T) {
 
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 
 	//user1 login
 	var h = [][]string{{"Content-Type", "application/json"}, {"username", username1}, {"password", password1}}

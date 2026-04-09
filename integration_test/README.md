@@ -1,20 +1,20 @@
 ## Integration test
 
-The tests in this folder use a docker compose file to orchestrate the starting of `MavSign`, `flexmasa`, `mavryk`, and `speculos` containers.  
+The tests in this folder use a docker compose file to orchestrate the starting of `MavSeal`, `mavbox`, `mavryk`, and `speculos` containers.  
 
-The version of MavSign that is run is defined by an environment variable named `IMAGE`.
+The version of MavSeal that is run is defined by an environment variable named `IMAGE`.
 
 The `mavkit-client` that is run by the tests is provided by the `mavryk` container. The version of `mavryk` container is defined by an environment variable named `MAVKIT_VERSION`.
 
-Currently, it is always the `latest` version of the `flexmasa` image that is run by the tests.  The economic protocol run by flexmasa is defined by an environment variable named `PROTOCOL`
+Currently, it is always the `latest` version of the `mavbox` image that is run by the tests.  The economic protocol run by mavbox is defined by an environment variable named `PROTOCOL`
 
 ## Pulling the images
 
-Pre-release MavSign images are available in [github container registry](https://github.com/mavryk-network/mavsign/pkgs/container/mavsign)
-Official image releases are available in [dockerhub](https://hub.docker.com/r/mavryk-network/mavsign/tags)
+Pre-release MavSeal images are available in [github container registry](https://github.com/mavryk-network/mavseal/pkgs/container/mavseal)
+Official image releases are available in [dockerhub](https://hub.docker.com/r/mavryk-network/mavseal/tags)
 If you get a 404 from the github container registry web console, you can request access from an admin.
 
-[flexmasa](https://hub.docker.com/r/mavrykdynamics/flexmasa/tags) image is used.
+[mavbox](https://hub.docker.com/r/mavrykdynamics/mavbox/tags) image is used.
 
 [mavryk](https://hub.docker.com/r/mavryk/mavryk/tags) image is used
 
@@ -45,16 +45,16 @@ export ARCH=amd64
 
 use `arm64` on a macbook m1 host
 
-Next, decide the version of MavSign you want to test.
+Next, decide the version of MavSeal you want to test.
 using main branch:
 
 ```sh
-export IMAGE=ghcr.io/mavryk-network/mavsign:main-${ARCH}
+export IMAGE=ghcr.io/mavryk-network/mavseal:main-${ARCH}
 ```
 
-Next, choose the economic protocol version run by flexmasa, and the version of mavkit-mavkit client.
+Next, choose the economic protocol version run by mavbox, and the version of mavkit-mavkit client.
 
-Choose the set of env var to use from the files `.env.current`, `.env.next`.  Use `current` if you'd like the economic protocol run by flexmasa to match mainnet, use `next` if you'd like the next protocol instead.
+Choose the set of env var to use from the files `.env.current`, `.env.next`.  Use `current` if you'd like the economic protocol run by mavbox to match mainnet, use `next` if you'd like the next protocol instead.
 
 So, to set the env to use mainnet protocol:
 
@@ -124,7 +124,7 @@ Most tests can be re-run successfully as detailed above.  Some tests (like the `
 
 ## Notes to the operator
 
-Some tests in this folder make edits to `mavsign.yaml` configuration and restart the MavSign service. By design, tests that do this shall clean up after themselves by restoring the copy of the file that is in the code repository.  If `git status` after a test run shows you have modifications to the `mavsign.yaml` file, then that would mean a test is failing to clean up after itself and should be corrected.  Function `backup_then_update_config()` and `defer restore_config()` should be used by tests that edit config. Likewise, `git status` may show you new files in the `.mavryk-client` folder, another indication of a test not cleaning up after itself.  Function `clean_mavryk_folder()` should be used by tests that leave state behind in `.mavryk-client`.
+Some tests in this folder make edits to `mavseal.yaml` configuration and restart the MavSeal service. By design, tests that do this shall clean up after themselves by restoring the copy of the file that is in the code repository.  If `git status` after a test run shows you have modifications to the `mavseal.yaml` file, then that would mean a test is failing to clean up after itself and should be corrected.  Function `backup_then_update_config()` and `defer restore_config()` should be used by tests that edit config. Likewise, `git status` may show you new files in the `.mavryk-client` folder, another indication of a test not cleaning up after itself.  Function `clean_mavryk_folder()` should be used by tests that leave state behind in `.mavryk-client`.
 
 The PEM file that is used for AZ authentication is stored in env var `VAULT_AZ_SP_KEY` which in github actions is supplied via secret `${{ secrets.INTEGRATIONTEST_VAULT_AZ_SP_KEY }}`.  Because github secrets do not support multiline values, the PEM file content was base64 encoded before entered as the value of the secret.  With the private key in a file named `service-principal.key` the base64 value is generated by:
 

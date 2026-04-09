@@ -12,11 +12,11 @@ import (
 	kms "cloud.google.com/go/kms/apiv1"
 	kmspb "cloud.google.com/go/kms/apiv1/kmspb"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/cryptoutils"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/utils"
-	"github.com/mavryk-network/mavsign/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/cryptoutils"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/utils"
+	"github.com/mavryk-network/mavseal/pkg/vault"
 	kwp "github.com/google/tink/go/kwp/subtle"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/api/iterator"
@@ -219,7 +219,7 @@ func (c *Vault) Import(ctx context.Context, pk crypt.PrivateKey, opt utils.Optio
 		return nil, fmt.Errorf("(CloudKMS/%s): %w", c.config.keyRingName(), err)
 	}
 	if !ok {
-		keyName = "mavsign-imported-" + ksuid.New().String()
+		keyName = "mavseal-imported-" + ksuid.New().String()
 	}
 
 	ecdsaKey, ok := pk.(*crypt.ECDSAPrivateKey)
@@ -254,7 +254,7 @@ func (c *Vault) Import(ctx context.Context, pk crypt.PrivateKey, opt utils.Optio
 	// Create an import job
 	jobReq := kmspb.CreateImportJobRequest{
 		Parent:      c.config.keyRingName(),
-		ImportJobId: "mavsign-import-job-" + ksuid.New().String(),
+		ImportJobId: "mavseal-import-job-" + ksuid.New().String(),
 		ImportJob: &kmspb.ImportJob{
 			ImportMethod:    kmspb.ImportJob_RSA_OAEP_4096_SHA1_AES_256,
 			ProtectionLevel: kmspb.ProtectionLevel_HSM,

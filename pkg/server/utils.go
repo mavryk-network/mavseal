@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/mavryk-network/mavsign/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/errors"
 )
 
 // HTTPServer represents a subset of http.Server methods

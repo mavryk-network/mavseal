@@ -1,11 +1,11 @@
 version: '3'
 services:
-  mavsign:
-      image: mavrykdynamics/mavsign
+  mavseal:
+      image: mavrykdynamics/mavseal
       ports:
         - "80:80"
       volumes: 
-        - ./mavsign.yaml:/app/mavsign.yaml
+        - ./mavseal.yaml:/app/mavseal.yaml
   grafana:
     image: grafana/grafana
     volumes: 

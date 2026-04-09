@@ -5,7 +5,7 @@ title: HashicorpVault
 
 # Hashicorp Vault
 
-The goal of this guide is to configure MavSign to use an Hashicorp Vault as a signing backend.
+The goal of this guide is to configure MavSeal to use an Hashicorp Vault as a signing backend.
 
 ## **Vault setup**
 

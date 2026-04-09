@@ -13,7 +13,7 @@ func TestAuthorizedKeys(t *testing.T) {
 	c.Server.Keys = []string{"edpkujLb5ZCZ2gprnRzE9aVHKZfx9A8EtWu2xxkwYSjBUJbesJ9rWE"}
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 
 	out, err := MavkitClient("-w", "1", "transfer", "1", "from", "alice", "to", "bob")
 	require.NotNil(t, err)

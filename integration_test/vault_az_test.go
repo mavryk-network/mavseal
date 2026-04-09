@@ -40,14 +40,14 @@ func TestAZVault(t *testing.T) {
 	c.Mavryk[mv3] = &p
 	backup_then_update_config(c)
 	defer restore_config()
-	restart_mavsign()
+	restart_mavseal()
 
 	//setup
-	out, err := MavkitClient("import", "secret", "key", mv2alias, "http://mavsign:6732/"+mv2)
+	out, err := MavkitClient("import", "secret", "key", mv2alias, "http://mavseal:6732/"+mv2)
 	assert.NoError(t, err)
 	assert.Contains(t, string(out), "Mavryk address added: "+mv2)
 	defer MavkitClient("forget", "address", mv2alias, "--force")
-	out, err = MavkitClient("import", "secret", "key", mv3alias, "http://mavsign:6732/"+mv3)
+	out, err = MavkitClient("import", "secret", "key", mv3alias, "http://mavseal:6732/"+mv3)
 	assert.NoError(t, err)
 	assert.Contains(t, string(out), "Mavryk address added: "+mv3)
 	defer MavkitClient("forget", "address", mv3alias, "--force")

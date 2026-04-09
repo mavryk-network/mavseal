@@ -5,11 +5,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/mavryk-network/mavsign/pkg/auth"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/metrics"
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/watermark"
+	"github.com/mavryk-network/mavseal/pkg/auth"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/metrics"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/watermark"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -19,7 +19,7 @@ type Context struct {
 	Context context.Context
 
 	config    *config.Config
-	mavsign *mavsign.MavSign
+	mavseal *mavseal.MavSeal
 }
 
 // NewRootCommand returns new root command
@@ -74,7 +74,7 @@ func NewRootCommand(c *Context, name string) *cobra.Command {
 
 			log.SetLevel(lv)
 
-			pol, err := mavsign.PreparePolicy(conf.Mavryk)
+			pol, err := mavseal.PreparePolicy(conf.Mavryk)
 			if err != nil {
 				return err
 			}
@@ -84,7 +84,7 @@ func NewRootCommand(c *Context, name string) *cobra.Command {
 				return err
 			}
 
-			sigConf := mavsign.Config{
+			sigConf := mavseal.Config{
 				Policy:      pol,
 				Vaults:      conf.Vaults,
 				Interceptor: metrics.Interceptor,
@@ -92,7 +92,7 @@ func NewRootCommand(c *Context, name string) *cobra.Command {
 			}
 
 			if conf.PolicyHook != nil && conf.PolicyHook.Address != "" {
-				sigConf.PolicyHook = &mavsign.PolicyHook{
+				sigConf.PolicyHook = &mavseal.PolicyHook{
 					Address: conf.PolicyHook.Address,
 				}
 				if conf.PolicyHook.AuthorizedKeys != nil {
@@ -104,7 +104,7 @@ func NewRootCommand(c *Context, name string) *cobra.Command {
 				}
 			}
 
-			sig, err := mavsign.New(c.Context, &sigConf)
+			sig, err := mavseal.New(c.Context, &sigConf)
 			if err != nil {
 				return err
 			}
@@ -114,14 +114,14 @@ func NewRootCommand(c *Context, name string) *cobra.Command {
 			}
 
 			c.config = conf
-			c.mavsign = sig
+			c.mavseal = sig
 			return nil
 		},
 	}
 
 	f := rootCmd.PersistentFlags()
 
-	f.StringVarP(&configFile, "config", "c", "/etc/mavsign.yaml", "Config file path")
+	f.StringVarP(&configFile, "config", "c", "/etc/mavseal.yaml", "Config file path")
 	f.StringVar(&level, "log", "info", "Log level: [error, warn, info, debug, trace]")
 	f.StringVar(&baseDir, "base-dir", "", "Base directory. Takes priority over one specified in config")
 	f.BoolVar(&jsonLog, "json-log", false, "Use JSON structured logs")

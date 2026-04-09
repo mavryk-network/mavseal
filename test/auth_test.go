@@ -12,14 +12,14 @@ import (
 	"testing"
 
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/auth"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
-	"github.com/mavryk-network/mavsign/pkg/server"
-	"github.com/mavryk-network/mavsign/pkg/mavsign"
-	"github.com/mavryk-network/mavsign/pkg/mavsign/watermark"
-	"github.com/mavryk-network/mavsign/pkg/vault"
-	"github.com/mavryk-network/mavsign/pkg/vault/memory"
+	"github.com/mavryk-network/mavseal/pkg/auth"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/server"
+	"github.com/mavryk-network/mavseal/pkg/mavseal"
+	"github.com/mavryk-network/mavseal/pkg/mavseal/watermark"
+	"github.com/mavryk-network/mavseal/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault/memory"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v3"
 )
@@ -72,16 +72,16 @@ func TestAuthenticatedRequest(t *testing.T) {
 
 	message := "03a11f5f176e553a11cf184bb2b15f09f55dfc5dcb2d26d79bf5dd099d074d5f5d6c0079cae4c9a1885f17d3995619bf28636c4394458b820af19172c35000904e0000712c4c4270d9e7f512115310d8ec6acfcd878bef00"
 
-	conf := mavsign.Config{
+	conf := mavseal.Config{
 		Vaults:    map[string]*config.VaultConfig{"mock": {Driver: "mock"}},
 		Watermark: watermark.Ignore{},
 		VaultFactory: vault.FactoryFunc(func(ctx context.Context, name string, conf *yaml.Node) (vault.Vault, error) {
 			return memory.New([]*memory.PrivateKey{{Key: signPriv}}, "Mock")
 		}),
-		Policy: hashmap.NewPublicKeyHashMap([]hashmap.PublicKeyKV[*mavsign.PublicKeyPolicy]{
+		Policy: hashmap.NewPublicKeyHashMap([]hashmap.PublicKeyKV[*mavseal.PublicKeyPolicy]{
 			{
 				Key: signPub.Hash(),
-				Val: &mavsign.PublicKeyPolicy{
+				Val: &mavseal.PublicKeyPolicy{
 					AllowedRequests:     []string{"generic", "block", "endorsement"},
 					AllowedOps:          []string{"endorsement", "seed_nonce_revelation", "activate_account", "ballot", "reveal", "transaction", "origination", "delegation"},
 					AuthorizedKeyHashes: []crypt.PublicKeyHash{authPub1.Hash()},
@@ -90,7 +90,7 @@ func TestAuthenticatedRequest(t *testing.T) {
 		}),
 	}
 
-	signer, err := mavsign.New(context.Background(), &conf)
+	signer, err := mavseal.New(context.Background(), &conf)
 	require.NoError(t, err)
 	require.NoError(t, signer.Unlock(context.Background()))
 
@@ -111,7 +111,7 @@ func TestAuthenticatedRequest(t *testing.T) {
 			if c.signWith != nil {
 				msgBytes, err := hex.DecodeString(message)
 				require.NoError(t, err)
-				authBytes, err := mavsign.AuthenticatedBytesToSign(&mavsign.SignRequest{
+				authBytes, err := mavseal.AuthenticatedBytesToSign(&mavseal.SignRequest{
 					PublicKeyHash: signPub.Hash(),
 					Message:       msgBytes,
 				})

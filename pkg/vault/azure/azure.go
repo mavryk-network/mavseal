@@ -17,27 +17,27 @@ import (
 
 	"github.com/decred/dcrd/dcrec/secp256k1/v4"
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/config"
-	"github.com/mavryk-network/mavsign/pkg/errors"
-	"github.com/mavryk-network/mavsign/pkg/utils"
-	"github.com/mavryk-network/mavsign/pkg/vault"
-	"github.com/mavryk-network/mavsign/pkg/vault/azure/auth"
-	"github.com/mavryk-network/mavsign/pkg/vault/azure/jwk"
+	"github.com/mavryk-network/mavseal/pkg/config"
+	"github.com/mavryk-network/mavseal/pkg/errors"
+	"github.com/mavryk-network/mavseal/pkg/utils"
+	"github.com/mavryk-network/mavseal/pkg/vault"
+	"github.com/mavryk-network/mavseal/pkg/vault/azure/auth"
+	"github.com/mavryk-network/mavseal/pkg/vault/azure/jwk"
 	"github.com/segmentio/ksuid"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 )
 
 const (
-	managementURL = "https://management.azure.com/"
+	managementURL = "https://management.azure.com"
 
 	keyVaultAPIVersion       = "7.0"
-	resourceHealthAPIVersion = "2018-08-01-rc"
+	resourceHealthAPIVersion = "2022-10-01"
 )
 
 var (
 	vaultScopes      = []string{"https://vault.azure.net/.default"}
-	managementScopes = []string{managementURL + ".default"}
+	managementScopes = []string{managementURL + "/.default"}
 )
 
 // Config contains Azure KeyVault backend configuration
@@ -309,7 +309,7 @@ func (v *Vault) Import(ctx context.Context, priv crypt.PrivateKey, opt utils.Opt
 		return nil, fmt.Errorf("(Azure/%s): %w", v.config.Vault, err)
 	}
 	if !ok {
-		keyName = "mavsign-imported-" + ksuid.New().String()
+		keyName = "mavseal-imported-" + ksuid.New().String()
 	}
 
 	ecdsaKey, ok := priv.(*crypt.ECDSAPrivateKey)
@@ -391,6 +391,13 @@ func (v *Vault) Ready(ctx context.Context) (bool, error) {
 	var res resourceHealthAvailabilityStatus
 	status, err := v.request(ctx, v.managementClient, "GET", uri, nil, &res)
 	if err != nil {
+		if status == http.StatusConflict {
+			// 409 Conflict: Resource Health API is not supported for this resource type
+			// (e.g. Azure Key Vault does not expose per-resource health status).
+			// Treat as available so the health check is not blocked.
+			log.WithField("vault", v.config.Vault).Warn("(Azure) Resource Health API returned 409; treating vault as available")
+			return true, nil
+		}
 		err = fmt.Errorf("(Azure/%s): %w", v.config.Vault, err)
 		if status != 0 {
 			err = errors.Wrap(err, status)

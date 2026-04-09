@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/mavryk-network/mavbingo/v2/crypt"
-	"github.com/mavryk-network/mavsign/pkg/hashmap"
-	"github.com/mavryk-network/mavsign/pkg/middlewares"
+	"github.com/mavryk-network/mavseal/pkg/hashmap"
+	"github.com/mavryk-network/mavseal/pkg/middlewares"
 	"github.com/go-playground/validator/v10"
 	yaml "gopkg.in/yaml.v3"
 )
@@ -44,7 +44,7 @@ type VaultConfig struct {
 	Config yaml.Node `yaml:"config"`
 }
 
-// Config contains all the configuration necessary to run the mavsign
+// Config contains all the configuration necessary to run the mavseal
 type Config struct {
 	Vaults     map[string]*VaultConfig `yaml:"vaults" validate:"dive,required"`
 	Mavryk      MavrykConfig             `yaml:"mavryk"`
@@ -65,7 +65,7 @@ var defaultConfig = Config{
 		Address:        ":6732",
 		UtilityAddress: ":9583",
 	},
-	BaseDir: "/var/lib/mavsign",
+	BaseDir: "/var/lib/mavseal",
 	Watermark: &WatermarkConfig{
 		Driver: "file",
 	},

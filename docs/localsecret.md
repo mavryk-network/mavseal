@@ -4,13 +4,13 @@ title: File-Based Secret Storage (Insecure)
 ---
 
 
-MavSign file-based signer mode allows operation without an HSM or Key Vault service for evaluation and prototyping purposes. By storing the secret key material in a JSON file, users can get MavSign up and running quickly for evaluation and development purposes.
+MavSeal file-based signer mode allows operation without an HSM or Key Vault service for evaluation and prototyping purposes. By storing the secret key material in a JSON file, users can get MavSeal up and running quickly for evaluation and development purposes.
 
-## MavSign configuration for file-based secret storage
+## MavSeal configuration for file-based secret storage
 
-This documentation assumes you will use the official MavSign docker image, and that you have a working Linux server with docker installed.
+This documentation assumes you will use the official MavSeal docker image, and that you have a working Linux server with docker installed.
 
-Place the following YAML in a file named `mavsign.yaml`
+Place the following YAML in a file named `mavseal.yaml`
 
 ```yaml
 server:
@@ -47,27 +47,27 @@ Contents of `secret.json` is:
 ]
 ```
 
-### Running MavSign
+### Running MavSeal
 
-Next, you want to run the mavsign docker image as follows:
+Next, you want to run the mavseal docker image as follows:
 
-_Remember to secure the network where MavSign is running_
+_Remember to secure the network where MavSeal is running_
 
 ```sh
 docker run -it --rm \
-    -v "$(realpath mavsign.yaml):/etc/mavsign.yaml" \
+    -v "$(realpath mavseal.yaml):/etc/mavseal.yaml" \
     -v "$(realpath secret.json):/etc/secret.json" \
     -p 6732:6732 \
     -p 9583:9583 \
-    mavrykdynamics/mavsign:latest serve -c /etc/mavsign.yaml
+    mavrykdynamics/mavseal:latest serve -c /etc/mavseal.yaml
 ```
 
-### Verify that MavSign is working
+### Verify that MavSeal is working
 
-You can test that MavSign works, making a GET request using the Public Key Hash (PKH). MavSign will return a JSON payload containing the public key.
+You can test that MavSeal works, making a GET request using the Public Key Hash (PKH). MavSeal will return a JSON payload containing the public key.
 
 ```sh
-curl mavsign:6732/keys/mv19VEmW4zEELeQiBqLHH4RHgysYuLe4P6xt
+curl mavseal:6732/keys/mv19VEmW4zEELeQiBqLHH4RHgysYuLe4P6xt
 ```
 
 A response such as the following should be expected:
@@ -81,7 +81,7 @@ You can test the signing functionality by making a POST request as follows:
 ```sh
 curl -XPOST \
     -d '"027a06a770e6cebe5b3e39483a13ac35f998d650e8b864696e31520922c7242b88c8d2ac55000003eb6d"' \
-    mavsign:6732/keys/mv19VEmW4zEELeQiBqLHH4RHgysYuLe4P6xt
+    mavseal:6732/keys/mv19VEmW4zEELeQiBqLHH4RHgysYuLe4P6xt
 ```
 
 Which should return an HTTP 200 OK with a payload similar to:

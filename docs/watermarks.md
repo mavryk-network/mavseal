@@ -3,13 +3,13 @@ id: watermarks
 title: Watermarks
 ---
 
-# Understanding Watermarks in MavSign
+# Understanding Watermarks in MavSeal
 
 ## What Are Watermarks?
 
-Watermarks in MavSign are a critical security feature that prevent **double signing** of operations at the same block level or round. Double signing is a serious issue in the Mavryk network that can result in penalties including loss of staked tokens (slashing).
+Watermarks in MavSeal are a critical security feature that prevent **double signing** of operations at the same block level or round. Double signing is a serious issue in the Mavryk network that can result in penalties including loss of staked tokens (slashing).
 
-Think of watermarks as checkpoints that track the highest block level and round number that has been signed by each key. When a new signing request arrives, MavSign checks if it's for a higher level or round than what's recorded in the watermark - only allowing the signature if it passes this check.
+Think of watermarks as checkpoints that track the highest block level and round number that has been signed by each key. When a new signing request arrives, MavSeal checks if it's for a higher level or round than what's recorded in the watermark - only allowing the signature if it passes this check.
 
 ## Why Watermarks Are Essential
 
@@ -19,21 +19,21 @@ Watermarks provide three critical benefits:
 
 2. **Protection Against Accidental Double Baking**: Even with a single baker instance, watermarks ensure that system restarts or errors don't result in re-signing operations that were already signed.
 
-3. **Support for High-Availability Setups**: When running multiple MavSign instances for redundancy, watermarks prevent multiple instances from simultaneously signing the same operation.
+3. **Support for High-Availability Setups**: When running multiple MavSeal instances for redundancy, watermarks prevent multiple instances from simultaneously signing the same operation.
 
 ## How Watermarks Work
 
 Here's the basic flow of how watermarks operate:
 
-1. When MavSign receives a signing request (block, endorsement, etc.), it extracts the operation's level and round number
-2. MavSign checks the stored watermark for the corresponding key and operation type
+1. When MavSeal receives a signing request (block, endorsement, etc.), it extracts the operation's level and round number
+2. MavSeal checks the stored watermark for the corresponding key and operation type
 3. If the new operation has a higher level or round, it's allowed to proceed
 4. After successful signing, the watermark is updated to the new level/round
 5. Any future request at the same or lower level/round will be rejected
 
 ## Choosing a Watermark Backend
 
-MavSign supports three watermark backend types, each suited for different deployment scenarios:
+MavSeal supports three watermark backend types, each suited for different deployment scenarios:
 
 ### File System (`file`) - Default
 - **Best for**: Standalone, single-instance bakers
@@ -44,15 +44,15 @@ MavSign supports three watermark backend types, each suited for different deploy
 ### Memory (`mem`)
 - **Best for**: Testing and development only
 - **Pros**: Simple, no configuration needed
-- **Cons**: Watermarks are lost when MavSign is restarted, making it unsuitable for production
+- **Cons**: Watermarks are lost when MavSeal is restarted, making it unsuitable for production
 - **Configuration**: [See documentation](#memory-backend-configuration)
 
 ### AWS DynamoDB (`aws`)
 - **Best for**: Production environments, especially cloud-based or high-availability setups
 - **Pros**: 
-  - Persistent storage independent of the MavSign instance
+  - Persistent storage independent of the MavSeal instance
   - Supports concurrent access with strong consistency
-  - Enables multiple MavSign instances to safely share signing keys
+  - Enables multiple MavSeal instances to safely share signing keys
 - **Configuration**: [See detailed documentation](aws_dynamodb.md)
 
 ## Configuration Examples
@@ -72,7 +72,7 @@ The file watermark backend stores watermark data in JSON files in the local file
 
 ```yaml
 # Main configuration
-base_dir: /var/lib/mavsign  # Default if not specified
+base_dir: /var/lib/mavseal  # Default if not specified
 
 watermark:
   driver: file
@@ -82,7 +82,7 @@ watermark:
 Watermark files are stored in the `watermark_v2` subdirectory under the specified `base_dir`. For example, with the default configuration, watermarks would be stored in:
 
 ```
-/var/lib/mavsign/watermark_v2/
+/var/lib/mavseal/watermark_v2/
 ```
 
 Each chain ID gets its own JSON file within this directory, containing watermarks for all keys on that chain. There is no additional configuration specific to the file watermark backend - it simply uses the global `base_dir` setting.
@@ -101,7 +101,7 @@ See the [AWS DynamoDB Watermark Backend](aws_dynamodb.md) documentation for deta
 
 ## High-Availability Considerations
 
-When setting up multiple MavSign instances for high availability:
+When setting up multiple MavSeal instances for high availability:
 
 1. **Choose the right backend**: The AWS DynamoDB backend is specifically designed for this scenario
 2. **Ensure consistent configuration**: All instances must use the same watermark backend configuration
@@ -113,9 +113,9 @@ When setting up multiple MavSign instances for high availability:
 ### Common Errors
 
 **"watermark validation failed" error**:
-- This is a safety mechanism indicating MavSign blocked a potential double signing attempt
+- This is a safety mechanism indicating MavSeal blocked a potential double signing attempt
 - If you're seeing this unexpectedly, check if:
-  - Multiple MavSign instances are configured with different watermark backends
+  - Multiple MavSeal instances are configured with different watermark backends
   - Your watermark storage has been lost or reset
   - The same key is being used by different bakers
 
@@ -124,9 +124,9 @@ When setting up multiple MavSign instances for high availability:
 Enable debug logs to see more information about watermark checks.
 
 ```bash
-mavsign serve --log debug -c /path/to/config.yaml
+mavseal serve --log debug -c /path/to/config.yaml
 ```
 
 Valid log levels are: `error`, `warn`, `info`, `debug`, `trace`
 
-In debug mode, MavSign logs each watermark check and update, making it easier to diagnose potential issues. 
+In debug mode, MavSeal logs each watermark check and update, making it easier to diagnose potential issues. 

@@ -1,17 +1,17 @@
 FROM golang:1.24-bullseye AS builder
 RUN apt-get update && apt-get install -y make
-ADD . /mavsign
-WORKDIR /mavsign
+ADD . /mavseal
+WORKDIR /mavseal
 RUN make
 
 FROM debian:bullseye-slim
-WORKDIR /mavsign
+WORKDIR /mavseal
 RUN apt update -y \
     && apt install -y curl apt-transport-https\
     && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /mavsign/mavsign.yaml /mavsign/mavsign.yaml
-COPY --from=builder /mavsign/mavsign /usr/bin/mavsign
-COPY --from=builder /mavsign/mavsign-cli /usr/bin/mavsign-cli
+COPY --from=builder /mavseal/mavseal.yaml /mavseal/mavseal.yaml
+COPY --from=builder /mavseal/mavseal /usr/bin/mavseal
+COPY --from=builder /mavseal/mavseal-cli /usr/bin/mavseal-cli
 
-ENTRYPOINT ["/usr/bin/mavsign"]
-CMD [ "-c", "/mavsign/mavsign.yaml" ]
+ENTRYPOINT ["/usr/bin/mavseal"]
+CMD [ "-c", "/mavseal/mavseal.yaml" ]
