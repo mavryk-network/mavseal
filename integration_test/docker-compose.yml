@@ -76,8 +76,11 @@ services:
     networks:
       - ecadnet
     volumes:
-      - type: tmpfs
+      - type: bind
+        source: ./mavseal-state
         target: /var/lib/mavseal
+        bind:
+          create_host_path: true
       - ./coverage:/opt/coverage
       - ./hashicerts:/opt/hashicerts
     configs:

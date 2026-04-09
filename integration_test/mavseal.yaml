@@ -57,7 +57,7 @@ mavryk:
                 - delegation
                 - transaction
         log_payloads: true
-    mv1PzDyjNPB9Cu2Wo97oe8SZVLwjdPr5KVUZ:
+    mv1Je5rQBQzggYJmg3thbc8GnmK5pN4Npp2Q:
         allow:
             block: []
             endorsement: []

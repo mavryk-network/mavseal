@@ -22,7 +22,7 @@ const (
 	protocol  = "http://"
 	host      = "localhost"
 	port      = "6732"
-	pkh       = "mv1PzDyjNPB9Cu2Wo97oe8SZVLwjdPr5KVUZ"
+	pkh       = "mv1Je5rQBQzggYJmg3thbc8GnmK5pN4Npp2Q"
 	url       = protocol + host + ":" + port + "/keys/" + pkh
 	dir       = "/var/lib/mavseal/watermark_v2/"
 	container = "mavseal"
@@ -123,8 +123,8 @@ var functionalTestCases = []functionalTestCase{
 			SignSuccessResponse{Signature: "edsigtfoBKBjfYYASaf194oQknF3r5eag81ihkErSSi1WPiV6qfrQjCFWomAbjG63PKaLoUvoNxqK4TCD4MLoJAFC6JtHwtBYYn"}},
 		watermarkBefore: watermarkFile{pkh: {"block": {Level: 33, Round: 2, Hash: "vh2i6wpkn9bGpw47r3RhnfHiCrLvzTvQT36AmEZNPPsKqcN7yecT"}}},
 		watermarkAfter: watermarkFile{pkh: {"block": {Level: 34, Round: 4, Hash: "vh2E3QPN8R55XtdeZXsPtbgXErMeLcE5YbjDMcUzXsFByL97u5Qc"},
-			"endorsement":    {Level: 34, Round: 4, Hash: "vh216VxjGyVK2XWEQ5gyFcAMLEqPzRKJijB6ZUybZjnwetdZp8Lm"},
-			"preendorsement": {Level: 34, Round: 4, Hash: "vh2KHE9afrJBSzLQcnP21cCtHfc9yPsjCVzsbBfLTpzRTenXtp1s"}}},
+			"attestation":    {Level: 34, Round: 4, Hash: "vh216VxjGyVK2XWEQ5gyFcAMLEqPzRKJijB6ZUybZjnwetdZp8Lm"},
+			"preattestation": {Level: 34, Round: 4, Hash: "vh2KHE9afrJBSzLQcnP21cCtHfc9yPsjCVzsbBfLTpzRTenXtp1s"}}},
 		chainID: "NetXo5iVw1vBoxM",
 	},
 	{title: "baking scenario - block request can arrive last",
@@ -140,8 +140,8 @@ var functionalTestCases = []functionalTestCase{
 			SignSuccessResponse{Signature: "edsigtfHHgiTKBhZ4wzfZwCtLpWsS1q4pHR47YbhWHLzxmx95LpSQQXXC4nWhoHCp7ppEeC2eHw2Be7zjQrKwHvsmb8KyJcGf1b"}},
 		watermarkBefore: watermarkFile{pkh: {"block": {Level: 33, Round: 2, Hash: "vh2i6wpkn9bGpw47r3RhnfHiCrLvzTvQT36AmEZNPPsKqcN7yecT"}}},
 		watermarkAfter: watermarkFile{pkh: {"block": {Level: 34, Round: 4, Hash: "vh2E3QPN8R55XtdeZXsPtbgXErMeLcE5YbjDMcUzXsFByL97u5Qc"},
-			"endorsement":    {Level: 34, Round: 4, Hash: "vh216VxjGyVK2XWEQ5gyFcAMLEqPzRKJijB6ZUybZjnwetdZp8Lm"},
-			"preendorsement": {Level: 34, Round: 4, Hash: "vh2KHE9afrJBSzLQcnP21cCtHfc9yPsjCVzsbBfLTpzRTenXtp1s"}}},
+			"attestation":    {Level: 34, Round: 4, Hash: "vh216VxjGyVK2XWEQ5gyFcAMLEqPzRKJijB6ZUybZjnwetdZp8Lm"},
+			"preattestation": {Level: 34, Round: 4, Hash: "vh2KHE9afrJBSzLQcnP21cCtHfc9yPsjCVzsbBfLTpzRTenXtp1s"}}},
 		chainID: "NetXo5iVw1vBoxM",
 	},
 }
