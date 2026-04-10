@@ -238,48 +238,54 @@ builds:
 
 dockers:
   - ids:
-      - mavseal
-      - mavseal-cli
-  - image_templates:
-    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-amd64'
-    - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-amd64{{ end }}'
+      - mavseal-linux-amd
+      - mavseal-cli-linux-amd
+    image_templates:
+      - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-amd64'
+      - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-amd64{{ end }}'
     dockerfile: goreleaser.dockerfile
     use: buildx
     build_flag_templates:
-    - "--pull"
-    - "--label=org.opencontainers.image.created={{.Date}}"
-    - "--label=org.opencontainers.image.name={{.ProjectName}}"
-    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-    - "--label=org.opencontainers.image.version={{.Version}}"
-    - "--label=org.opencontainers.image.source={{.GitURL}}"
-    - "--platform=linux/amd64"
-  - image_templates:
-    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-arm64'
-    - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-arm64{{ end }}'
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source={{.GitURL}}"
+      - "--platform=linux/amd64"
+  - ids:
+      - mavseal-linux-arm64
+      - mavseal-cli-linux-arm64
+    image_templates:
+      - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-arm64'
+      - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-arm64{{ end }}'
     dockerfile: goreleaser.dockerfile
     use: buildx
     build_flag_templates:
-    - "--pull"
-    - "--label=org.opencontainers.image.created={{.Date}}"
-    - "--label=org.opencontainers.image.name={{.ProjectName}}"
-    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-    - "--label=org.opencontainers.image.version={{.Version}}"
-    - "--label=org.opencontainers.image.source={{.GitURL}}"
-    - "--platform=linux/arm64"
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source={{.GitURL}}"
+      - "--platform=linux/arm64"
     goarch: arm64
-  - image_templates:
-    - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-armv7'
-    - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-armv7{{ end }}'
+  - ids:
+      - mavseal-linux-arm
+      - mavseal-cli-linux-arm
+    image_templates:
+      - '{{ if .IsSnapshot }}ghcr.io/{{ end }}mavryk-network/mavseal:{{ if .IsSnapshot }}{{ .FullCommit }}{{ else }}{{ .Tag }}{{ end }}-armv7'
+      - '{{ if not .IsSnapshot }}mavryk-network/mavseal:latest-armv7{{ end }}'
     dockerfile: goreleaser.dockerfile
     use: buildx
     build_flag_templates:
-    - "--pull"
-    - "--label=org.opencontainers.image.created={{.Date}}"
-    - "--label=org.opencontainers.image.name={{.ProjectName}}"
-    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-    - "--label=org.opencontainers.image.version={{.Version}}"
-    - "--label=org.opencontainers.image.source={{.GitURL}}"
-    - "--platform=linux/arm/v7"
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source={{.GitURL}}"
+      - "--platform=linux/arm/v7"
     goarch: arm
     goarm: '7'
 
