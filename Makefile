@@ -72,4 +72,4 @@ release:
 		ghcr.io/goreleaser/goreleaser-cross:${GOLANG_CROSS_VERSION} \
 		release \
 		--clean \
-		--skip-validate
+		--skip=validate
