@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkmavseal=globalThis.webpackChunkmavseal||[]).push([[5390],{5390(e,a,s){s.d(a,{createArchitectureServices:()=>c.S});var c=s(5530);s(2519)}}]);
