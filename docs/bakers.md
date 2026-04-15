@@ -39,7 +39,7 @@ Things you will need to know:
 - The host_address for a Mavryk Node
     - In this example, we will host a node locally at `http://localhost:8732`
 - A public_key_hash to be the baker
-    - e.g. `tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU`
+    - e.g. `mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs`
 - The protocol running on the network used
     - e.g. `PtMumbai`
 
@@ -54,7 +54,7 @@ List known addresses :
 ```
 ./mavkit-client list known addresses
 
-alice: tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU (unencrypted sk known)
+alice: mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs (unencrypted sk known)
 
 ```
 
@@ -65,7 +65,7 @@ Show the baker address and secret key:
 ```
 ./mavkit-client show address -S alice
 
-Hash: tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
+Hash: mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs
 Public Key: edpktmKfj5reMbPmgwh2BNw5EHYpHEZZceMWfffcEpfPTn6pXgoRwF
 Secret Key: unencrypted:edsk2hf8Y9oYMQ9MiEAH9pbs3H7tpcBbyxjcWuRjJCrGPB81bDHC7s
 ```
@@ -118,7 +118,7 @@ Create a file `/etc/secret.json` and populate it with the PKH and secret key for
 ```json!
 [
   {
-    "name": "tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU",
+    "name": "mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs",
     "value": "unencrypted:edsk2hf8Y9oYMQ9MiEAH9pbs3H7tpcBbyxjcWuRjJCrGPB81bDHC7s"
   }
 ]
@@ -137,7 +137,7 @@ vaults:
       file: /etc/secret.json
       
   mavryk:
-    tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU:
+    mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs:
       log_payloads: true
       allowed_operations:
       - generic
@@ -158,7 +158,7 @@ Start MavSeal :
 Test that MavSeal is working :
 
 ```bash!
-curl localhost:6732/keys/tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
+curl localhost:6732/keys/mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs
 
 {"public_key":"edpktmKfj5reMbPmgwh2BNw5EHYpHEZZceMWfffcEpfPTn6pXgoRwF"}
 
@@ -166,21 +166,21 @@ curl localhost:6732/keys/tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
 ./mavseal-cli list -c local_secret.yaml
 
 INFO[0000] Initializing vault                            vault=file vault_name=local_secret
-Public Key Hash:    tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
+Public Key Hash:    mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs
 Vault:              File
-ID:                 tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU
+ID:                 mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs
 Active:             false
 ```
 Import the key MavSeal provides into mavkit-client, overriding the key alice created earlier.
 
 ```bash!
-./mavkit-client import secret key alice http://localhost:6732/tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU --force
+./mavkit-client import secret key alice http://localhost:6732/mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs --force
 ```
 Check the mavryk node secret key file:
 ```bash!
 cat ~/.mavryk-client/secret_keys
 [{ "name": "alice",
-    "value": "http://localhost:6732/tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU"
+    "value": "http://localhost:6732/mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs"
 }]
 ```
 
@@ -190,9 +190,9 @@ Do a mavryk transfer operation:
 ```
 and check the mavseal logs
 ```go!
-INFO[0006] Requesting signing operation                  ops="map[transaction:1]" ops_total=1 pkh=tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU request=generic vault=File vault_name=local_secret
-INFO[0006] About to sign raw bytes                       ops="map[transaction:1]" ops_total=1 pkh=tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU raw=034266bedbf77c4e104790c8c3e7ca81cef9aa2f63770ae27d9032c670902f03e76c00fa8d929d0a3eb3a509e16bd6aec74e6c18783432e102fd13e9070080ade20400005cf5b8fb0209b20765b88233de1700896d4d084a00 request=generic vault=File vault_name=local_secret
-INFO[0006] Signed generic successfully                   ops="map[transaction:1]" ops_total=1 pkh=tz1iUqDimrzPmYuWbmLgWwX73YF7dBcaJryU request=generic vault=File vault_name=local_secret
+INFO[0006] Requesting signing operation                  ops="map[transaction:1]" ops_total=1 pkh=mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs request=generic vault=File vault_name=local_secret
+INFO[0006] About to sign raw bytes                       ops="map[transaction:1]" ops_total=1 pkh=mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs raw=034266bedbf77c4e104790c8c3e7ca81cef9aa2f63770ae27d9032c670902f03e76c00fa8d929d0a3eb3a509e16bd6aec74e6c18783432e102fd13e9070080ade20400005cf5b8fb0209b20765b88233de1700896d4d084a00 request=generic vault=File vault_name=local_secret
+INFO[0006] Signed generic successfully                   ops="map[transaction:1]" ops_total=1 pkh=mv1T9xoFWkkNgy6wH5xeDg9XgdwnqznpuDXs request=generic vault=File vault_name=local_secret
 ```
 
 
@@ -204,49 +204,47 @@ Make sure that mavryk client can access the ledger:
 ```bash!
 ./mavkit-client list connected ledgers
 
-## Ledger `elated-beaver-unusual-nightingale`
-Found a Mavryk Baking 2.3.2 (git-description: "") application running on
-Ledger Nano S at [0001:0029:00].
+## Ledger `villainous-cichlid-relieved-dodo`
+Found a Mavryk Baking 1.0.0 (git-description: "e1bfc2a0") application running
+on Ledger Nano S+ at [DevSrvsID:4296775577].
 
-To use keys at BIP32 path m/44'/1969'/0'/0' (default Mavryk key path), use one
-of:
-  mavkit-client import secret key ledger_michael "ledger://elated-beaver-unusual-nightingale/bip25519/0h/0h"
-  mavkit-client import secret key ledger_michael "ledger://elated-beaver-unusual-nightingale/ed25519/0h/0h"
-  mavkit-client import secret key ledger_michael "ledger://elated-beaver-unusual-nightingale/secp256k1/0h/0h"
-  mavkit-client import secret key ledger_michael "ledger://elated-beaver-unusual-nightingale/P-256/0h/0h"
+To use keys at BIP32 path m/44'/1969'/0'/0' (default Mavryk key path), use
+one of:
+  mavkit-client import secret key ledger_tristan "ledger://villainous-cichlid-relieved-dodo/ed25519/0h/0h"
+  mavkit-client import secret key ledger_tristan "ledger://villainous-cichlid-relieved-dodo/secp256k1/0h/0h"
+  mavkit-client import secret key ledger_tristan "ledger://villainous-cichlid-relieved-dodo/P-256/0h/0h"
+  mavkit-client import secret key ledger_tristan "ledger://villainous-cichlid-relieved-dodo/bip25519/0h/0h"
 ```
 
 Use the appropriate import command for the elliptic curve you plan to use to get the ledger keys into mavkit-client
 
 ```bash!
-./mavkit-client import secret key ledger_michael "ledger://elated-beaver-unusual-nightingale/bip25519/0h/0h"
+./mavkit-client import secret key ledger_tristan "ledger://villainous-cichlid-relieved-dodo/ed25519/0h/0h"
 
 Please validate (and write down) the public key hash displayed on the Ledger,
 it should be equal
-to `tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt`:
-Mavryk address added: tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt
+to `mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p`:
+Mavryk address added: mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p
 ```
 Review the Request on the ledger device and approve it.
 
 
-Ensure the implicit account used has funds for a baking stake. (Use the [faucet](https://teztnets.xyz/))
+Ensure the implicit account used has funds for a baking stake.
 
 Set up ledger for baking 
 ```
-./mavseal-cli ledger setup-baking bip25519/0h/0h -c mavseal.yaml 
+./mavseal-cli ledger setup-baking ed25519/0h/0h -c mavseal.yaml 
 
-INFO[0000] Initializing vault    
-vault=ledger vault_name=ledger
-Authorized baking for address: tz1Kiak7gwhv6fvcpq9Q9ghjKNuFNYDtUJUG
+Authorized baking for address: mv1AxtBcyobua1A8sZdf7DJ9xUxQ73q8mhPe
 ```
 
 Determine the ID of the ledger device. 
 ```bash!
 ./mavseal-cli ledger list -c mavseal.yaml
   
-Path:           0001:0029:00
-ID:             elated-beaver-unusual-nightingale / 00f24232
-Version:        TezBake 2.3.2
+Path:  		DevSrvsID:4296775577
+ID:     	villainous-cichlid-relieved-dodo / e1c98d9f
+Version:	MavBake 1.0.0 e1bfc2a0
 ```
 
 The ID is used by the mavseal.yaml file to identify the ledger
@@ -261,14 +259,14 @@ vaults:
   ledger:
     driver: ledger
     config:
-      id: 00f24232
+      id: e1c98d9f
       keys:
         - "bip32-ed25519/0'/0'"
         - "secp256k1/0'/1'"
       close_after: 600800s
 
 mavryk:
-  tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt:
+  mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p:
     log_payloads: true
     allow:
       generic:
@@ -294,7 +292,7 @@ Get the public key hash from the ledger device
 ./mavseal-cli list -c ledger.yaml 
 
 INFO[0000] Initializing vault                            vault=ledger vault_name=ledger
-Public Key Hash:    tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt
+Public Key Hash:    mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p
 Vault:              Ledger
 ID:                 bip32-ed25519/44'/1969'/0'/0'
 Active:             true
@@ -304,16 +302,16 @@ Allowed Operations: [endorsement proposals transaction]
 Check the logs for the baker to see that endorsing is working
 ```bash!
 Mar 22 12:09:44.815 - 016-PtMumbai.baker.actions: injected preendorsement op8Pj4ot1oZ3YmmUhxeTKiH83SUazCVDVgZzqgKb1DKj68vr8a1
-Mar 22 12:09:44.815 - 016-PtMumbai.baker.actions:   for blueledger (tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt)
+Mar 22 12:09:44.815 - 016-PtMumbai.baker.actions:   for blueledger (mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p)
 Mar 22 12:09:46.596 - 016-PtMumbai.baker.actions: injected endorsement ooee4W7k4oNSLRZu62aZQwhkahmWRngbEnJZ5CopsXGantGemzd for
-Mar 22 12:09:46.596 - 016-PtMumbai.baker.actions:   blueledger (tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt)
+Mar 22 12:09:46.596 - 016-PtMumbai.baker.actions:   blueledger (mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p)
 ```
 See the endorsing in the MavSeal logs:
 ```go!
-INFO[1910525] Requesting signing operation                  chain_id=NetXQw6nWSnrJ5t lvl=457542 pkh=tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt request=preendorsement vault=Ledger vault_name=00f24232
-INFO[1910525] About to sign raw bytes                       chain_id=NetXQw6nWSnrJ5t lvl=457542 pkh=tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt raw=122f6cbd6119f3a10704d101a5d13334809adce2e9d3011c6cead4b975a8d39f91c87273e714001e0006fb4600000082c6194912098ea5a9a7d52a593e4783afb36f3965780b242eb1e271c1159cc946 request=preendorsement vault=Ledger vault_name=00f24232
-INFO[1910527] Signed preendorsement successfully            chain_id=NetXQw6nWSnrJ5t lvl=457542 pkh=tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt request=preendorsement vault=Ledger vault_name=00f24232
-INFO[1910527] POST /keys/tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt  duration=1.772184564s hostname="localhost:6732" method=POST path=/keys/tz1bQYMFieZHomNPjJvpp2g7PuhxRPDxpnFt start_time="2023-03-08T10:26:30-08:00" status=200
+INFO[1910525] Requesting signing operation                  chain_id=NetXQw6nWSnrJ5t lvl=457542 pkh=mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p request=preendorsement vault=Ledger vault_name=00f24232
+INFO[1910525] About to sign raw bytes                       chain_id=NetXQw6nWSnrJ5t lvl=457542 pkh=mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p raw=122f6cbd6119f3a10704d101a5d13334809adce2e9d3011c6cead4b975a8d39f91c87273e714001e0006fb4600000082c6194912098ea5a9a7d52a593e4783afb36f3965780b242eb1e271c1159cc946 request=preendorsement vault=Ledger vault_name=00f24232
+INFO[1910527] Signed preendorsement successfully            chain_id=NetXQw6nWSnrJ5t lvl=457542 pkh=mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p request=preendorsement vault=Ledger vault_name=00f24232
+INFO[1910527] POST /keys/mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p  duration=1.772184564s hostname="localhost:6732" method=POST path=/keys/mv19wMsoWjs41dhwtb3kb3wGaEUZnpKBuv2p start_time="2023-03-08T10:26:30-08:00" status=200
 ```
 ### 3. Yubi HSM
 Follow the MavSeal Vault installation instructions for Yubi HSM at https://mavseal.mavryk.org/docs/yubihsm

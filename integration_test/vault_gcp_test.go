@@ -15,7 +15,7 @@ func TestGCPVault(t *testing.T) {
 	keyring := os.Getenv("VAULT_GCP_KEYRING")
 	mv3 := os.Getenv("VAULT_GCP_MV3")
 	mv3pk := os.Getenv("VAULT_GCP_MV3_PK")
-	mv3alias := "gcptz3"
+	mv3alias := "gcpmv3"
 
 	//config
 	var c Config

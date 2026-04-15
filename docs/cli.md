@@ -94,7 +94,7 @@ vaults:
   azure:
     ...
 mavryk:
-  tz2***:
+  mv2***:
     log_payloads: true
     allow:
       block:
@@ -102,7 +102,7 @@ mavryk:
       preendorsement:
       generic:
         - transaction
-  tz3***:
+  mv3***:
     log_payloads: true
     allow:
       generic:

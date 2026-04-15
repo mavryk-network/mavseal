@@ -18,8 +18,8 @@ func TestAWSVault(t *testing.T) {
 	secret := os.Getenv("VAULT_AWS_SECRET")
 	region := os.Getenv("VAULT_AWS_REGION")
 
-	mv2alias := "awstz2"
-	mv3alias := "awstz3"
+	mv2alias := "awsmv2"
+	mv3alias := "awsmv3"
 
 	//config
 	var c Config

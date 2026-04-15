@@ -1,5 +1,3 @@
-![MavSeal Logo](/docs/mavseal-logo.png "MavSeal Logo")
-
 #### A Mavryk Remote Signer
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2778/badge)](https://bestpractices.coreinfrastructure.org/projects/2778)

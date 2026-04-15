@@ -23,8 +23,8 @@ func TestAZVault(t *testing.T) {
 	mv3 := os.Getenv("VAULT_AZ_MV3")
 	mv3pk := os.Getenv("VAULT_AZ_MV3_PK")
 
-	mv2alias := "aztz2"
-	mv3alias := "aztz3"
+	mv2alias := "azmv2"
+	mv3alias := "azmv3"
 
 	//config
 	var c Config

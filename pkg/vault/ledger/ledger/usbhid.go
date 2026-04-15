@@ -7,7 +7,7 @@ import (
 	"math/big"
 	"runtime"
 
-	"github.com/karalabe/hid"
+	"github.com/mavryk-network/hid"
 )
 
 const (
@@ -35,7 +35,10 @@ func isValidInterface(d *hid.DeviceInfo) bool {
 
 // Enumerate returns a list os attached Ledger devices
 func (u *USBHIDTransport) Enumerate() ([]*DeviceInfo, error) {
-	devs := hid.Enumerate(ledgerUSBVendorID, 0)
+	devs, err := hid.Enumerate(ledgerUSBVendorID, 0)
+	if err != nil {
+		return nil, err
+	}
 	res := make([]*DeviceInfo, 0, len(devs))
 	for _, d := range devs {
 		if !isValidInterface(&d) {
@@ -59,7 +62,7 @@ func (u *USBHIDTransport) Enumerate() ([]*DeviceInfo, error) {
 
 type usbHIDRoundTripper struct {
 	channel uint16
-	dev     *hid.Device
+	dev     hid.Device
 }
 
 type packet struct {
@@ -262,6 +265,7 @@ func (u *USBHIDTransport) Open(path string) (Exchanger, error) {
 
 	n, err := rand.Int(rand.Reader, big.NewInt(0x10000))
 	if err != nil {
+		dev.Close()
 		return nil, fmt.Errorf("ledger: %w", err)
 	}
 

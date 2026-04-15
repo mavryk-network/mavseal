@@ -138,8 +138,8 @@ If the import is successful, the `mavseal-cli` will report the PKH of your newly
 INFO[0000] Initializing vault                            vault=yubihsm vault_name=yubi
 Enter secret key: 
 Enter Password:
-INFO[0000] Requesting import operation                   pkh=tz1SBhzLDp9Jvg98ztMZMstaKbAENmzRd4Y7 vault=YubiHSM vault_name="localhost:12345/1"
-INFO[0000] Successfully imported                         key_id=0cf8 pkh=tz1SBhzLDp9Jvg98ztMZMstaKbAENmzRd4Y7 vault=YubiHSM vault_name="localhost:12345/1"
+INFO[0000] Requesting import operation                   pkh=mv1KscSac2FXLeksvSChMMaHB8o1p7eJccg3 vault=YubiHSM vault_name="localhost:12345/1"
+INFO[0000] Successfully imported                         key_id=0cf8 pkh=mv1KscSac2FXLeksvSChMMaHB8o1p7eJccg3 vault=YubiHSM vault_name="localhost:12345/1"
 ```
 
 If you import an encrypted key, the `mavseal-cli` command will prompt you for a password.
@@ -152,7 +152,7 @@ You can use the command `mavseal-cli list` to list all keys in the YubiHSM2. `ma
 
 ```bash
 mavseal-cli -c ./mavseal.yaml list
-Public Key Hash:    tz1SBhzLDp9Jvg98ztMZMstaKbAENmzRd4Y7
+Public Key Hash:    mv1KscSac2FXLeksvSChMMaHB8o1p7eJccg3
 Vault:              YubiHSM
 ID:                 0cf8
 Status:             Disabled
@@ -175,7 +175,7 @@ vaults:
       password: password
       auth_key_id: 1
 mavryk:
-  tz1SBhzLDp9Jvg98ztMZMstaKbAENmzRd4Y7:
+  mv1KscSac2FXLeksvSChMMaHB8o1p7eJccg3:
     log_payloads: true
     allow:
       generic:
@@ -186,7 +186,7 @@ Rerun the `mavseal-cli list` command to verify that your new address is getting 
 
 ```bash
 mavseal-cli -c ./mavseal.yaml list
-Public Key Hash:    tz1SBhzLDp9Jvg98ztMZMstaKbAENmzRd4Y7
+Public Key Hash:    mv1KscSac2FXLeksvSChMMaHB8o1p7eJccg3
 Vault:              YubiHSM
 ID:                 0cf8
 Status:             Active

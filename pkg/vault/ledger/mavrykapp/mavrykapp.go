@@ -22,7 +22,7 @@ type App struct {
 // Mavryk application types
 const (
 	AppMavryk  = 0
-	AppTezBake = 1
+	AppMavBake = 1
 )
 
 // Version contains Mavryk app version
@@ -39,8 +39,8 @@ func (v *Version) String() string {
 	switch v.AppClass {
 	case AppMavryk:
 		class = "Mavryk"
-	case AppTezBake:
-		class = "TezBake"
+	case AppMavBake:
+		class = "MavBake"
 	default:
 		class = "Unknown"
 	}
