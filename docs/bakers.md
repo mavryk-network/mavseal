@@ -99,7 +99,7 @@ To start the baker :
 Clone MavSeal from its Github repository or run with docker .
 
 ```
-git clone <https://github.com/daily-co/mavseal.git>
+git clone https://github.com/mavryk-network/mavseal.git
 ```
 
 Build MavSeal:

@@ -4,7 +4,7 @@ module.exports = {
 	url: 'https://mavseal.mavryk.org',
 	baseUrl: '/',
 	favicon: 'img/favicon.svg',
-	organizationName: 'ecadlabs', // Usually your GitHub org/user name.
+	organizationName: 'mavryk-network', // Usually your GitHub org/user name.
 	projectName: 'mavseal', // Usually your repo name.
 	onBrokenLinks: 'warn',
 	markdown: {
