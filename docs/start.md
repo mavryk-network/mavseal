@@ -227,7 +227,7 @@ To test the signing operation, you can send a post to MavSeal. In this example, 
 ```sh
 curl -XPOST \
     -d '"027a06a770e6cebe5b3e39483a13ac35f998d650e8b864696e31520922c7242b88c8d2ac55000003eb6d"' \
-    localhost:8003/keys/tz3Tm6UTWmPAZJaNSPAQNiMiyFSHnRXrkcHj
+    localhost:8003/keys/mv3UHZA6PJuSg4PJNmriQUKGd1GK2Cnn3Jf2
 ```
 
 If you receive an error from curl and on the mavseal console, you will have to investigate. If it was successful, you should see output similar to:
@@ -290,24 +290,24 @@ Example output:
 ```
 INFO[0000] Initializing vault                            vault=cloudkms vault_name=kms
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
-Public Key Hash:    tz3VfoCwiQyMNYnaseFLFAjN9AQJQnhvddjG
+Public Key Hash:    mv3WAadg7NT4zrFYjUSFNMZxXoyos4UFeJc8
 Vault:              CloudKMS
 ID:                 projects/mavseal-testing/locations/europe-north1/keyRings/hsm-ring/cryptoKeys/hsm-key/cryptoKeyVersions/1
 Allowed Operations: [block endorsement]
 Allowed Kinds:      []
 
-Public Key Hash:    tz3ZqyLdKy2doLbw7yghLPz2TWWZdxeLGKVx
+Public Key Hash:    mv38mYtwfLGj3y4c2y2W87BRd8ANzSMcbFuN
 Vault:              CloudKMS
 ID:                 projects/mavseal-testing/locations/europe-north1/keyRings/hsm-ring/cryptoKeys/hsm-key/cryptoKeyVersions/2
 *DISABLED*
 
-Public Key Hash:    tz3aTwpna6m9qsw4YZVFad1nsm5cGgWHVQ8R
+Public Key Hash:    mv3PiVDFFyF8XXu4Hz4wd16XQbYRDHRBM8Qi
 Vault:              CloudKMS
 ID:                 projects/mavseal-testing/locations/europe-north1/keyRings/hsm-ring/cryptoKeys/mavseal-imported-1RG8mJUH8P5ncMEMypfkno98Gpq/cryptoKeyVersions/1
 Allowed Operations: [block endorsement generic]
 Allowed Kinds:      [endorsement transaction]
 
-Public Key Hash:    tz3VkMSRVjLwEoUgZNJwjoD6YHeBDXyWiBaY
+Public Key Hash:    mv3RZ83opGggXcyAwhdUV23MbufjYnzwn6Cc
 Vault:              Azure
 ID:                 https://mavseal.vault.azure.net/keys/key0/fa9607734e58485181d19da901e725b9
 *DISABLED*

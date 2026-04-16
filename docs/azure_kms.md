@@ -282,7 +282,7 @@ az keyvault key create --curve P-256 --kty EC-HSM --name "sigy-key" --vault-name
 
 ```sh
 % ./mavseal-cli list -c /etc/s.yaml
-Public Key Hash:    tz3d6nYmR1LmSDsgJ463Kgd8EbH53pYnuv8S
+Public Key Hash:    mv3FcJaUFAszJKNhVEeedxmbjcqEtXyGEEue
 Vault:              Azure
 ID:                 https://sigy.vault.azure.net/keys/sigy-EC-HSM/77154e5846b4sdajbf78fs876dfse963b0b4bec
 Status:             ACTIVE
@@ -310,7 +310,7 @@ vaults:
       resource_group: sigy
 
 mavryk:
-  tz3d6nYmR1LmSDsgJ463Kgd8EbH53pYnuv8S:
+  mv3FcJaUFAszJKNhVEeedxmbjcqEtXyGEEue:
     log_payloads: true
     allow:
       block:

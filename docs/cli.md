@@ -19,7 +19,7 @@ Confirm password:
 
 ```bash
 % mavkit-client list known addresses
-import-p256: tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo (encrypted sk known)
+import-p256: mv3La7tvyXDG3tekoYEQQyLMjzy5jcrBYFMT (encrypted sk known)
 ```
 
 The encrypted private key can be obtained from the `.mavkit-client/` directory
@@ -41,11 +41,11 @@ If you import an encrypted key, the `mavseal-cli` command will prompt you for th
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
 Enter secret key: 
 Enter Password:
-INFO[0002] Requesting import operation                   pkh=tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo vault=Azure vault_name="https://forimport.vault.azure.net/"
-INFO[0007] Successfully imported                         key_id="https://forimport.vault.azure.net/keys/mavseal-imported-2CsWhgGqeRdkEiA0LFm3WyN5DxS/9d2266b388734ef0b14203e0943465d7" pkh=tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo vault=Azure vault_name="https://forimport.vault.azure.net/"
+INFO[0002] Requesting import operation                   pkh=mv3La7tvyXDG3tekoYEQQyLMjzy5jcrBYFMT vault=Azure vault_name="https://forimport.vault.azure.net/"
+INFO[0007] Successfully imported                         key_id="https://forimport.vault.azure.net/keys/mavseal-imported-2CsWhgGqeRdkEiA0LFm3WyN5DxS/9d2266b388734ef0b14203e0943465d7" pkh=mv3La7tvyXDG3tekoYEQQyLMjzy5jcrBYFMT vault=Azure vault_name="https://forimport.vault.azure.net/"
 ```
 
-If the import is successful, the `mavseal-cli` will report the PKH (`tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo` in the above example) of your newly imported secret which in turn can be used in the config YAML to add the policies.
+If the import is successful, the `mavseal-cli` will report the PKH (`mv3La7tvyXDG3tekoYEQQyLMjzy5jcrBYFMT` in the above example) of your newly imported secret which in turn can be used in the config YAML to add the policies.
 
 **Note:** The PKH from MavSeal and the PKH from `mavkit-client list known addresess` command must be the same.
 
@@ -56,12 +56,12 @@ Name of the key can also be provided with the import command.
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
 Enter secret key: 
 Enter Password: 
-INFO[0003] Requesting import operation                   pkh=tz2PpBJj8utBU3Nxu7vexbdJVTcRxYfkfqcV vault=Azure vault_name="https://forimport.vault.azure.net/"
-INFO[0009] Successfully imported                         key_id="https://forimport.vault.azure.net/keys/test-name/f503f20b309e4c8ea57982bd9736c412" pkh=tz2PpBJj8utBU3Nxu7vexbdJVTcRxYfkfqcV vault=Azure vault_name="https://forimport.vault.azure.net/"
+INFO[0003] Requesting import operation                   pkh=mv2PkGZNuXasfLM6duD6Z55HaLiNJHWznRDE vault=Azure vault_name="https://forimport.vault.azure.net/"
+INFO[0009] Successfully imported                         key_id="https://forimport.vault.azure.net/keys/test-name/f503f20b309e4c8ea57982bd9736c412" pkh=mv2PkGZNuXasfLM6duD6Z55HaLiNJHWznRDE vault=Azure vault_name="https://forimport.vault.azure.net/"
 
 ./mavseal-cli list -c ./azure.yaml --base-dir ./
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
-Public Key Hash:    tz2PpBJj8utBU3Nxu7vexbdJVTcRxYfkfqcV
+Public Key Hash:    mv2PkGZNuXasfLM6duD6Z55HaLiNJHWznRDE
 Vault:              Azure
 ID:                 https://forimport.vault.azure.net/keys/test-name/f503f20b309e4c8ea57982bd9736c412
 Active:             false
@@ -75,7 +75,7 @@ The import operation can be verified using the below list command.
  % ./mavseal-cli list -c ./azure.yaml --base-dir ./
 INFO[0000] Initializing vault                            vault=azure vault_name=azure
 
-Public Key Hash:    tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo
+Public Key Hash:    mv3La7tvyXDG3tekoYEQQyLMjzy5jcrBYFMT
 Vault:              Azure
 ID:                 https://forimport.vault.azure.net/keys/mavseal-imported-2Csev40hxBXjwo5wVVnRbonNaDl/ce48c88caf744549b638e97bf89acb1b
 Active:             true
@@ -116,5 +116,5 @@ mavryk:
 Once the key is imported and made active, the value of the secret key in mavkit-client configuration is replaced with the key's URI in MavSeal:
 
 ```bash
-% mavkit-client import secret key <alias> http://<mavseal_host>:6732/tz3gxd1y7FdVJ81vzvuACcVjAc4ewXARQkLo
+% mavkit-client import secret key <alias> http://<mavseal_host>:6732/mv3La7tvyXDG3tekoYEQQyLMjzy5jcrBYFMT
 ```

@@ -5,7 +5,7 @@ title: Mavryk Bakers
 
 # How to use MavSeal with a Mavryk Baker
 
-A Mavryk node can be installed from binaries, or run with docker, or built from sources (for details see [here](https://teztnets.xyz/)) . In each case a baker is set up with a network and a vault, but each vault has unique requirements. This diagram shows the range of configurations supported by MavSeal. There are `3x3x6=54` variations shown, and more are possible. This article will introduce baking and test networks but will focus on the configration details required for baking with each supported vault type.
+A Mavryk node can be installed from binaries, or run with docker, or built from sources (for details see [here](https://testnets.mavryk.network/)) . In each case a baker is set up with a network and a vault, but each vault has unique requirements. This diagram shows the range of configurations supported by MavSeal. There are `3x3x6=54` variations shown, and more are possible. This article will introduce baking and test networks but will focus on the configration details required for baking with each supported vault type.
 ```mermaid
 flowchart LR
     I{How Install Mavryk<br> and MavSeal?}-->BIN[Binaries]
@@ -70,7 +70,7 @@ Public Key: edpktmKfj5reMbPmgwh2BNw5EHYpHEZZceMWfffcEpfPTn6pXgoRwF
 Secret Key: unencrypted:edsk2hf8Y9oYMQ9MiEAH9pbs3H7tpcBbyxjcWuRjJCrGPB81bDHC7s
 ```
 
-Ensure minimum required balance for baking rights. To get funds, use the [faucets](https://teztnets.xyz/). This has to wait util bootstrapping is complete.
+Ensure minimum required balance for baking rights. To get funds, use the faucets. This has to wait util bootstrapping is complete.
 
 ```
 ./mavkit-client get balance for alice
@@ -332,7 +332,7 @@ vaults:
       auth_key_id: 1
       
 mavryk:
-  tz3fK7rVYSg2HTEAmUYdfjJWSDGfsKrxH3xQ:
+  mv3VJ5u5GLRSwfpWpCFvNojEmvc4wNuAGdeQ:
     log_payloads: true
     allow:
       block:
@@ -372,7 +372,7 @@ vaults:
       region: <aws_region>
 
 mavryk:
-  tz2KtieusLufPkLEEocrr2etP4rb1QR3k8ri:
+  mv2ds3CDsARNXP9Xp6THqf28zw8HkrnAQtjt:
     log_payloads: true
     allow:
       block:
@@ -381,7 +381,7 @@ mavryk:
       generic:
         - transaction
 ``` 
-Here `tz2KtieusLufPkLEEocrr2etP4rb1QR3k8ri` is the key returned by MavSeal when you run `./mavseal-cli list -c awskms.yaml`.
+Here `mv2ds3CDsARNXP9Xp6THqf28zw8HkrnAQtjt` is the key returned by MavSeal when you run `./mavseal-cli list -c awskms.yaml`.
 
 The vault should be active when listed:
 
@@ -389,7 +389,7 @@ The vault should be active when listed:
 ./mavseal-cli list -c awskms.yaml
 
 INFO[0000] Initializing vault                            vault=awskms vault_name=aws
-Public Key Hash:    tz2KtieusLufPkLEEocrr2etP4rb1QR3k8ri
+Public Key Hash:    mv2ds3CDsARNXP9Xp6THqf28zw8HkrnAQtjt
 Vault:              AWSKMS
 ID:                 arn:aws:kms:us-east-1:757500755852:key/60d6c5f2-1824-4ee8-af3d-5bbc462e1875
 Active:             true
@@ -400,7 +400,7 @@ Allowed Operations: [endorsement proposals transaction]
 To manage baking with this key using mavkit-client you can import the key:
 
 ```bash
- ./mavkit-client import secret key awskms http://localhost:6732/tz2KtieusLufPkLEEocrr2etP4rb1QR3k8ri
+ ./mavkit-client import secret key awskms http://localhost:6732/mv2ds3CDsARNXP9Xp6THqf28zw8HkrnAQtjt
 ```
 ### 5. GCPKeyManagement
 Follow the MavSeal Vault installation instructions for GCPKeyManagement at https://mavseal.mavryk.org/docs/gcp_kms
@@ -422,7 +422,7 @@ vaults:
       application_credentials: <credentials_file_path>
       
 mavryk:
-  tz2PgBeeL6ddBuejPDs26iYExRchEn3K6ZXp:
+  mv2bQrMJ3a8hH4sRnMFQ8VzoTMHsi9w2p6q5:
     log_payloads: true
     allow:
       block:
@@ -431,14 +431,14 @@ mavryk:
       generic:
         - transaction
 ```
-Here `tz2PgBeeL6ddBuejPDs26iYExRchEn3K6ZXp` is the key returned by MavSeal when you run `./mavseal-cli list -c google.yaml`.
+Here `mv2bQrMJ3a8hH4sRnMFQ8VzoTMHsi9w2p6q5` is the key returned by MavSeal when you run `./mavseal-cli list -c google.yaml`.
 
 The vault should be active when listed:
 
 ```bash
 ./mavseal-cli list -c google.yaml
 INFO[0000] Initializing vault                            vault=cloudkms vault_name=gcp
-Public Key Hash:    tz2PgBeeL6ddBuejPDs26iYExRchEn3K6ZXp
+Public Key Hash:    mv2bQrMJ3a8hH4sRnMFQ8VzoTMHsi9w2p6q5
 Vault:              CloudKMS
 ID:                 projects/mavseal-testing/locations/northamerica-northeast2/keyRings/googlebaker/cryptoKeys/baker/cryptoKeyVersions/1
 Active:             true
@@ -448,7 +448,7 @@ Allowed Operations: [transaction]
 To manage baking with this key using mavkit-client you can import the key:
 
 ```bash
- ./mavkit-client import secret key gcpkms http://localhost:6732/tz2PgBeeL6ddBuejPDs26iYExRchEn3K6ZXp
+ ./mavkit-client import secret key gcpkms http://localhost:6732/mv2bQrMJ3a8hH4sRnMFQ8VzoTMHsi9w2p6q5
 ```
 
 
@@ -476,7 +476,7 @@ vaults:
       resource_group: sigy
 
 mavryk:
-  tz3d6nYmR1LmSDsgJ463Kgd8EbH53pYnuv8S:
+  mv3FcJaUFAszJKNhVEeedxmbjcqEtXyGEEue:
     log_payloads: true
     allow:
       block:

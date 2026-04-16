@@ -88,26 +88,27 @@ Keep mavryk-wallet app open for the below commands and for signing any wallet tr
 During every wallet transaction `Accept/Reject` input should be provided in the ledger when prompted.
 
 ```sh
-    % ./mavseal-cli list -c ./sig-ledger.yaml 
-    INFO[0000] Initializing vault                            vault=ledger vault_name=ledger
-    Public Key Hash:    tz1TrrJS7XU2WGJJEZcPxaB7cXWLd8pCL7SW
-    Vault:              Ledger
-    ID:                 bip32-ed25519/44'/1969'/0'/0'
-    Active:             true
-    Allowed Operations: [block endorsement generic]
-    Allowed Kinds:      [delegation endorsement origination reveal transaction]
-    Public Key Hash:    tz2ByDXtXn3Wj4k6DoJnyKHMA68xJvL1nBmV
-    Vault:              Ledger
-    ID:                 secp256k1/44'/1969'/0'/1'
+% ./mavseal-cli list -c ./sig-ledger.yaml 
+INFO[0000] Initializing watermark backend                backend=file
+INFO[0000] Initializing vault                            vault=ledger vault_name=ledger
+Public Key Hash:    mv1AxtBcyobua1A8sZdf7DJ9xUxQ73q8mhPe
+Reference:          bip32-ed25519/44'/1969'/0'/0'
+Vault:              Ledger/e1c98d9f
+Active:             false
+
+Public Key Hash:    mv2ds3CDsARNXP9Xp6THqf28zw8HkrnAQtjt
+Reference:          secp256k1/44'/1969'/0'/1'
+Vault:              Ledger/e1c98d9f
+Active:             false
 ```
 
 ### List all connected Ledgers
 
 ```sh
 % mavseal-cli ledger list
-Path:    IOService:/AppleARMPE/arm-io@10F00000/AppleT810xIO/usb-drd1@2280000/AppleT8103USBXHCI@01000000/usb-drd1-port-hs@01100000/USB2.1 Hub@01100000/AppleUSB20Hub@01100000/AppleUSB20HubPort@01130000/Nano S@01130000/Nano S@0/AppleUserUSBHostHIDDevice
-ID:      tz1Qrqpz6bVUgZc5o5qARHB7j2v57z6knm55 / 3944f7a0
-Version: TezBake 2.2.11 a6fbd27f
+Path:  		DevSrvsID:4296821191
+ID:     	villainous-cichlid-relieved-dodo / e1c98d9f
+Version:	MavBake 1.0.0 e1bfc2a0
 ```
 
 ### Ledger device lock

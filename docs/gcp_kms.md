@@ -85,7 +85,7 @@ Do not download the service account credentials and place them on MavSeal's file
 
 ```sh
 mavseal % ./mavseal-cli list -c /etc/s.yaml
-Public Key Hash:    tz3fK7rVYSg2HTEAmUYdfjJWSDGfsKrxH3xQ
+Public Key Hash:    mv3VJ5u5GLRSwfpWpCFvNojEmvc4wNuAGdeQ
 Vault:              CloudKMS
 ID:                 projects/mavseal-testing/locations/europe-north1/keyRings/sigy-key/cryptoKeys/sigyhsm/cryptoKeyVersions/4
 Status:             FOUND_NOT_CONFIGURED
@@ -108,7 +108,7 @@ vaults:
       key_ring: <key_ring_name>
       application_credentials: <credentials_file_path>
 mavryk:
-  tz3fK7rVYSg2HTEAmUYdfjJWSDGfsKrxH3xQ:
+  mv3VJ5u5GLRSwfpWpCFvNojEmvc4wNuAGdeQ:
     log_payloads: true
     allow:
       block:
@@ -132,6 +132,6 @@ Users can generate a private key in an air gap environment and then import it in
 INFO[0000] Initializing vault                            vault=cloudkms vault_name=kms
 Enter secret key: 
 Enter Password: 
-Enter Password: INFO[0002] Requesting import operation                   pkh=tz3be5v4ZWL3zQYUZoLWJQy8P3H6RJryVVXn vault=CloudKMS vault_name=projects/mavseal-testing/locations/europe-north1/keyRings/sign-ring
-INFO[0008] Successfully imported                         key_id=projects/mavseal-testing/locations/europe-north1/keyRings/sign-ring/cryptoKeys/mavseal-imported-215FwcXxhLdlr9IYwzA31vwANmy/cryptoKeyVersions/1 pkh=tz3be5v4ZWL3zQYUZoLWJQy8P3H6RJryVVXn vault=CloudKMS vault_name=projects/mavseal-testing/locations/europe-north1/keyRings/sign-ring
+Enter Password: INFO[0002] Requesting import operation                   pkh=mv3Tc4EWiM3ZpTKpcYPyrspe3CiQYuMCKFrr vault=CloudKMS vault_name=projects/mavseal-testing/locations/europe-north1/keyRings/sign-ring
+INFO[0008] Successfully imported                         key_id=projects/mavseal-testing/locations/europe-north1/keyRings/sign-ring/cryptoKeys/mavseal-imported-215FwcXxhLdlr9IYwzA31vwANmy/cryptoKeyVersions/1 pkh=mv3Tc4EWiM3ZpTKpcYPyrspe3CiQYuMCKFrr vault=CloudKMS vault_name=projects/mavseal-testing/locations/europe-north1/keyRings/sign-ring
 ```

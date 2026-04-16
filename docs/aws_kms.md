@@ -100,7 +100,7 @@ Global Flags:
       
 $ ./mavseal-cli list -c mavseal.yaml
 INFO[0000] Initializing vault                            vault=awskms vault_name=awskms
-Public Key Hash:    tz3WxgnteyTpM5YzJSTFFtnNYB8Du31gf3bQ
+Public Key Hash:    mv3AT8prUhd3Q9T5naE3x4oEDqKRzMFRzv2n
 Vault:              AWSKMS
 ID:                 arn:aws:kms:us-east-2:461830523399:key/038ec90c-1809-4320-9dc8-9cb05a8ef5bb
 Active:             true
@@ -110,6 +110,6 @@ Allowed Kinds:      [delegation endorsement reveal transaction]
 
 ### Final MavSeal Verification Test
 We can finally see that all the pieces are working together by curling the MavSeal service and asking for the public key associated with our active public key hash:
-`curl http://localhost:6732/keys/tz3WxgnteyTpM5YzJSTFFtnNYB8Du31gf3bQ`
+`curl http://localhost:6732/keys/mv3AT8prUhd3Q9T5naE3x4oEDqKRzMFRzv2n`
 
 The output can be verified by checking the public_keys file in the .mavryk-client directory

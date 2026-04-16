@@ -115,7 +115,7 @@ Example output:
     "Items": [
         {
             "idx": {
-                "S": "NetXdQprcVkpaWU/tz1aKTCPZHZRzNBrucPp8WTiAMzaYh84NZkC"
+                "S": "NetXdQprcVkpaWU/mv1Bm6GciQqJiKHvm7BvCZoFsZ4YejxTpVpY"
             },
             "request": {
                 "S": "block"
@@ -141,7 +141,7 @@ For a specific key, you can use a query:
 ```bash
 aws dynamodb query --table-name watermark \
   --key-condition-expression "idx = :idx" \
-  --expression-attribute-values '{":idx":{"S":"NetXdQprcVkpaWU/tz1aKTCPZHZRzNBrucPp8WTiAMzaYh84NZkC"}}' \
+  --expression-attribute-values '{":idx":{"S":"NetXdQprcVkpaWU/mv1Bm6GciQqJiKHvm7BvCZoFsZ4YejxTpVpY"}}' \
   --region us-east-1
 ```
 

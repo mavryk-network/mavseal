@@ -142,7 +142,7 @@ If no JWT users are configured for a PKH, then any JWT token will be accepted fo
 
 ```yaml
 mavryk:
-  tz3cbDCwrqFqfx1dBhHoXTwZ9FG3MDrtyMs6:
+  mv3MBXzKqN5inaeihDJu54KFjgktbEdtTLJr:
     jwt_users:
       - user_name1
       - user_name2
