@@ -1,43 +1,33 @@
+/* Code blocks — dark theme matching docs.html */
 pre {
-	background-color: #f9f9f9 !important;
-	border-radius: 4px !important;
+	background-color: #060910 !important;
+	border: 1px solid rgba(255,255,255,0.08);
+	border-radius: 10px !important;
+	font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+	font-size: 0.82rem;
+	line-height: 1.75;
+	color: #A8B4D0;
 
 	.token-line {
-		color: var(--ifm-color-primary) !important;
+		color: #A8B4D0 !important;
 
-		.keyword {
-			color: #4b78a2 !important;
-		}
-
-		.punctuation {
-			color: var(--ifm-color-primary) !important;
-		}
-
-		.function {
-			color: #ae596c !important;
-		}
-
-		.string {
-			color: #e4a45c !important;
-		}
-
-		.boolean {
-			color: #c22252 !important;
-		}
-
-		.operator {
-			color: var(--ifm-color-primary) !important;
-		}
-		.builtins {
-			color: #4b78a2 !important;
-		}
+		.keyword { color: #7DD3C0 !important; }
+		.punctuation { color: #A8B4D0 !important; }
+		.function { color: #C3A6FF !important; }
+		.string { color: #C9D97F !important; }
+		.boolean { color: #C3A6FF !important; }
+		.operator { color: #A8B4D0 !important; }
+		.builtins { color: #7DD3C0 !important; }
+		.comment { color: #4B5775 !important; }
+		.number { color: #C3A6FF !important; }
 	}
 }
 
 .playgroundEditorWrapper {
-	border-radius: 4px !important;
+	border-radius: 10px !important;
 }
 
+/* Ensure dark mode is the same */
 [data-theme='dark'] pre {
-	background-color: #2e2e2e !important;
+	background-color: #060910 !important;
 }

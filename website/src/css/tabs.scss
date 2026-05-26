@@ -1,33 +1,34 @@
+/* Tabs — dark theme */
 .tabs-container {
 	.tabs {
 		height: fit-content;
 
 		.tabs__item:hover {
-			color: #a13455;
-			border-radius: 24px;
+			color: #C84070;
+			border-radius: 8px;
+			background: rgba(200,64,112,0.1);
 		}
+
 		.tabs__item {
-			font-family: Fira Sans;
-			font-style: normal;
-			font-weight: 400;
-			font-size: 14px;
-			line-height: 18px;
-			letter-spacing: 0.3px;
-			color: #454545;
-			margin-right: 25px;
-			border-radius: 24px;
+			font-family: 'Inter', system-ui, sans-serif;
+			font-size: 0.85rem;
+			font-weight: 500;
+			color: #6B7899;
+			margin-right: 8px;
+			border-radius: 8px;
 			height: fit-content;
+			border: none;
+			padding: 8px 16px;
+			transition: color 0.2s, background 0.2s;
 		}
+
 		.tabs__item--active {
-			font-family: Fira Sans;
-			font-style: normal;
-			font-weight: 400;
-			font-size: 14px;
-			line-height: 18px;
-			letter-spacing: 0.3px;
-			color: #a13455;
-			background: rgba(161, 52, 85, 0.2);
-			border-radius: 24px;
+			font-family: 'Inter', system-ui, sans-serif;
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: #C84070;
+			background: rgba(161,52,85,0.15);
+			border-radius: 8px;
 			border: none;
 			height: fit-content;
 		}

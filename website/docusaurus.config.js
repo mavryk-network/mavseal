@@ -12,8 +12,11 @@ module.exports = {
 	},
 	themes: ['@docusaurus/theme-mermaid'],
 	themeConfig: {
+		mermaid: {
+			theme: { light: 'default', dark: 'default' },
+		},
 		colorMode: {
-			defaultMode: 'light',
+			defaultMode: 'dark',
 			disableSwitch: true,
 			respectPrefersColorScheme: false,
 			// The following value has been deprecated and will need to be re-implemented when dark mode is implemented
@@ -47,10 +50,11 @@ module.exports = {
 					docId: 'start',
 					label: 'Docs',
 					position: 'right',
-					className: 'header-link button_link',
+					className: 'header-link',
 				},
 				{
 					href: 'https://github.com/mavryk-network/mavseal',
+					label: 'GitHub',
 					position: 'right',
 					className: 'header-link header-github-link',
 					'aria-label': 'GitHub repository',

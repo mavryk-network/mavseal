@@ -31,37 +31,29 @@ function Feature() {
 	};
 
 	return (
-		<>
-			<div className={styles.footerForm}>
-				{error && <h6>Please enter your email</h6>}
-				{loading && <p>...Loading</p>}
-				{message && <p>{message && parse(message)}</p>}
+		<div className={styles.footerForm}>
+			{error && <p className={styles.errorMsg}>Please enter your email</p>}
+			{loading && <p className={styles.loadingMsg}>Loading...</p>}
+			{message && <p className={styles.successMsg}>{message && parse(message)}</p>}
 
-				<h5>Register for updates</h5>
-				<form className={styles.footerInputContainer} onSubmit={handleSubmit}>
-					<input
-						type='email'
-						name='email'
-						id='mchimpEmail'
-						placeholder='Your email address'
-						onChange={handleInputChange}
-						className={styles.footerEmail}
-					/>
-					<button className={styles.signupButton} type='submit'>
-						Sign up
-					</button>
-				</form>
-			</div>
-		</>
+			<div className={styles.signupTitle}>Register for updates</div>
+			<form className={styles.signupForm} onSubmit={handleSubmit}>
+				<input
+					type="email"
+					name="email"
+					id="mchimpEmail"
+					placeholder="Your email address"
+					onChange={handleInputChange}
+					className={styles.emailInput}
+				/>
+				<button className={styles.signupButton} type="submit">
+					Sign up
+				</button>
+			</form>
+		</div>
 	);
 }
 
 export default function FooterForm() {
-	return (
-		<section className={styles.features}>
-			<div className={styles.container}>
-				<Feature />
-			</div>
-		</section>
-	);
+	return <Feature />;
 }
